@@ -28,14 +28,14 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.crash2Control1 = new LiveSplit.Crash.Controls.Crash2Control();
+			this.crash2Control1 = new LiveSplit.Crash.Controls.CrashControl();
 			this.SuspendLayout();
 			// 
 			// crash2Control1
 			// 
 			this.crash2Control1.Location = new System.Drawing.Point(4, 4);
 			this.crash2Control1.Name = "crash2Control1";
-			this.crash2Control1.Size = new System.Drawing.Size(418, 219);
+			this.crash2Control1.Size = new System.Drawing.Size(472, 226);
 			this.crash2Control1.TabIndex = 0;
 			// 
 			// CrashMasterControl
@@ -44,13 +44,13 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.crash2Control1);
 			this.Name = "CrashMasterControl";
-			this.Size = new System.Drawing.Size(507, 274);
+			this.Size = new System.Drawing.Size(697, 375);
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
 
-		private Crash2Control crash2Control1;
+		private CrashControl crash2Control1;
 	}
 }

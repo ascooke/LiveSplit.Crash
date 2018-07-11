@@ -49,11 +49,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\Crash2Control.cs">
+    <Compile Include="Controls\CrashControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Crash2Control.Designer.cs">
-      <DependentUpon>Crash2Control.cs</DependentUpon>
+    <Compile Include="Controls\CrashControl.Designer.cs">
+      <DependentUpon>CrashControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Crash2SplitControl.cs">
       <SubType>UserControl</SubType>
@@ -79,6 +79,12 @@
     <Compile Include="Controls\CrashComboBox.Designer.cs">
       <DependentUpon>CrashComboBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CrashGameControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CrashGameControl.Designer.cs">
+      <DependentUpon>CrashGameControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CrashMasterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -90,6 +96,9 @@
     </Compile>
     <Compile Include="Controls\CrashTestingForm.Designer.cs">
       <DependentUpon>CrashTestingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CrashToggleButton.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="CrashComponent.cs" />
     <Compile Include="CrashComponentFactory.cs" />
@@ -108,14 +117,17 @@
     <Compile Include="Splits\SplitCollection.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\Crash2Control.resx">
-      <DependentUpon>Crash2Control.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\CrashControl.resx">
+      <DependentUpon>CrashControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Crash2SplitControl.resx">
       <DependentUpon>Crash2SplitControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CrashCollectibleGroup.resx">
       <DependentUpon>CrashCollectibleGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CrashGameControl.resx">
+      <DependentUpon>CrashGameControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CrashMasterControl.resx">
       <DependentUpon>CrashMasterControl.cs</DependentUpon>
@@ -135,6 +147,9 @@
     <Content Include="Resources\Add.png" />
     <Content Include="Resources\BlueGem.png" />
     <Content Include="Resources\ClearGem.png" />
+    <Content Include="Resources\Crash1.png" />
+    <Content Include="Resources\Crash2.png" />
+    <Content Include="Resources\Crash3.png" />
     <Content Include="Resources\Crystal.png" />
     <Content Include="Resources\Delete.png" />
     <Content Include="Resources\Down.png" />
