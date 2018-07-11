@@ -36,9 +36,9 @@
 			// crash3Button
 			// 
 			this.crash3Button.Appearance = System.Windows.Forms.Appearance.Button;
-			this.crash3Button.Location = new System.Drawing.Point(152, 4);
+			this.crash3Button.Location = new System.Drawing.Point(154, 4);
 			this.crash3Button.Name = "crash3Button";
-			this.crash3Button.Size = new System.Drawing.Size(68, 32);
+			this.crash3Button.Size = new System.Drawing.Size(69, 32);
 			this.crash3Button.TabIndex = 2;
 			this.crash3Button.Text = "Crash 3";
 			this.crash3Button.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -49,9 +49,9 @@
 			// crash2Button
 			// 
 			this.crash2Button.Appearance = System.Windows.Forms.Appearance.Button;
-			this.crash2Button.Location = new System.Drawing.Point(78, 4);
+			this.crash2Button.Location = new System.Drawing.Point(79, 4);
 			this.crash2Button.Name = "crash2Button";
-			this.crash2Button.Size = new System.Drawing.Size(68, 32);
+			this.crash2Button.Size = new System.Drawing.Size(69, 32);
 			this.crash2Button.TabIndex = 1;
 			this.crash2Button.Text = "Crash 2";
 			this.crash2Button.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -64,7 +64,7 @@
 			this.crash1Button.Appearance = System.Windows.Forms.Appearance.Button;
 			this.crash1Button.Location = new System.Drawing.Point(4, 4);
 			this.crash1Button.Name = "crash1Button";
-			this.crash1Button.Size = new System.Drawing.Size(68, 32);
+			this.crash1Button.Size = new System.Drawing.Size(69, 32);
 			this.crash1Button.TabIndex = 0;
 			this.crash1Button.Text = "Crash 1";
 			this.crash1Button.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -80,7 +80,7 @@
 			this.Controls.Add(this.crash2Button);
 			this.Controls.Add(this.crash1Button);
 			this.Name = "CrashGameControl";
-			this.Size = new System.Drawing.Size(224, 40);
+			this.Size = new System.Drawing.Size(227, 40);
 			this.ResumeLayout(false);
 
 		}

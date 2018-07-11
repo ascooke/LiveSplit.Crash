@@ -66,7 +66,7 @@
 			// 
 			this.anyPercentHelpButton.Image = global::LiveSplit.Crash.Properties.Resources.Question;
 			this.anyPercentHelpButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.anyPercentHelpButton.Location = new System.Drawing.Point(89, 59);
+			this.anyPercentHelpButton.Location = new System.Drawing.Point(92, 59);
 			this.anyPercentHelpButton.Name = "anyPercentHelpButton";
 			this.anyPercentHelpButton.Size = new System.Drawing.Size(135, 24);
 			this.anyPercentHelpButton.TabIndex = 1;
@@ -77,7 +77,7 @@
 			// anyPercentCheckbox
 			// 
 			this.anyPercentCheckbox.AutoSize = true;
-			this.anyPercentCheckbox.Location = new System.Drawing.Point(9, 64);
+			this.anyPercentCheckbox.Location = new System.Drawing.Point(9, 63);
 			this.anyPercentCheckbox.Name = "anyPercentCheckbox";
 			this.anyPercentCheckbox.Size = new System.Drawing.Size(82, 17);
 			this.anyPercentCheckbox.TabIndex = 0;
@@ -128,7 +128,6 @@
 			// 
 			// crashLogo
 			// 
-			this.crashLogo.Image = global::LiveSplit.Crash.Properties.Resources.Crash1;
 			this.crashLogo.InitialImage = null;
 			this.crashLogo.Location = new System.Drawing.Point(234, 19);
 			this.crashLogo.Name = "crashLogo";

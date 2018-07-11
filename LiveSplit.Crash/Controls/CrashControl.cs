@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using LiveSplit.Crash.Properties;
 
 namespace LiveSplit.Crash.Controls
 {
@@ -15,6 +16,7 @@ namespace LiveSplit.Crash.Controls
 		public CrashControl()
 		{
 			InitializeComponent();
+			UpdateImage(Resources.Crash1);
 		}
 
 		public void UpdateImage(Image image)
