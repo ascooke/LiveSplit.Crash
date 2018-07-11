@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Stages>
+  <!-- Turtle Woods -->
+  <Stage Crystals="1" Gems="1" ColoredGem="Blue" />
+  <!-- Snow Go -->
+  <Stage Crystals="1" Gems="1" ColoredGem="Red" />
+  <!-- Hang Eight -->
+  <Stage Crystals="1" Gems="2" />
+  <!-- The Pits -->
+  <Stage Crystals="1" Gems="1" />
+  <!-- Crash Dash -->
+  <Stage Crystals="1" Gems="1" />
+  <!-- Air Crash -->
+  <Stage Crystals="1" Gems="2" />
+  <!-- Snow Biz -->
+  <Stage Crystals="1" Gems="1" />
+  <!-- Bear It -->
+  <Stage Crystals="1" Gems="1" />
+  <!-- Crash Crush -->
+  <Stage Crystals="1" Gems="1" />
+  <!-- The Eel Deal -->
+  <Stage Crystals="1" Gems="1" ColoredGem="Green" />
+  <!-- Plant Food -->
+  <Stage Crystals="1" Gems="1" ColoredGem="Yellow" />
+  <!-- Sewer or Later -->
+  <Stage Crystals="1" Gems="2" />
+  <!-- Bear Down -->
+  <Stage Crystals="1" Gems="1" />
+  <!-- Road to Ruin -->
+  <Stage Crystals="1" Gems="2" />
+  <!-- Un-Bearable -->
+  <Stage Crystals="1" Gems="1" />
+  <!-- Hangin' Out -->
+  <Stage Crystals="1" Gems="1" />
+  <!-- Diggin' It -->
+  <Stage Crystals="1" Gems="2" />
+  <!-- Cold Hard Crash -->
+  <Stage Crystals="1" Gems="2" />
+  <!-- Ruination -->
+  <Stage Crystals="1" Gems="2" />
+  <!-- Bee-Having -->
+  <Stage Crystals="1" Gems="1" ColoredGem="Purple" />
+  <!-- PistonItAway -->
+  <Stage Crystals="1" Gems="2" />
+  <!-- Rock It -->
+  <Stage Crystals="1" Gems="1" />
+  <!-- Night Fight -->
+  <Stage Crystals="1" Gems="2" />
+  <!-- Pack Attack -->
+  <Stage Crystals="1" Gems="1" />
+  <!-- Spaced Out -->
+  <Stage Crystals="1" Gems="2" />
+  <!-- Totally Bear -->
+  <Stage Gems="1" />
+  <!-- Totally Fly -->
+  <Stage Gems="1" />
+</Stages>
