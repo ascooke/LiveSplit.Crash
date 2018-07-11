@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using LiveSplit.Crash.Controls.Buttons;
 using LiveSplit.Crash.Properties;
 
 namespace LiveSplit.Crash.Controls
@@ -19,9 +20,9 @@ namespace LiveSplit.Crash.Controls
 		{
 			InitializeComponent();
 
-			crash1Button.UserData = new GameData(0, Resources.Crash1, crash2Button, crash3Button);
-			crash2Button.UserData = new GameData(1, Resources.Crash2, crash1Button, crash3Button);
-			crash3Button.UserData = new GameData(2, Resources.Crash3, crash1Button, crash2Button);
+			crash1Button.Initialize(0, Resources.Crash1, crash2Button, crash3Button);
+			crash2Button.Initialize(1, Resources.Crash2, crash1Button, crash3Button);
+			crash3Button.Initialize(2, Resources.Crash3, crash1Button, crash2Button);
 
 			// This button must be checked after setting user data on each button.
 			crash1Button.Checked = true;
@@ -29,18 +30,18 @@ namespace LiveSplit.Crash.Controls
 
 		private void crashButton_CheckedChanged(object sender, EventArgs e)
 		{
-			CrashToggleButton button = (CrashToggleButton)sender;
-			GameData data = (GameData)button.UserData;
+			CrashGameButton button = (CrashGameButton)sender;
 
 			if (button.Checked)
 			{
-				selectedIndex = data.Index;
+				selectedIndex = button.Index;
 
-				foreach (var other in data.OtherButtons)
+				foreach (var other in button.OtherButtons)
 				{
 					if (other.Checked)
 					{
 						other.Checked = false;
+						other.BackColor = Color.FloralWhite;
 					}
 				}
 
@@ -49,32 +50,13 @@ namespace LiveSplit.Crash.Controls
 					var box = (GroupBox)Parent;
 					var parent = (CrashControl)box.Parent;
 
-					parent.UpdateImage(data.Image);
+					parent.UpdateImage(button.Logo);
 				}
 			}
-			else if (data.Index == selectedIndex)
+			else if (button.Index == selectedIndex)
 			{
 				button.Checked = true;
 			}
-		}
-
-		private class GameData
-		{
-			public GameData(int index, Image image, CrashToggleButton other1, CrashToggleButton other2)
-			{
-				Index = index;
-				Image = image;
-				OtherButtons = new []
-				{
-					other1,
-					other2
-				};
-			}
-
-			public Image Image { get; }
-			public CrashToggleButton[] OtherButtons { get; }
-
-			public int Index { get; }
 		}
 	}
 }

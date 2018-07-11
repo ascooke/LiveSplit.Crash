@@ -1,4 +1,6 @@
-﻿namespace LiveSplit.Crash.Controls
+﻿using LiveSplit.Crash.Controls.Buttons;
+
+namespace LiveSplit.Crash.Controls
 {
 	partial class CrashGameControl
 	{
@@ -28,9 +30,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.crash3Button = new LiveSplit.Crash.Controls.CrashToggleButton();
-			this.crash2Button = new LiveSplit.Crash.Controls.CrashToggleButton();
-			this.crash1Button = new LiveSplit.Crash.Controls.CrashToggleButton();
+			this.crash3Button = new LiveSplit.Crash.Controls.Buttons.CrashGameButton();
+			this.crash2Button = new LiveSplit.Crash.Controls.Buttons.CrashGameButton();
+			this.crash1Button = new LiveSplit.Crash.Controls.Buttons.CrashGameButton();
 			this.SuspendLayout();
 			// 
 			// crash3Button
@@ -87,8 +89,8 @@
 
 		#endregion
 
-		private CrashToggleButton crash1Button;
-		private CrashToggleButton crash2Button;
-		private CrashToggleButton crash3Button;
+		private CrashGameButton crash1Button;
+		private CrashGameButton crash2Button;
+		private CrashGameButton crash3Button;
 	}
 }

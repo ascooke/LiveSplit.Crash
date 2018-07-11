@@ -49,35 +49,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\Buttons\CrashGameButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\CrashComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\CrashControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\CrashControl.Designer.cs">
       <DependentUpon>CrashControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Crash2SplitControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\Crash2SplitControl.Designer.cs">
-      <DependentUpon>Crash2SplitControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\CrashCollectibleButton.cs">
+    <Compile Include="Controls\Buttons\CrashItemButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\CrashCollectibleButton.Designer.cs">
-      <DependentUpon>CrashCollectibleButton.cs</DependentUpon>
+    <Compile Include="Controls\CrashSplitControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CrashSplitControl.Designer.cs">
+      <DependentUpon>CrashSplitControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\CrashCollectibleGroup.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\CrashCollectibleGroup.Designer.cs">
       <DependentUpon>CrashCollectibleGroup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\CrashComboBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\CrashComboBox.Designer.cs">
-      <DependentUpon>CrashComboBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\CrashGameControl.cs">
       <SubType>UserControl</SubType>
@@ -97,7 +94,7 @@
     <Compile Include="Controls\CrashTestingForm.Designer.cs">
       <DependentUpon>CrashTestingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CrashToggleButton.cs">
+    <Compile Include="Controls\Buttons\CrashToggleButton.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="CrashComponent.cs" />
@@ -120,8 +117,8 @@
     <EmbeddedResource Include="Controls\CrashControl.resx">
       <DependentUpon>CrashControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Crash2SplitControl.resx">
-      <DependentUpon>Crash2SplitControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\CrashSplitControl.resx">
+      <DependentUpon>CrashSplitControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CrashCollectibleGroup.resx">
       <DependentUpon>CrashCollectibleGroup.cs</DependentUpon>

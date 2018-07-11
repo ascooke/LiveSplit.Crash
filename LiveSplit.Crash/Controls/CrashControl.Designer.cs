@@ -32,13 +32,13 @@
 			this.gameControl = new LiveSplit.Crash.Controls.CrashGameControl();
 			this.anyPercentHelpButton = new System.Windows.Forms.Button();
 			this.anyPercentCheckbox = new System.Windows.Forms.CheckBox();
-			this.Splits = new System.Windows.Forms.GroupBox();
+			this.splitsBox = new System.Windows.Forms.GroupBox();
 			this.splitCountLabel = new System.Windows.Forms.Label();
 			this.saveSplitsButton = new System.Windows.Forms.Button();
 			this.addSplitButton = new System.Windows.Forms.Button();
 			this.crashLogo = new System.Windows.Forms.PictureBox();
 			this.settingsBox.SuspendLayout();
-			this.Splits.SuspendLayout();
+			this.splitsBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.crashLogo)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -84,17 +84,17 @@
 			this.anyPercentCheckbox.Text = "Any% Mode";
 			this.anyPercentCheckbox.UseVisualStyleBackColor = true;
 			// 
-			// Splits
+			// splitsBox
 			// 
-			this.Splits.Controls.Add(this.splitCountLabel);
-			this.Splits.Controls.Add(this.saveSplitsButton);
-			this.Splits.Controls.Add(this.addSplitButton);
-			this.Splits.Location = new System.Drawing.Point(7, 103);
-			this.Splits.Name = "Splits";
-			this.Splits.Size = new System.Drawing.Size(462, 158);
-			this.Splits.TabIndex = 4;
-			this.Splits.TabStop = false;
-			this.Splits.Text = "Splits";
+			this.splitsBox.Controls.Add(this.splitCountLabel);
+			this.splitsBox.Controls.Add(this.saveSplitsButton);
+			this.splitsBox.Controls.Add(this.addSplitButton);
+			this.splitsBox.Location = new System.Drawing.Point(7, 103);
+			this.splitsBox.Name = "splitsBox";
+			this.splitsBox.Size = new System.Drawing.Size(462, 252);
+			this.splitsBox.TabIndex = 4;
+			this.splitsBox.TabStop = false;
+			this.splitsBox.Text = "Splits";
 			// 
 			// splitCountLabel
 			// 
@@ -125,6 +125,7 @@
 			this.addSplitButton.Text = "Add Split";
 			this.addSplitButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.addSplitButton.UseVisualStyleBackColor = true;
+			this.addSplitButton.Click += new System.EventHandler(this.addSplitButton_Click);
 			// 
 			// crashLogo
 			// 
@@ -139,14 +140,14 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.Splits);
+			this.Controls.Add(this.splitsBox);
 			this.Controls.Add(this.settingsBox);
 			this.Name = "CrashControl";
 			this.Size = new System.Drawing.Size(718, 468);
 			this.settingsBox.ResumeLayout(false);
 			this.settingsBox.PerformLayout();
-			this.Splits.ResumeLayout(false);
-			this.Splits.PerformLayout();
+			this.splitsBox.ResumeLayout(false);
+			this.splitsBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.crashLogo)).EndInit();
 			this.ResumeLayout(false);
 
@@ -157,7 +158,7 @@
 		private System.Windows.Forms.GroupBox settingsBox;
 		private System.Windows.Forms.Button anyPercentHelpButton;
 		private System.Windows.Forms.CheckBox anyPercentCheckbox;
-		private System.Windows.Forms.GroupBox Splits;
+		private System.Windows.Forms.GroupBox splitsBox;
 		private System.Windows.Forms.Button addSplitButton;
 		private System.Windows.Forms.Button saveSplitsButton;
 		private System.Windows.Forms.Label splitCountLabel;

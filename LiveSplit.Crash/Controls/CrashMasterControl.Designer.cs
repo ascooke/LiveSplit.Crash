@@ -35,7 +35,7 @@
 			// 
 			this.crash2Control1.Location = new System.Drawing.Point(4, 4);
 			this.crash2Control1.Name = "crash2Control1";
-			this.crash2Control1.Size = new System.Drawing.Size(472, 226);
+			this.crash2Control1.Size = new System.Drawing.Size(472, 440);
 			this.crash2Control1.TabIndex = 0;
 			// 
 			// CrashMasterControl
@@ -44,7 +44,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.crash2Control1);
 			this.Name = "CrashMasterControl";
-			this.Size = new System.Drawing.Size(697, 375);
+			this.Size = new System.Drawing.Size(484, 546);
 			this.ResumeLayout(false);
 
 		}

@@ -10,13 +10,12 @@ using System.Windows.Forms;
 
 namespace LiveSplit.Crash.Controls
 {
-	public partial class CrashComboBox : ComboBox
+	public class CrashComboBox : ComboBox
 	{
 		private int previousIndex = -1;
 
 		public CrashComboBox()
 		{
-			InitializeComponent();
 			DrawMode = DrawMode.OwnerDrawFixed;
 			DropDownStyle = ComboBoxStyle.DropDownList;
 		}

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LiveSplit.Crash
 {
-	public enum CollectibleTypes
+	public enum ItemTypes
 	{
 		Crystal,
 		ClearGem,
