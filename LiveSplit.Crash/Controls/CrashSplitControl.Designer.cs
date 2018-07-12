@@ -118,6 +118,7 @@
 			this.deleteButton.Size = new System.Drawing.Size(38, 23);
 			this.deleteButton.TabIndex = 4;
 			this.deleteButton.UseVisualStyleBackColor = true;
+			this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
 			// 
 			// CrashSplitControl
 			// 

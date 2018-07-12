@@ -47,8 +47,12 @@ namespace LiveSplit.Crash.Controls
 		private int index;
 		private int selectedIndex = -1;
 
-		public CrashSplitControl(int index)
+		private CrashControl parent;
+
+		public CrashSplitControl(int index, CrashControl parent)
 		{
+			this.parent = parent;
+
 			InitializeComponent();
 			Index = index;
 		}
@@ -123,6 +127,11 @@ namespace LiveSplit.Crash.Controls
 					Location = new Point(startX + i * 36, 0)
 				});
 			}
+		}
+
+		private void deleteButton_Click(object sender, EventArgs e)
+		{
+			parent.RemoveSplit(index);
 		}
 	}
 }

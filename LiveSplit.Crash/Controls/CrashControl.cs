@@ -13,6 +13,10 @@ namespace LiveSplit.Crash.Controls
 {
 	public partial class CrashControl : UserControl
 	{
+		// There are three persistent controls in the splits box (two buttons and the number of splits).
+		private const int IndexOffset = 3;
+		private const int SplitSpacing = 30;
+
 		private Point splitBase;
 
 		public CrashControl()
@@ -32,14 +36,28 @@ namespace LiveSplit.Crash.Controls
 			crashLogo.Location = new Point(centerX - image.Width / 2, centerY - image.Height / 2);
 		}
 
+		public void RemoveSplit(int index)
+		{
+			Controls.RemoveAt(index + IndexOffset);
+
+			for (int i = index + IndexOffset; i < Controls.Count; i++)
+			{
+				var split = (CrashSplitControl)Controls[i];
+
+				Point location = split.Location;
+				location.Y -= SplitSpacing;
+				split.Location = location;
+				split.Index--;
+			}
+		}
+
 		private void addSplitButton_Click(object sender, EventArgs e)
 		{
-			// There are three persistent controls in the splits box (two buttons and the number of splits).
-			int index = splitsBox.Controls.Count - 3;
+			int index = splitsBox.Controls.Count - IndexOffset;
 
-			splitsBox.Controls.Add(new CrashSplitControl(index)
+			splitsBox.Controls.Add(new CrashSplitControl(index, this)
 			{
-				Location = new Point(splitBase.X, splitBase.Y + (splitsBox.Controls.Count - 3) * 30)
+				Location = new Point(splitBase.X, splitBase.Y + (splitsBox.Controls.Count - IndexOffset) * SplitSpacing)
 			});
 		}
 	}
