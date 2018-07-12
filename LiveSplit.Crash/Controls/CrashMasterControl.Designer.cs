@@ -35,7 +35,7 @@
 			// 
 			this.crash2Control1.Location = new System.Drawing.Point(4, 4);
 			this.crash2Control1.Name = "crash2Control1";
-			this.crash2Control1.Size = new System.Drawing.Size(472, 440);
+			this.crash2Control1.Size = new System.Drawing.Size(472, 472);
 			this.crash2Control1.TabIndex = 0;
 			// 
 			// CrashMasterControl

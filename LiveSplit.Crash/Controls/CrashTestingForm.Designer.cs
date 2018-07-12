@@ -35,14 +35,14 @@
 			// 
 			this.crashMasterControl1.Location = new System.Drawing.Point(13, 13);
 			this.crashMasterControl1.Name = "crashMasterControl1";
-			this.crashMasterControl1.Size = new System.Drawing.Size(488, 421);
+			this.crashMasterControl1.Size = new System.Drawing.Size(488, 635);
 			this.crashMasterControl1.TabIndex = 0;
 			// 
 			// CrashTestingForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(513, 532);
+			this.ClientSize = new System.Drawing.Size(513, 740);
 			this.Controls.Add(this.crashMasterControl1);
 			this.Name = "CrashTestingForm";
 			this.Text = "TestingForm";

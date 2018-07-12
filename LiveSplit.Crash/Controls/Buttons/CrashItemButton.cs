@@ -26,7 +26,7 @@ namespace LiveSplit.Crash.Controls.Buttons
 		{
 			ItemType = itemType;
 			Image = images[(int)itemType];
-			Size = new Size(32, 32);
+			Size = new Size(32, 26);
 		}
 
 		public ItemTypes ItemType { get; }

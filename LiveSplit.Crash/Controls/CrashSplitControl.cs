@@ -69,9 +69,9 @@ namespace LiveSplit.Crash.Controls
 
 		private void stageComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int index = stageComboBox.SelectedIndex;
+			int newIndex = stageComboBox.SelectedIndex;
 
-			if (selectedIndex == index)
+			if (selectedIndex == newIndex)
 			{
 				return;
 			}
@@ -89,9 +89,9 @@ namespace LiveSplit.Crash.Controls
 				return;
 			}
 
-			selectedIndex = index;
+			selectedIndex = newIndex;
 
-			int effectiveIndex = index - index / 7;
+			int effectiveIndex = newIndex - newIndex / 7;
 
 			// Every 6th entry is a boss.
 			if (effectiveIndex > 0 && effectiveIndex % 6 == 5)
@@ -118,13 +118,15 @@ namespace LiveSplit.Crash.Controls
 				typeList.Add((ItemTypes)((int)data.ColoredGem + 2));
 			}
 
+			typeList.Add(ItemTypes.Relic);
+
 			int startX = stageComboBox.Bounds.Right + 4;
 
 			for (int i = 0; i < typeList.Count; i++)
 			{
 				Controls.Add(new CrashItemButton(typeList[i])
 				{
-					Location = new Point(startX + i * 36, 0)
+					Location = new Point(startX + i * 36, 2)
 				});
 			}
 		}

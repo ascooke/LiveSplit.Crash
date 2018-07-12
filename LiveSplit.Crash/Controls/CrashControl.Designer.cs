@@ -28,18 +28,22 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CrashControl));
 			this.settingsBox = new System.Windows.Forms.GroupBox();
+			this.crashLogo = new System.Windows.Forms.PictureBox();
 			this.gameControl = new LiveSplit.Crash.Controls.CrashGameControl();
 			this.anyPercentHelpButton = new System.Windows.Forms.Button();
 			this.anyPercentCheckbox = new System.Windows.Forms.CheckBox();
 			this.splitsBox = new System.Windows.Forms.GroupBox();
+			this.itemsLabel = new System.Windows.Forms.Label();
+			this.stageLabel = new System.Windows.Forms.Label();
+			this.splitsPanel = new System.Windows.Forms.Panel();
 			this.splitCountLabel = new System.Windows.Forms.Label();
 			this.saveSplitsButton = new System.Windows.Forms.Button();
 			this.addSplitButton = new System.Windows.Forms.Button();
-			this.crashLogo = new System.Windows.Forms.PictureBox();
 			this.settingsBox.SuspendLayout();
-			this.splitsBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.crashLogo)).BeginInit();
+			this.splitsBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// settingsBox
@@ -55,16 +59,25 @@
 			this.settingsBox.TabStop = false;
 			this.settingsBox.Text = "Settings";
 			// 
+			// crashLogo
+			// 
+			this.crashLogo.InitialImage = null;
+			this.crashLogo.Location = new System.Drawing.Point(234, 19);
+			this.crashLogo.Name = "crashLogo";
+			this.crashLogo.Size = new System.Drawing.Size(120, 64);
+			this.crashLogo.TabIndex = 3;
+			this.crashLogo.TabStop = false;
+			// 
 			// gameControl
 			// 
-			this.gameControl.Location = new System.Drawing.Point(4, 16);
+			this.gameControl.Location = new System.Drawing.Point(4, 19);
 			this.gameControl.Name = "gameControl";
-			this.gameControl.Size = new System.Drawing.Size(224, 40);
-			this.gameControl.TabIndex = 2;
+			this.gameControl.Size = new System.Drawing.Size(227, 40);
+			this.gameControl.TabIndex = 4;
 			// 
 			// anyPercentHelpButton
 			// 
-			this.anyPercentHelpButton.Image = global::LiveSplit.Crash.Properties.Resources.Question;
+			this.anyPercentHelpButton.Image = ((System.Drawing.Image)(resources.GetObject("anyPercentHelpButton.Image")));
 			this.anyPercentHelpButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.anyPercentHelpButton.Location = new System.Drawing.Point(92, 59);
 			this.anyPercentHelpButton.Name = "anyPercentHelpButton";
@@ -86,24 +99,52 @@
 			// 
 			// splitsBox
 			// 
+			this.splitsBox.Controls.Add(this.itemsLabel);
+			this.splitsBox.Controls.Add(this.stageLabel);
+			this.splitsBox.Controls.Add(this.splitsPanel);
 			this.splitsBox.Controls.Add(this.splitCountLabel);
 			this.splitsBox.Controls.Add(this.saveSplitsButton);
 			this.splitsBox.Controls.Add(this.addSplitButton);
 			this.splitsBox.Location = new System.Drawing.Point(7, 103);
 			this.splitsBox.Name = "splitsBox";
-			this.splitsBox.Size = new System.Drawing.Size(462, 252);
+			this.splitsBox.Size = new System.Drawing.Size(462, 362);
 			this.splitsBox.TabIndex = 4;
 			this.splitsBox.TabStop = false;
 			this.splitsBox.Text = "Splits";
+			// 
+			// itemsLabel
+			// 
+			this.itemsLabel.AutoSize = true;
+			this.itemsLabel.Location = new System.Drawing.Point(156, 53);
+			this.itemsLabel.Name = "itemsLabel";
+			this.itemsLabel.Size = new System.Drawing.Size(32, 13);
+			this.itemsLabel.TabIndex = 5;
+			this.itemsLabel.Text = "Items";
+			// 
+			// stageLabel
+			// 
+			this.stageLabel.AutoSize = true;
+			this.stageLabel.Location = new System.Drawing.Point(31, 53);
+			this.stageLabel.Name = "stageLabel";
+			this.stageLabel.Size = new System.Drawing.Size(35, 13);
+			this.stageLabel.TabIndex = 4;
+			this.stageLabel.Text = "Stage";
+			// 
+			// splitsPanel
+			// 
+			this.splitsPanel.Location = new System.Drawing.Point(9, 68);
+			this.splitsPanel.Name = "splitsPanel";
+			this.splitsPanel.Size = new System.Drawing.Size(447, 288);
+			this.splitsPanel.TabIndex = 3;
 			// 
 			// splitCountLabel
 			// 
 			this.splitCountLabel.AutoSize = true;
 			this.splitCountLabel.Location = new System.Drawing.Point(164, 26);
 			this.splitCountLabel.Name = "splitCountLabel";
-			this.splitCountLabel.Size = new System.Drawing.Size(51, 13);
+			this.splitCountLabel.Size = new System.Drawing.Size(39, 13);
 			this.splitCountLabel.TabIndex = 2;
-			this.splitCountLabel.Text = "100 splits";
+			this.splitCountLabel.Text = "0 splits";
 			// 
 			// saveSplitsButton
 			// 
@@ -116,7 +157,7 @@
 			// 
 			// addSplitButton
 			// 
-			this.addSplitButton.Image = global::LiveSplit.Crash.Properties.Resources.Add;
+			this.addSplitButton.Image = ((System.Drawing.Image)(resources.GetObject("addSplitButton.Image")));
 			this.addSplitButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.addSplitButton.Location = new System.Drawing.Point(7, 20);
 			this.addSplitButton.Name = "addSplitButton";
@@ -126,15 +167,6 @@
 			this.addSplitButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.addSplitButton.UseVisualStyleBackColor = true;
 			this.addSplitButton.Click += new System.EventHandler(this.addSplitButton_Click);
-			// 
-			// crashLogo
-			// 
-			this.crashLogo.InitialImage = null;
-			this.crashLogo.Location = new System.Drawing.Point(234, 19);
-			this.crashLogo.Name = "crashLogo";
-			this.crashLogo.Size = new System.Drawing.Size(120, 64);
-			this.crashLogo.TabIndex = 3;
-			this.crashLogo.TabStop = false;
 			// 
 			// CrashControl
 			// 
@@ -146,9 +178,9 @@
 			this.Size = new System.Drawing.Size(718, 468);
 			this.settingsBox.ResumeLayout(false);
 			this.settingsBox.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.crashLogo)).EndInit();
 			this.splitsBox.ResumeLayout(false);
 			this.splitsBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.crashLogo)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -164,5 +196,8 @@
 		private System.Windows.Forms.Label splitCountLabel;
 		private CrashGameControl gameControl;
 		private System.Windows.Forms.PictureBox crashLogo;
+		private System.Windows.Forms.Panel splitsPanel;
+		private System.Windows.Forms.Label itemsLabel;
+		private System.Windows.Forms.Label stageLabel;
 	}
 }

@@ -38,7 +38,9 @@
 			// stageComboBox
 			// 
 			this.stageComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.stageComboBox.DropDownHeight = 300;
 			this.stageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.stageComboBox.IntegralHeight = false;
 			this.stageComboBox.Items.AddRange(new object[] {
             "Turtle Woods",
             "Snow Go",
@@ -77,7 +79,7 @@
             "-",
             "Totally Bear",
             "Totally Fly"});
-			this.stageComboBox.Location = new System.Drawing.Point(27, 5);
+			this.stageComboBox.Location = new System.Drawing.Point(26, 5);
 			this.stageComboBox.Name = "stageComboBox";
 			this.stageComboBox.Size = new System.Drawing.Size(121, 21);
 			this.stageComboBox.TabIndex = 0;
@@ -130,7 +132,7 @@
 			this.Controls.Add(this.indexLabel);
 			this.Controls.Add(this.stageComboBox);
 			this.Name = "CrashSplitControl";
-			this.Size = new System.Drawing.Size(453, 32);
+			this.Size = new System.Drawing.Size(453, 28);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

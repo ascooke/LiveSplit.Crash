@@ -13,18 +13,16 @@ namespace LiveSplit.Crash.Controls
 {
 	public partial class CrashControl : UserControl
 	{
-		// There are three persistent controls in the splits box (two buttons and the number of splits).
-		private const int IndexOffset = 3;
-		private const int SplitSpacing = 30;
-
-		private Point splitBase;
+		private const int SplitSpacing = 28;
+		
+		private ControlCollection splitControls;
 
 		public CrashControl()
 		{
 			InitializeComponent();
 			UpdateImage(Resources.Crash1);
-
-			splitBase = new Point(Location.X + 3, addSplitButton.Bounds.Bottom + 7);
+			
+			splitControls = splitsPanel.Controls;
 		}
 
 		public void UpdateImage(Image image)
@@ -38,27 +36,38 @@ namespace LiveSplit.Crash.Controls
 
 		public void RemoveSplit(int index)
 		{
-			Controls.RemoveAt(index + IndexOffset);
+			splitControls.RemoveAt(index);
 
-			for (int i = index + IndexOffset; i < Controls.Count; i++)
+			for (int i = index; i < splitControls.Count; i++)
 			{
-				var split = (CrashSplitControl)Controls[i];
+				var split = (CrashSplitControl)splitControls[i];
 
 				Point location = split.Location;
 				location.Y -= SplitSpacing;
 				split.Location = location;
 				split.Index--;
 			}
+
+			UpdateCount();
 		}
 
 		private void addSplitButton_Click(object sender, EventArgs e)
 		{
-			int index = splitsBox.Controls.Count - IndexOffset;
+			int index = splitControls.Count;
 
-			splitsBox.Controls.Add(new CrashSplitControl(index, this)
+			splitControls.Add(new CrashSplitControl(index, this)
 			{
-				Location = new Point(splitBase.X, splitBase.Y + (splitsBox.Controls.Count - IndexOffset) * SplitSpacing)
+				Location = new Point(-5, index * SplitSpacing)
 			});
+
+			UpdateCount();
+		}
+
+		private void UpdateCount()
+		{
+			int count = splitControls.Count;
+
+			splitCountLabel.Text = count + (count == 1 ? " split" : " splits");
 		}
 	}
 }
