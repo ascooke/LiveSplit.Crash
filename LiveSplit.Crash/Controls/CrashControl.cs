@@ -48,7 +48,53 @@ namespace LiveSplit.Crash.Controls
 				split.Index--;
 			}
 
+			if (splitControls.Count > 0)
+			{
+				if (index == 0)
+				{
+					((CrashSplitControl)splitControls[0]).UpButton.Enabled = false;
+				}
+				else if (index == splitControls.Count)
+				{
+					((CrashSplitControl)splitControls[index - 1]).DownButton.Enabled = false;
+				}
+			}
+
 			UpdateCount();
+		}
+
+		public void MoveUp(int index)
+		{
+			Swap((CrashSplitControl)splitControls[index], (CrashSplitControl)splitControls[index - 1]);
+		}
+
+		public void MoveDown(int index)
+		{
+			Swap((CrashSplitControl)splitControls[index], (CrashSplitControl)splitControls[index + 1]);
+		}
+
+		private void Swap(CrashSplitControl split1, CrashSplitControl split2)
+		{
+			Point tempLocation = split1.Location;
+			split1.Location = split2.Location;
+			split2.Location = tempLocation;
+
+			bool tempUp = split1.UpButton.Enabled;
+			split1.UpButton.Enabled = split2.UpButton.Enabled;
+			split2.UpButton.Enabled = tempUp;
+
+			bool tempDown = split1.DownButton.Enabled;
+			split1.DownButton.Enabled = split2.DownButton.Enabled;
+			split2.DownButton.Enabled = tempDown;
+
+			int index1 = split1.Index;
+			int index2 = split2.Index;
+			
+			split1.Index = index2;
+			split2.Index = index1;
+
+			splitControls.SetChildIndex(split1, index2);
+			splitControls.SetChildIndex(split2, index1);
 		}
 
 		private void addSplitButton_Click(object sender, EventArgs e)
@@ -59,6 +105,11 @@ namespace LiveSplit.Crash.Controls
 			{
 				Location = new Point(-5, index * SplitSpacing)
 			});
+
+			if (index > 0)
+			{
+				((CrashSplitControl)splitControls[index - 1]).DownButton.Enabled = true;
+			}
 
 			UpdateCount();
 		}

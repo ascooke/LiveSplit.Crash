@@ -55,6 +55,7 @@ namespace LiveSplit.Crash.Controls
 
 			InitializeComponent();
 			Index = index;
+			upButton.Enabled = index > 0;
 		}
 
 		public int Index
@@ -66,6 +67,9 @@ namespace LiveSplit.Crash.Controls
 				indexLabel.Text = index + 1 + ".";
 			}
 		}
+
+		public Button UpButton => upButton;
+		public Button DownButton => downButton;
 
 		private void stageComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -134,6 +138,16 @@ namespace LiveSplit.Crash.Controls
 		private void deleteButton_Click(object sender, EventArgs e)
 		{
 			parent.RemoveSplit(index);
+		}
+
+		private void upButton_Click(object sender, EventArgs e)
+		{
+			parent.MoveUp(index);
+		}
+
+		private void downButton_Click(object sender, EventArgs e)
+		{
+			parent.MoveDown(index);
 		}
 	}
 }
