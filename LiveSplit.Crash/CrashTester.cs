@@ -14,21 +14,26 @@ namespace LiveSplit.Crash
 
 		public static void Main(string[] args)
 		{
-			CrashTestingForm form = new CrashTestingForm();
-			form.ShowDialog();
+			bool formTesting = true;
 
-			/*
-			CrashComponent component = new CrashComponent();
-
-			Console.WriteLine("Component created.\n");
-
-			while (true)
+			if (formTesting)
 			{
-				component.Autosplit();
-
-				Thread.Sleep((int)(1000f / Tick));
+				CrashTestingForm form = new CrashTestingForm();
+				form.ShowDialog();
 			}
-			*/
+			else
+			{
+				CrashComponent component = new CrashComponent();
+
+				Console.WriteLine("Component created.");
+
+				while (true)
+				{
+					component.Autosplit();
+
+					Thread.Sleep((int)(1000f / Tick));
+				}
+			}
 		}
 	}
 }

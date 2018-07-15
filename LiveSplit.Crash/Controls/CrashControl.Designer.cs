@@ -33,7 +33,7 @@
 			this.crashLogo = new System.Windows.Forms.PictureBox();
 			this.gameControl = new LiveSplit.Crash.Controls.CrashGameControl();
 			this.anyPercentHelpButton = new System.Windows.Forms.Button();
-			this.anyPercentCheckbox = new System.Windows.Forms.CheckBox();
+			this.simpleModeCheckbox = new System.Windows.Forms.CheckBox();
 			this.splitsBox = new System.Windows.Forms.GroupBox();
 			this.itemsLabel = new System.Windows.Forms.Label();
 			this.stageLabel = new System.Windows.Forms.Label();
@@ -41,6 +41,7 @@
 			this.splitCountLabel = new System.Windows.Forms.Label();
 			this.saveSplitsButton = new System.Windows.Forms.Button();
 			this.addSplitButton = new System.Windows.Forms.Button();
+			this.simpleModeNotification = new System.Windows.Forms.Label();
 			this.settingsBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.crashLogo)).BeginInit();
 			this.splitsBox.SuspendLayout();
@@ -51,7 +52,7 @@
 			this.settingsBox.Controls.Add(this.crashLogo);
 			this.settingsBox.Controls.Add(this.gameControl);
 			this.settingsBox.Controls.Add(this.anyPercentHelpButton);
-			this.settingsBox.Controls.Add(this.anyPercentCheckbox);
+			this.settingsBox.Controls.Add(this.simpleModeCheckbox);
 			this.settingsBox.Location = new System.Drawing.Point(7, 4);
 			this.settingsBox.Name = "settingsBox";
 			this.settingsBox.Size = new System.Drawing.Size(462, 93);
@@ -79,26 +80,30 @@
 			// 
 			this.anyPercentHelpButton.Image = ((System.Drawing.Image)(resources.GetObject("anyPercentHelpButton.Image")));
 			this.anyPercentHelpButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.anyPercentHelpButton.Location = new System.Drawing.Point(92, 59);
+			this.anyPercentHelpButton.Location = new System.Drawing.Point(94, 59);
 			this.anyPercentHelpButton.Name = "anyPercentHelpButton";
-			this.anyPercentHelpButton.Size = new System.Drawing.Size(135, 24);
+			this.anyPercentHelpButton.Size = new System.Drawing.Size(133, 24);
 			this.anyPercentHelpButton.TabIndex = 1;
 			this.anyPercentHelpButton.Text = "What does this mean?";
 			this.anyPercentHelpButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.anyPercentHelpButton.UseVisualStyleBackColor = true;
 			// 
-			// anyPercentCheckbox
+			// simpleModeCheckbox
 			// 
-			this.anyPercentCheckbox.AutoSize = true;
-			this.anyPercentCheckbox.Location = new System.Drawing.Point(9, 63);
-			this.anyPercentCheckbox.Name = "anyPercentCheckbox";
-			this.anyPercentCheckbox.Size = new System.Drawing.Size(82, 17);
-			this.anyPercentCheckbox.TabIndex = 0;
-			this.anyPercentCheckbox.Text = "Any% Mode";
-			this.anyPercentCheckbox.UseVisualStyleBackColor = true;
+			this.simpleModeCheckbox.AutoSize = true;
+			this.simpleModeCheckbox.Checked = true;
+			this.simpleModeCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.simpleModeCheckbox.Location = new System.Drawing.Point(8, 63);
+			this.simpleModeCheckbox.Name = "simpleModeCheckbox";
+			this.simpleModeCheckbox.Size = new System.Drawing.Size(87, 17);
+			this.simpleModeCheckbox.TabIndex = 0;
+			this.simpleModeCheckbox.Text = "Simple Mode";
+			this.simpleModeCheckbox.UseVisualStyleBackColor = true;
+			this.simpleModeCheckbox.CheckedChanged += new System.EventHandler(this.simpleModeCheckbox_CheckedChanged);
 			// 
 			// splitsBox
 			// 
+			this.splitsBox.Controls.Add(this.simpleModeNotification);
 			this.splitsBox.Controls.Add(this.itemsLabel);
 			this.splitsBox.Controls.Add(this.stageLabel);
 			this.splitsBox.Controls.Add(this.splitsPanel);
@@ -120,6 +125,7 @@
 			this.itemsLabel.Size = new System.Drawing.Size(32, 13);
 			this.itemsLabel.TabIndex = 5;
 			this.itemsLabel.Text = "Items";
+			this.itemsLabel.Visible = false;
 			// 
 			// stageLabel
 			// 
@@ -129,6 +135,7 @@
 			this.stageLabel.Size = new System.Drawing.Size(35, 13);
 			this.stageLabel.TabIndex = 4;
 			this.stageLabel.Text = "Stage";
+			this.stageLabel.Visible = false;
 			// 
 			// splitsPanel
 			// 
@@ -136,6 +143,7 @@
 			this.splitsPanel.Name = "splitsPanel";
 			this.splitsPanel.Size = new System.Drawing.Size(447, 288);
 			this.splitsPanel.TabIndex = 3;
+			this.splitsPanel.Visible = false;
 			// 
 			// splitCountLabel
 			// 
@@ -145,9 +153,11 @@
 			this.splitCountLabel.Size = new System.Drawing.Size(39, 13);
 			this.splitCountLabel.TabIndex = 2;
 			this.splitCountLabel.Text = "0 splits";
+			this.splitCountLabel.Visible = false;
 			// 
 			// saveSplitsButton
 			// 
+			this.saveSplitsButton.Enabled = false;
 			this.saveSplitsButton.Location = new System.Drawing.Point(86, 20);
 			this.saveSplitsButton.Name = "saveSplitsButton";
 			this.saveSplitsButton.Size = new System.Drawing.Size(72, 24);
@@ -157,6 +167,7 @@
 			// 
 			// addSplitButton
 			// 
+			this.addSplitButton.Enabled = false;
 			this.addSplitButton.Image = ((System.Drawing.Image)(resources.GetObject("addSplitButton.Image")));
 			this.addSplitButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.addSplitButton.Location = new System.Drawing.Point(7, 20);
@@ -167,6 +178,15 @@
 			this.addSplitButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.addSplitButton.UseVisualStyleBackColor = true;
 			this.addSplitButton.Click += new System.EventHandler(this.addSplitButton_Click);
+			// 
+			// simpleModeNotification
+			// 
+			this.simpleModeNotification.AutoSize = true;
+			this.simpleModeNotification.Location = new System.Drawing.Point(213, 26);
+			this.simpleModeNotification.Name = "simpleModeNotification";
+			this.simpleModeNotification.Size = new System.Drawing.Size(191, 13);
+			this.simpleModeNotification.TabIndex = 6;
+			this.simpleModeNotification.Text = "This section is disabled in simple mode.";
 			// 
 			// CrashControl
 			// 
@@ -189,7 +209,7 @@
 
 		private System.Windows.Forms.GroupBox settingsBox;
 		private System.Windows.Forms.Button anyPercentHelpButton;
-		private System.Windows.Forms.CheckBox anyPercentCheckbox;
+		private System.Windows.Forms.CheckBox simpleModeCheckbox;
 		private System.Windows.Forms.GroupBox splitsBox;
 		private System.Windows.Forms.Button addSplitButton;
 		private System.Windows.Forms.Button saveSplitsButton;
@@ -199,5 +219,6 @@
 		private System.Windows.Forms.Panel splitsPanel;
 		private System.Windows.Forms.Label itemsLabel;
 		private System.Windows.Forms.Label stageLabel;
+		private System.Windows.Forms.Label simpleModeNotification;
 	}
 }

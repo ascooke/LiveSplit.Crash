@@ -32,7 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>LiveSplit.Crash.CrashTester</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LiveSplit.Core">
@@ -99,6 +100,7 @@
     </Compile>
     <Compile Include="CrashComponent.cs" />
     <Compile Include="CrashComponentFactory.cs" />
+    <Compile Include="CrashEvents.cs" />
     <Compile Include="CrashTester.cs" />
     <Compile Include="Data\StageData.cs" />
     <Compile Include="Enums.cs" />

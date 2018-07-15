@@ -14,6 +14,7 @@ namespace LiveSplit.Crash.Controls
 	public partial class CrashControl : UserControl
 	{
 		private const int SplitSpacing = 28;
+		private const int SimpleHeight = 53;
 		
 		private ControlCollection splitControls;
 
@@ -23,6 +24,7 @@ namespace LiveSplit.Crash.Controls
 			UpdateImage(Resources.Crash1);
 			
 			splitControls = splitsPanel.Controls;
+			splitsBox.Height = SimpleHeight;
 		}
 
 		public void UpdateImage(Image image)
@@ -119,6 +121,18 @@ namespace LiveSplit.Crash.Controls
 			int count = splitControls.Count;
 
 			splitCountLabel.Text = count + (count == 1 ? " split" : " splits");
+		}
+
+		private void simpleModeCheckbox_CheckedChanged(object sender, EventArgs e)
+		{
+			bool simpleMode = simpleModeCheckbox.Checked;
+
+			addSplitButton.Enabled = !simpleMode;
+			saveSplitsButton.Enabled = !simpleMode;
+			splitCountLabel.Visible = !simpleMode;
+			simpleModeNotification.Visible = simpleMode;
+			splitsPanel.Visible = !simpleMode;
+			splitsBox.Height = simpleMode ? SimpleHeight : 400;
 		}
 	}
 }

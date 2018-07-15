@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using LiveSplit.Crash.Controls;
 using LiveSplit.Crash.Memory;
 using LiveSplit.Model;
 using LiveSplit.UI;
@@ -17,25 +18,20 @@ namespace LiveSplit.Crash
 	{
 		private TimerModel timer;
 		private CrashMemory memory;
+		private CrashEvents events;
 
 		private bool processHooked;
-		private bool anyPercentMode;
-
-		private int crystals = -1;
-		private int gems = -1;
-		private int lives = -1;
-		private int bossesKilled = 0;
-
-		private float fade = 0;
-
-		private Crash2Stages stage = Crash2Stages.None;
+		private bool simpleMode;
 
 		public CrashComponent()
 		{
 			memory = new CrashMemory();
+			events = new CrashEvents(memory);
+			events.LoadStart += OnLoadStart;
+			events.LoadEnd += OnLoadEnd;
 		}
 
-		public string ComponentName => "Crash Bandicoot N. Sane Trilogy Autosplitter";
+		public string ComponentName => "Crash Bandicoot NST Autosplitter (Memory-Based)";
 
 		public float HorizontalWidth => 0;
 		public float MinimumHeight => 0;
@@ -58,7 +54,7 @@ namespace LiveSplit.Crash
 
 		public Control GetSettingsControl(LayoutMode mode)
 		{
-			return null;
+			return new CrashMasterControl();
 		}
 
 		public XmlNode GetSettings(XmlDocument document)
@@ -70,6 +66,27 @@ namespace LiveSplit.Crash
 		{
 		}
 
+		private void OnLoadStart()
+		{
+			Console.WriteLine("Load start.");
+			//timer.CurrentState.IsGameTimePaused = true;
+		}
+
+		private void OnLoadEnd()
+		{
+			Console.WriteLine("Load end.");
+			//timer.CurrentState.IsGameTimePaused = false;
+		}
+
+		private void OnStart(object sender, EventArgs e)
+		{
+			timer.InitializeGameTime();
+		}
+
+		private void OnReset(object sender, TimerPhase phase)
+		{
+		}
+
 		public void Update(IInvalidator invalidator, LiveSplitState state, float width, float height, LayoutMode mode)
 		{
 			if (timer == null)
@@ -78,6 +95,9 @@ namespace LiveSplit.Crash
 				{
 					CurrentState = state
 				};
+
+				timer.CurrentState.OnStart += OnStart;
+				timer.CurrentState.OnReset += OnReset;
 			}
 			
 			Autosplit();
@@ -87,67 +107,19 @@ namespace LiveSplit.Crash
 		public void Autosplit()
 		{
 			bool processPreviouslyHooked = processHooked;
-
+			
 			processHooked = memory.HookProcess();
 
 			if (processHooked ^ processPreviouslyHooked)
 			{
 				if (!processHooked)
 				{
-					Console.WriteLine("Process unhooked.");
-
 					return;
 				}
-
-				Console.WriteLine("Process hooked.");
 			}
 
-			int newCrystals = memory.GetCrystals();
-
-			if (crystals != newCrystals)
-			{
-				Console.WriteLine($"Crystals changed ({crystals} -> {newCrystals}).");
-
-				crystals = newCrystals;
-			}
-
-			int newGems = memory.GetGems();
-
-			if (gems != newGems)
-			{
-				Console.WriteLine($"Gems changed ({gems} -> {newGems}).");
-
-				gems = newGems;
-			}
-
-			int newLives = memory.GetLives();
-
-			if (lives != newLives)
-			{
-				Console.WriteLine($"Lives changed ({lives} -> {newLives}).");
-
-				lives = newLives;
-			}
-
-			float oldFade = fade;
-			fade = memory.GetFade();
-
-			if (oldFade == 0 && fade > 0)
-			{
-				Console.WriteLine("Fade started.");
-			}
-			else if (oldFade > 0 && fade == 0)
-			{
-				Console.WriteLine("Fade ended.");
-			}
-
-			Crash2Stages oldStage = stage;
-			stage = memory.GetStage();
-
-			if (stage != oldStage)
-			{
-				Console.WriteLine($"Entering stage {stage}.");
-			}
+			events.Refresh();
+			//timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime);
 		}
 
 		public void Dispose()

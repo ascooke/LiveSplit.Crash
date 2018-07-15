@@ -4,22 +4,29 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using IntPtr = System.IntPtr;
 
 namespace LiveSplit.Crash.Memory
 {
 	public class CrashMemory
 	{
-		private const string CollectibleMarker = "48989640F77F0000";
-		private const string FadeMarker = "E85D0FC1F67F000001";
-		private const string StageMarker = "e06000000000100020";
-
-		private const int StageCount = 32;
-
 		private Process process;
-		private IntPtr collectiblePointer;
-		private IntPtr fadePointer;
-		private IntPtr loadedStagePointer;
+		private ProgramPointer fadePointer;
+		private ProgramPointer loadPointer;
+		private ProgramPointer stagePointer;
+		private ProgramPointer collectiblePointer;
 		private IntPtr[] stagePointers;
+
+		public CrashMemory()
+		{
+			return;
+
+			fadePointer = new ProgramPointer("e85d??????7F000001", 0x1C);
+			loadPointer = new ProgramPointer("185c49a2f67f000001", 0x10, 1);
+			stagePointer = new ProgramPointer("06000000000100020", 0x130);
+			collectiblePointer = new ProgramPointer("48989640F77F0000", 0);
+		}
 
 		public bool HookProcess()
 		{
@@ -34,18 +41,8 @@ namespace LiveSplit.Crash.Memory
 				}
 
 				MemoryReader.Update64Bit(process);
-				MemorySearcher searcher = new MemorySearcher
-				{
-					MemoryFilter = info => info.State == 4096 && info.Protect == 4
-				};
 
-				Console.WriteLine("Finding base pointers...");
-
-				collectiblePointer = searcher.FindSignature(process, CollectibleMarker);
-				fadePointer = searcher.FindSignature(process, FadeMarker) + 0x1C;
-				loadedStagePointer = searcher.FindSignature(process, StageMarker) + 0x130;
-
-				Console.WriteLine("Done.\n");
+				return true;
 
 				string[] stageStrings =
 				{
@@ -100,7 +97,7 @@ namespace LiveSplit.Crash.Memory
 				
 				for (int i = 0; i < stagePointers.Length; i++)
 				{
-					stagePointers[i] = searcher.FindSignature(process, stageStrings[i]);
+					//stagePointers[i] = memorySearcher.FindSignature(process, stageStrings[i]);
 
 					Console.WriteLine((Crash2Stages)i + " found.");
 				}
@@ -113,7 +110,8 @@ namespace LiveSplit.Crash.Memory
 
 		public int GetCrystals()
 		{
-			return process.Read<int>(fadePointer, 0x198);
+			//return process.Read<int>(fadePointer, 0x198);
+			return 0;
 		}
 
 		public int GetGems()
@@ -128,12 +126,15 @@ namespace LiveSplit.Crash.Memory
 
 		public float GetFade()
 		{
-			return process.Read<float>(fadePointer);
+			return fadePointer.Get<float>(process);
 		}
 
 		public Crash2Stages GetStage()
 		{
-			IntPtr pointer = process.Read<IntPtr>(loadedStagePointer);
+			return Crash2Stages.DrNeoCortex;
+
+			/*
+			IntPtr pointer = process.Read<IntPtr>(stagePointer);
 			
 			for (int i = 0; i < StageCount; i++)
 			{
@@ -144,6 +145,7 @@ namespace LiveSplit.Crash.Memory
 			}
 
 			return Crash2Stages.TheWarpRoom;
+			*/
 		}
 
 		public bool GetBoss(int bossIndex)
@@ -154,6 +156,46 @@ namespace LiveSplit.Crash.Memory
 		public bool GetColoredGem(ColoredGems gem)
 		{
 			return false;
+		}
+
+		private class ProgramPointer
+		{
+			private IntPtr pointer;
+
+			private string signature;
+			private int offset;
+			private int resultIndex;
+
+			public ProgramPointer(string signature, int offset, int resultIndex = 0)
+			{
+				this.signature = signature;
+				this.offset = offset;
+				this.resultIndex = resultIndex;
+			}
+
+			public T Get<T>(Process process) where T : struct
+			{
+				if (pointer == IntPtr.Zero)
+				{
+					MemorySearcher searcher = new MemorySearcher
+					{
+						MemoryFilter = info => info.State == 4096 && info.Protect == 4
+					};
+
+					pointer = resultIndex == 0
+						? searcher.FindSignature(process, signature)
+						: searcher.FindSignatures(process, signature)[resultIndex];
+
+					if (pointer == IntPtr.Zero)
+					{
+						return default(T);
+					}
+
+					Console.WriteLine("Pointer acquired");
+				}
+
+				return process.Read<T>(pointer, offset);
+			}
 		}
 	}
 }
