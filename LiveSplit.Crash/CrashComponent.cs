@@ -22,6 +22,7 @@ namespace LiveSplit.Crash
 		private CrashEvents events;
 		private CrashSettingsControl settings;
 		private RelicDisplay relicDisplay;
+		private BoxDisplay boxDisplay;
 
 		private bool processHooked;
 		private bool simpleMode;
@@ -76,6 +77,7 @@ namespace LiveSplit.Crash
 		{
 			if (settings.DisplayBoxes)
 			{
+				boxDisplay.Draw(g, state, width, VerticalHeight);
 			}
 
 			if (settings.DisplayRelics)
@@ -139,6 +141,7 @@ namespace LiveSplit.Crash
 			{
 				if (relicDisplay == null)
 				{
+					boxDisplay = new BoxDisplay();
 					relicDisplay = new RelicDisplay();
 				}
 

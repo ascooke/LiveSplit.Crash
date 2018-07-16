@@ -19,5 +19,7 @@ namespace LiveSplit.Crash.Display
 				g.FillRectangle(new SolidBrush(backgroundColor), 0, 0, width, height);
 			}
 		}
+
+		public abstract void Draw(Graphics g, LiveSplitState state, float width, float height);
 	}
 }

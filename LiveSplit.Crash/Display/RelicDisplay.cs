@@ -36,7 +36,7 @@ namespace LiveSplit.Crash.Display
 			};
 		}
 
-		public void Draw(Graphics g, LiveSplitState state, float width, float height)
+		public override void Draw(Graphics g, LiveSplitState state, float width, float height)
 		{
 			sapphireLabel.Text = "03:03.33";
 			sapphireLabel.X = 0;

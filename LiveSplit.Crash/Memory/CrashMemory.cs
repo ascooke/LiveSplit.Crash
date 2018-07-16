@@ -162,6 +162,7 @@ namespace LiveSplit.Crash.Memory
 		private class ProgramPointer
 		{
 			private IntPtr pointer;
+			private DateTime lastTry;
 
 			private string signature;
 			private int offset;
@@ -176,11 +177,23 @@ namespace LiveSplit.Crash.Memory
 
 			public T Get<T>(Process process) where T : struct
 			{
-				if (pointer == IntPtr.Zero)
+				if (process == null)
 				{
+					pointer = IntPtr.Zero;
+
+					return default(T);
+				}
+
+				if (pointer == IntPtr.Zero && DateTime.Now > lastTry.AddSeconds(1))
+				{
+					lastTry = DateTime.Now;
+
 					MemorySearcher searcher = new MemorySearcher
 					{
-						MemoryFilter = info => info.State == 4096 && info.Protect == 4
+						MemoryFilter = info =>
+							(info.State & 0x1000) != 0 &&
+							(info.Protect & 0x40) != 0 &&
+							(info.Protect & 0x100) == 0
 					};
 
 					pointer = resultIndex == 0
