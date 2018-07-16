@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Stages>
+  <!-- Toad Village -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:03.00" Gold="0:57.50" Platinum="0:44.03" />
+  <!-- Under Pressure -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:39.00" Gold="1:10.90" Platinum="1:03.50" />
+  <!-- Orient Express -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="0:41.00" Gold="0:27.80" Platinum="0:18.10" />
+  <!-- Bone Yard -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:45.00" Gold="1:40.20" Platinum="1:21.00" />
+  <!-- Makin' Waves -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:11.00" Gold="1:03.23" Platinum="0:56.23" />
+  <!-- Gee Wiz -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:35.00" Gold="1:22.73" Platinum="1:05.90" />
+  <!-- Hang'em High -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:24.00" Gold="0:52.63" Platinum="0:43.80" />
+  <!-- Hog Ride -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="0:48.00" Gold="0:44.43" Platinum="0:38.06" />
+  <!-- Tomb Time -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:42.00" Gold="1:10.00" Platinum="0:53.90" />
+  <!-- Midnight Run -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="0:51.00" Gold="0:38.23" Platinum="0:18.20" />
+  <!-- Dino Might! -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:34.00" Gold="1:25.76" Platinum="1:03.00" />
+  <!-- Deep Trouble -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:37.00" Gold="1:15.12" Platinum="1:08.33" />
+  <!-- High Time -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="2:12.00" Gold="1:04.10" Platinum="0:56.93" />
+  <!-- Road Crash -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:31.00" Gold="1:26.70" Platinum="1:23.10" />
+  <!-- Double Header -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:27.00" Gold="1:21.12" Platinum="0:59.40" />
+  <!-- Sphynxinator -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:42.00" Gold="1:22.63" Platinum="0:56.70" />
+  <!-- Bye Bye Blimps -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="0:49.00" Gold="0:38.40" Platinum="0:31.50" />
+  <!-- Tell No Tales -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="2:12.00" Gold="1:35.63" Platinum="1:15.23" />
+  <!-- Future Frenzy -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="2:01.00" Gold="1:34.00" Platinum="1:19.62" />
+  <!-- Tomb Wader -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="2:44.00" Gold="1:45.03" Platinum="1:24.00" />
+  <!-- Gone Tomorrow -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="2:05.00" Gold="1:25.60" Platinum="1:02.10" />
+  <!-- Orange Asphalt -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:38.00" Gold="1:33.30" Platinum="1:23.80" />
+  <!-- Flaming Passion -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:43.00" Gold="1:13.10" Platinum="0:59.40" />
+  <!-- Mad Bombers -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="2:18.00" Gold="1:15.23" Platinum="0:58.13" />
+  <!-- Bug Lite -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:49.00" Gold="1:34.86" Platinum="1:14.90" />
+  <!-- Ski Crazed -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:19.00" Gold="0:53.50" Platinum="0:36.30" />
+  <!-- Area 51? -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="2:01.00" Gold="1:57.80" Platinum="1:52.50" />
+  <!-- Rings of Power -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:30.00" Gold="1:11.46" Platinum="1:01.73" />
+  <!-- Hot Coco -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="1:00.00" Gold="0:30.10" Platinum="0:19.96" />
+  <!-- Eggipus Rex -->
+  <Stage Crystals="" Gems="" Boxes="" Sapphire="0:59.00" Gold="0:53.01" Platinum="0:47.74" />
+  <!-- Future Tense -->
+  <Stage Crystals="" Gems="" Boxes="145" Sapphire="2:01.52" Gold="1:15.43" Platinum="0:52.17" />
+</Stages>

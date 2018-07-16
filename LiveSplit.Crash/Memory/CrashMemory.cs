@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using IntPtr = System.IntPtr;
 
 namespace LiveSplit.Crash.Memory
 {
@@ -120,6 +119,11 @@ namespace LiveSplit.Crash.Memory
 		}
 
 		public int GetLives()
+		{
+			return 0;
+		}
+
+		public int GetBoxes()
 		{
 			return 0;
 		}

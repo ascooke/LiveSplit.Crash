@@ -36,6 +36,10 @@ namespace LiveSplit.Crash.Display
 			};
 		}
 
+		public string Sapphire { set => sapphireLabel.Text = value; }
+		public string Gold { set => goldLabel.Text = value; }
+		public string Platinum { set => platinumLabel.Text = value; }
+
 		public override void Draw(Graphics g, LiveSplitState state, float width, float height)
 		{
 			sapphireLabel.Text = "03:03.33";

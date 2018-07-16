@@ -111,10 +111,10 @@ namespace LiveSplit.Crash.Controls
 				((CrashSplitControl)splitControls[index - 1]).DownButton.Enabled = true;
 			}
 
-			Refresh();
+			RefreshCount();
 		}
 
-		private void Refresh()
+		private void RefreshCount()
 		{
 			int count = splitControls.Count;
 

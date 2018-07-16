@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using LiveSplit.Crash.Controls;
+using LiveSplit.Crash.Data;
 using LiveSplit.Crash.Display;
 using LiveSplit.Crash.Memory;
 using LiveSplit.Model;
@@ -33,6 +34,9 @@ namespace LiveSplit.Crash
 			events = new CrashEvents(memory);
 			events.LoadStart += OnLoadStart;
 			events.LoadEnd += OnLoadEnd;
+			events.StageEnter += OnStageEnter;
+			events.StageLeave += OnStageLeave;
+			events.BoxChange += OnBoxChange;
 
 			settings = new CrashSettingsControl();
 		}
@@ -111,6 +115,23 @@ namespace LiveSplit.Crash
 		{
 			Console.WriteLine("Load end.");
 			//timer.CurrentState.IsGameTimePaused = false;
+		}
+
+		private void OnStageEnter(StageData data)
+		{
+			boxDisplay.BoxTarget = data.Boxes;
+			relicDisplay.Sapphire = data.Sapphire;
+			relicDisplay.Gold = data.Gold;
+			relicDisplay.Platinum = data.Platinum;
+		}
+
+		private void OnStageLeave()
+		{
+		}
+
+		private void OnBoxChange(int boxes)
+		{
+			boxDisplay.BoxCount = boxes;
 		}
 
 		private void OnStart(object sender, EventArgs e)

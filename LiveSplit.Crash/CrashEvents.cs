@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LiveSplit.Crash.Data;
 using LiveSplit.Crash.Memory;
 
 namespace LiveSplit.Crash
@@ -11,6 +12,7 @@ namespace LiveSplit.Crash
 	{
 		private CrashMemory memory;
 
+		private int boxes;
 		private float fade;
 
 		public CrashEvents(CrashMemory memory)
@@ -20,6 +22,9 @@ namespace LiveSplit.Crash
 
 		public event Action LoadStart;
 		public event Action LoadEnd;
+		public event Action<StageData> StageEnter;
+		public event Action StageLeave;
+		public event Action<int> BoxChange;
 
 		public void Refresh()
 		{

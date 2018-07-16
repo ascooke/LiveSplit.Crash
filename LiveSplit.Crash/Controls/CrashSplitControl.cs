@@ -40,7 +40,7 @@ namespace LiveSplit.Crash.Controls
 					? (ColoredGems)Enum.Parse(typeof(ColoredGems), coloredGemAttribute.Value)
 					: ColoredGems.None;
 
-				dataArray[i] = new StageData(crystals, gems, coloredGem);
+				//dataArray[i] = new StageData(crystals, gems, coloredGem);
 			}
 		}
 

@@ -28,6 +28,47 @@ namespace LiveSplit.Crash
 		None
 	}
 
+	public enum Crash1Stages
+	{
+		// Island 1
+		NSanityBeach,
+		JungleRollers,
+		TheGreatGate,
+		Boulders,
+		Upstream,
+		PapuPapu,
+		HogWild,
+		NativeFortress,
+
+		// Island 2
+		UpTheCreek,
+		RipperRoo,
+		TheLostCity,
+		TempleRuins,
+		RoadToNowhere,
+		BoulderDash,
+		WholeHog,
+		SunsetVista,
+
+		// Island 3
+		HeavyMachinery,
+		CortexPower,
+		GeneratorRoom,
+		ToxicWaste,
+		Pinstripe,
+		TheHighRoad,
+		SlipperyClimb,
+		LightsOut,
+		FumblingInTheDark,
+		JawsOfDarkness,
+		CastleMachinery,
+		NBrio,
+		TheLab,
+
+		// DLC
+		StormyAscent
+	}
+
 	public enum Crash2Stages
 	{
 		// Chamber 1
@@ -77,5 +118,55 @@ namespace LiveSplit.Crash
 		// Other
 		TheWarpRoom,
 		None
+	}
+
+	public enum Crash3Stages
+	{
+		// Warp 1
+		ToadVillage,
+		UnderPressure,
+		OrientExpress,
+		BoneYard,
+		MakinWaves,
+
+		// Warp 2
+		GeeWiz,
+		HangEmHigh,
+		HogRide,
+		TombTime,
+		MidnightRun,
+
+		// Warp 3
+		DinoMight,
+		DeepTrouble,
+		HighTime,
+		RoadCrash,
+		DoubleHeader,
+
+		// Warp 4
+		Sphynxinator,
+		ByeByeBlimps,
+		TellNoTales,
+		FutureFrenzy,
+		TombWader,
+
+		// Warp 5
+		GoneTomorrow,
+		OrangeAsphalt,
+		FlamingPassion,
+		MadBombers,
+		BugLite,
+
+		// Warp 6
+		SkiCrazed,
+		Area51,
+		RingsOfPower,
+
+		// Secret stages
+		HotCoco,
+		EggipusRex,
+
+		// DLC
+		FutureTense
 	}
 }
