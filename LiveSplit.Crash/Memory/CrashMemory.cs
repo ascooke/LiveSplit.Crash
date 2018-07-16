@@ -126,7 +126,8 @@ namespace LiveSplit.Crash.Memory
 
 		public float GetFade()
 		{
-			return fadePointer.Get<float>(process);
+			return 0;
+			//return fadePointer.Get<float>(process);
 		}
 
 		public Crash2Stages GetStage()

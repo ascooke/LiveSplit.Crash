@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using LiveSplit.Crash.Controls;
+using LiveSplit.Crash.Display;
 using LiveSplit.Crash.Memory;
 using LiveSplit.Model;
 using LiveSplit.UI;
@@ -19,6 +20,8 @@ namespace LiveSplit.Crash
 		private TimerModel timer;
 		private CrashMemory memory;
 		private CrashEvents events;
+		private CrashSettingsControl settings;
+		private RelicDisplay relicDisplay;
 
 		private bool processHooked;
 		private bool simpleMode;
@@ -29,14 +32,35 @@ namespace LiveSplit.Crash
 			events = new CrashEvents(memory);
 			events.LoadStart += OnLoadStart;
 			events.LoadEnd += OnLoadEnd;
+
+			settings = new CrashSettingsControl();
 		}
 
 		public string ComponentName => "Crash Bandicoot NST Autosplitter (Memory-Based)";
 
 		public float HorizontalWidth => 0;
-		public float MinimumHeight => 0;
-		public float VerticalHeight => 0;
+		public float VerticalHeight
+		{
+			get
+			{
+				int height = 0;
+
+				if (settings.DisplayBoxes)
+				{
+					height += 30;
+				}
+
+				if (settings.DisplayRelics)
+				{
+					height += 30;
+				}
+
+				return height;
+			}
+		}
+
 		public float MinimumWidth => 0;
+		public float MinimumHeight => 0;
 		public float PaddingTop => 0;
 		public float PaddingBottom => 0;
 		public float PaddingLeft => 0;
@@ -50,20 +74,29 @@ namespace LiveSplit.Crash
 
 		public void DrawVertical(Graphics g, LiveSplitState state, float width, Region clipRegion)
 		{
+			if (settings.DisplayBoxes)
+			{
+			}
+
+			if (settings.DisplayRelics)
+			{
+				relicDisplay.Draw(g, state, width, VerticalHeight);
+			}
 		}
 
 		public Control GetSettingsControl(LayoutMode mode)
 		{
-			return new CrashMasterControl();
+			return settings;
 		}
 
 		public XmlNode GetSettings(XmlDocument document)
 		{
-			return null;
+			return settings.SaveSettings(document);
 		}
 
 		public void SetSettings(XmlNode settings)
 		{
+			this.settings.LoadSettings(settings);
 		}
 
 		private void OnLoadStart()
@@ -101,6 +134,16 @@ namespace LiveSplit.Crash
 			}
 			
 			Autosplit();
+
+			if (settings.DisplayEnabled)
+			{
+				if (relicDisplay == null)
+				{
+					relicDisplay = new RelicDisplay();
+				}
+
+				invalidator?.Invalidate(0, 0, width, height);
+			}
 		}
 
 		// This function is public for use in the tester class.

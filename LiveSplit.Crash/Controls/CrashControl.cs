@@ -61,8 +61,6 @@ namespace LiveSplit.Crash.Controls
 					((CrashSplitControl)splitControls[index - 1]).DownButton.Enabled = false;
 				}
 			}
-
-			UpdateCount();
 		}
 
 		public void MoveUp(int index)
@@ -113,14 +111,15 @@ namespace LiveSplit.Crash.Controls
 				((CrashSplitControl)splitControls[index - 1]).DownButton.Enabled = true;
 			}
 
-			UpdateCount();
+			Refresh();
 		}
 
-		private void UpdateCount()
+		private void Refresh()
 		{
 			int count = splitControls.Count;
 
 			splitCountLabel.Text = count + (count == 1 ? " split" : " splits");
+			splitsBox.Height = 450;
 		}
 
 		private void simpleModeCheckbox_CheckedChanged(object sender, EventArgs e)

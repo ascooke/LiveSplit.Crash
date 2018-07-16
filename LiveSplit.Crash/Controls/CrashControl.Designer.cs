@@ -31,7 +31,6 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CrashControl));
 			this.settingsBox = new System.Windows.Forms.GroupBox();
 			this.crashLogo = new System.Windows.Forms.PictureBox();
-			this.gameControl = new LiveSplit.Crash.Controls.CrashGameControl();
 			this.anyPercentHelpButton = new System.Windows.Forms.Button();
 			this.simpleModeCheckbox = new System.Windows.Forms.CheckBox();
 			this.splitsBox = new System.Windows.Forms.GroupBox();
@@ -42,6 +41,7 @@
 			this.saveSplitsButton = new System.Windows.Forms.Button();
 			this.addSplitButton = new System.Windows.Forms.Button();
 			this.simpleModeNotification = new System.Windows.Forms.Label();
+			this.gameControl = new LiveSplit.Crash.Controls.CrashGameControl();
 			this.settingsBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.crashLogo)).BeginInit();
 			this.splitsBox.SuspendLayout();
@@ -55,7 +55,7 @@
 			this.settingsBox.Controls.Add(this.simpleModeCheckbox);
 			this.settingsBox.Location = new System.Drawing.Point(7, 4);
 			this.settingsBox.Name = "settingsBox";
-			this.settingsBox.Size = new System.Drawing.Size(462, 93);
+			this.settingsBox.Size = new System.Drawing.Size(442, 93);
 			this.settingsBox.TabIndex = 3;
 			this.settingsBox.TabStop = false;
 			this.settingsBox.Text = "Settings";
@@ -68,13 +68,6 @@
 			this.crashLogo.Size = new System.Drawing.Size(120, 64);
 			this.crashLogo.TabIndex = 3;
 			this.crashLogo.TabStop = false;
-			// 
-			// gameControl
-			// 
-			this.gameControl.Location = new System.Drawing.Point(4, 19);
-			this.gameControl.Name = "gameControl";
-			this.gameControl.Size = new System.Drawing.Size(227, 40);
-			this.gameControl.TabIndex = 4;
 			// 
 			// anyPercentHelpButton
 			// 
@@ -112,7 +105,7 @@
 			this.splitsBox.Controls.Add(this.addSplitButton);
 			this.splitsBox.Location = new System.Drawing.Point(7, 103);
 			this.splitsBox.Name = "splitsBox";
-			this.splitsBox.Size = new System.Drawing.Size(462, 362);
+			this.splitsBox.Size = new System.Drawing.Size(442, 362);
 			this.splitsBox.TabIndex = 4;
 			this.splitsBox.TabStop = false;
 			this.splitsBox.Text = "Splits";
@@ -141,7 +134,7 @@
 			// 
 			this.splitsPanel.Location = new System.Drawing.Point(9, 68);
 			this.splitsPanel.Name = "splitsPanel";
-			this.splitsPanel.Size = new System.Drawing.Size(447, 288);
+			this.splitsPanel.Size = new System.Drawing.Size(431, 288);
 			this.splitsPanel.TabIndex = 3;
 			this.splitsPanel.Visible = false;
 			// 
@@ -182,11 +175,18 @@
 			// simpleModeNotification
 			// 
 			this.simpleModeNotification.AutoSize = true;
-			this.simpleModeNotification.Location = new System.Drawing.Point(213, 26);
+			this.simpleModeNotification.Location = new System.Drawing.Point(205, 26);
 			this.simpleModeNotification.Name = "simpleModeNotification";
 			this.simpleModeNotification.Size = new System.Drawing.Size(191, 13);
 			this.simpleModeNotification.TabIndex = 6;
 			this.simpleModeNotification.Text = "This section is disabled in simple mode.";
+			// 
+			// gameControl
+			// 
+			this.gameControl.Location = new System.Drawing.Point(4, 19);
+			this.gameControl.Name = "gameControl";
+			this.gameControl.Size = new System.Drawing.Size(227, 40);
+			this.gameControl.TabIndex = 4;
 			// 
 			// CrashControl
 			// 
@@ -195,7 +195,7 @@
 			this.Controls.Add(this.splitsBox);
 			this.Controls.Add(this.settingsBox);
 			this.Name = "CrashControl";
-			this.Size = new System.Drawing.Size(718, 468);
+			this.Size = new System.Drawing.Size(456, 468);
 			this.settingsBox.ResumeLayout(false);
 			this.settingsBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.crashLogo)).EndInit();
