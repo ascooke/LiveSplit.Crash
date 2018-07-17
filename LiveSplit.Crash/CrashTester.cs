@@ -14,7 +14,7 @@ namespace LiveSplit.Crash
 
 		public static void Main(string[] args)
 		{
-			bool formTesting = true;
+			bool formTesting = false;
 
 			if (formTesting)
 			{

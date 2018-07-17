@@ -27,9 +27,13 @@ namespace LiveSplit.Crash
 		Purple,
 		None
 	}
-
-	public enum Crash1Stages
+	
+	public enum Stages
 	{
+		//---------//
+		// Crash 1 //
+		//---------//
+
 		// Island 1
 		NSanityBeach,
 		JungleRollers,
@@ -37,12 +41,13 @@ namespace LiveSplit.Crash
 		Boulders,
 		Upstream,
 		PapuPapu,
+		RollingStones,
 		HogWild,
 		NativeFortress,
 
 		// Island 2
 		UpTheCreek,
-		RipperRoo,
+		RipperRoo1,
 		TheLostCity,
 		TempleRuins,
 		RoadToNowhere,
@@ -66,18 +71,19 @@ namespace LiveSplit.Crash
 		TheLab,
 
 		// DLC
-		StormyAscent
-	}
+		StormyAscent,
 
-	public enum Crash2Stages
-	{
+		//---------//
+		// Crash 2 //
+		//---------//
+
 		// Chamber 1
 		TurtleWoods,
 		SnowGo,
 		HangEight,
 		ThePits,
 		CrashDash,
-		RipperRoo,
+		RipperRoo2,
 
 		// Chamber 2
 		AirCrash,
@@ -115,13 +121,10 @@ namespace LiveSplit.Crash
 		TotallyBear,
 		TotallyFly,
 
-		// Other
-		TheWarpRoom,
-		None
-	}
+		//---------//
+		// Crash 3 //
+		//---------//
 
-	public enum Crash3Stages
-	{
 		// Warp 1
 		ToadVillage,
 		UnderPressure,
@@ -167,6 +170,9 @@ namespace LiveSplit.Crash
 		EggipusRex,
 
 		// DLC
-		FutureTense
+		FutureTense,
+
+		// Other
+		None
 	}
 }

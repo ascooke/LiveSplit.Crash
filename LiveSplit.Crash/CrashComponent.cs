@@ -119,6 +119,8 @@ namespace LiveSplit.Crash
 
 		private void OnStageEnter(StageData data)
 		{
+			return;
+
 			boxDisplay.BoxTarget = data.Boxes;
 			relicDisplay.Sapphire = data.Sapphire;
 			relicDisplay.Gold = data.Gold;
@@ -177,12 +179,9 @@ namespace LiveSplit.Crash
 			
 			processHooked = memory.HookProcess();
 
-			if (processHooked ^ processPreviouslyHooked)
+			if (!processHooked && processPreviouslyHooked)
 			{
-				if (!processHooked)
-				{
-					return;
-				}
+				return;
 			}
 
 			events.Refresh();

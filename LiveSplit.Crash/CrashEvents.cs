@@ -15,6 +15,8 @@ namespace LiveSplit.Crash
 		private int boxes;
 		private float fade;
 
+		private Stages stage = Stages.None;
+
 		public CrashEvents(CrashMemory memory)
 		{
 			this.memory = memory;
@@ -40,6 +42,25 @@ namespace LiveSplit.Crash
 			else if (oldFade > 0 && fade == 0)
 			{
 				LoadEnd.Invoke();
+			}
+
+			Stages oldStage = stage;
+			stage = memory.GetStage();
+
+			if (stage != oldStage)
+			{
+				if (stage != Stages.None)
+				{
+					Console.WriteLine($"Entering stage {stage}.");
+
+					StageEnter.Invoke(null);
+				}
+				else
+				{
+					//Console.WriteLine($"Leaving stage {oldStage}.");
+
+					//StageLeave.Invoke();
+				}
 			}
 		}
 	}
