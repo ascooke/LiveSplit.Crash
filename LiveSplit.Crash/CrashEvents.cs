@@ -24,8 +24,8 @@ namespace LiveSplit.Crash
 
 		public event Action LoadStart;
 		public event Action LoadEnd;
-		public event Action<StageData> StageEnter;
-		public event Action StageLeave;
+		public event Action<Stages> StageEnter;
+		public event Action<Stages> StageLeave;
 		public event Action<int> BoxChange;
 
 		public void Refresh()
@@ -36,12 +36,14 @@ namespace LiveSplit.Crash
 			// Fade start
 			if (oldFade == 0 && fade > 0)
 			{
-				LoadStart.Invoke();
+				Console.WriteLine("Fade start.");
+				//LoadStart.Invoke();
 			}
 			// Fade end
 			else if (oldFade > 0 && fade == 0)
 			{
-				LoadEnd.Invoke();
+				Console.WriteLine("Fade end.");
+				//LoadEnd.Invoke();
 			}
 
 			Stages oldStage = stage;
@@ -51,9 +53,7 @@ namespace LiveSplit.Crash
 			{
 				if (stage != Stages.None)
 				{
-					Console.WriteLine($"Entering stage {stage}.");
-
-					StageEnter.Invoke(null);
+					StageEnter.Invoke(stage);
 				}
 				else
 				{

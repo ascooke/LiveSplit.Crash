@@ -411,6 +411,7 @@ namespace LiveSplit.Crash.Memory
 					return info.BaseAddress + result;
 				}
 			}
+
 			return IntPtr.Zero;
 		}
 		public List<IntPtr> FindSignatures(Process process, string signature)
@@ -431,7 +432,58 @@ namespace LiveSplit.Crash.Memory
 			}
 			return pointers;
 		}
-		
+
+		public IntPtr[] FindSignatures(Process process, string[] signatures)
+		{
+			GetMemoryInfo(process.Handle);
+
+			IntPtr[] pointers = new IntPtr[signatures.Length];
+			int index = 0;
+
+			GetSignature(signatures[index], out byte[] pattern, out bool[] mask);
+			int[] offsets = GetCharacterOffsets(pattern, mask);
+
+			for (int i = 0; i < memoryInfo.Count; i++)
+			{
+				byte[] buffer = ReadMemory(process, i);
+
+				MemInfo info = memoryInfo[i];
+
+				int current = 0;
+				int end = pattern.Length - 1;
+
+				while (current <= buffer.Length - pattern.Length)
+				{
+					for (int j = end; buffer[current + j] == pattern[j] || mask[j]; j--)
+					{
+						if (j == 0)
+						{
+							pointers[index] = info.BaseAddress + current;
+
+							if (index == signatures.Length - 1)
+							{
+								return pointers;
+							}
+
+							index++;
+							GetSignature(signatures[index], out pattern, out mask);
+							offsets = GetCharacterOffsets(pattern, mask);
+							current += j + 1;
+							end = pattern.Length - 1;
+
+							break;
+						}
+					}
+
+					int offset = offsets[buffer[current + end]];
+
+					current += offset;
+				}
+			}
+
+			return null;
+		}
+
 		public void GetMemoryInfo(IntPtr pHandle)
 		{
 			if (memoryInfo != null) { return; }
@@ -482,6 +534,7 @@ namespace LiveSplit.Crash.Memory
 				int offset = offsets[data[current + end]];
 				current += offset;
 			}
+
 			return int.MinValue;
 		}
 		private void ScanMemory(List<IntPtr> pointers, MemInfo info, byte[] data, byte[] search, bool[] mask, int[] offsets)

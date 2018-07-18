@@ -40,14 +40,12 @@ namespace LiveSplit.Crash
 		TheGreatGate,
 		Boulders,
 		Upstream,
-		PapuPapu,
 		RollingStones,
 		HogWild,
 		NativeFortress,
 
 		// Island 2
 		UpTheCreek,
-		RipperRoo1,
 		TheLostCity,
 		TempleRuins,
 		RoadToNowhere,
@@ -60,7 +58,6 @@ namespace LiveSplit.Crash
 		CortexPower,
 		GeneratorRoom,
 		ToxicWaste,
-		Pinstripe,
 		TheHighRoad,
 		SlipperyClimb,
 		LightsOut,
@@ -69,6 +66,11 @@ namespace LiveSplit.Crash
 		CastleMachinery,
 		NBrio,
 		TheLab,
+
+		// Bosses
+		PapuPapu,
+		RipperRoo1,
+		Pinstripe,
 
 		// DLC
 		StormyAscent,
@@ -83,7 +85,6 @@ namespace LiveSplit.Crash
 		HangEight,
 		ThePits,
 		CrashDash,
-		RipperRoo2,
 
 		// Chamber 2
 		AirCrash,
@@ -91,7 +92,6 @@ namespace LiveSplit.Crash
 		BearIt,
 		CrashCrush,
 		TheEelDeal,
-		KomodoBrothers,
 
 		// Chamber 3
 		PlantFood,
@@ -99,7 +99,6 @@ namespace LiveSplit.Crash
 		BearDown,
 		RoadToRuin,
 		UnBearable,
-		TinyTiger,
 
 		// Chamber 4
 		HanginOut,
@@ -107,7 +106,6 @@ namespace LiveSplit.Crash
 		ColdHardCrash,
 		Ruination,
 		BeeHaving,
-		DrNGin,
 
 		// Chamber 5
 		PistonItAway,
@@ -115,11 +113,17 @@ namespace LiveSplit.Crash
 		NightFight,
 		PackAttack,
 		SpacedOut,
-		DrNeoCortex,
 
 		// Secret stages
 		TotallyBear,
 		TotallyFly,
+
+		// Bosses
+		RipperRoo2,
+		KomodoBrothers,
+		TinyTiger1,
+		DrNGin1,
+		DrNeoCortex,
 
 		//---------//
 		// Crash 3 //
@@ -169,8 +173,22 @@ namespace LiveSplit.Crash
 		HotCoco,
 		EggipusRex,
 
+		// Bosses
+		TinyTiger2,
+		Dingodile,
+		DrNTropy,
+		DrNGin2,
+		UkaUka,
+
 		// DLC
 		FutureTense,
+		
+		//------//
+		// Hubs //
+		//------//
+
+		TheWarpRoom,
+		TheTimeTwister,
 
 		// Other
 		None

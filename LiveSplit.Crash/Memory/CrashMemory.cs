@@ -11,24 +11,23 @@ namespace LiveSplit.Crash.Memory
 	public class CrashMemory
 	{
 		private Process process;
-		private ProgramPointer stageBase;
 		private ProgramPointer fadePointer;
-		private ProgramPointer loadPointer;
 		private ProgramPointer stagePointer;
-		private ProgramPointer collectiblePointer;
+		private IntPtr stageBase;
 
 		// The game stores stage data in a different order than you'd logically expect. This array is used to translate
 		// that order to the order stages are listed in the enumeration.
 		private Stages[] stageOrdering;
 
+		private string[] stageSignatures;
 		private int[] stageOffsets;
 
 		public CrashMemory()
 		{
-			// This is the hex string of "Ripper Roo" (note that the lowercase letters differentiate it from Crash 2's Ripper Roo).
-			stageBase = new ProgramPointer("52697070657220526f6f", 0);
-			stagePointer = new ProgramPointer("3F0000803F000000FF0AD7233C00", 0x39);
+			stagePointer = new ProgramPointer("E06000000000100020?D", 0x130);
+			fadePointer = new ProgramPointer("00006F12833A6F12833A", -0x1A, -1);
 
+			// Note that the stage ordering in memory is mostly in order by game, but not always.
 			stageOrdering = new []
 			{
 				// Crash 1
@@ -59,15 +58,12 @@ namespace LiveSplit.Crash.Memory
 				Stages.FumblingInTheDark,
 				Stages.JawsOfDarkness,
 				Stages.CastleMachinery,
-				Stages.NBrio,
-				Stages.Pinstripe,
-				Stages.TheLab,
-
+				
 				// Crash 2
 				Stages.RipperRoo2,
 				Stages.KomodoBrothers,
-				Stages.TinyTiger,
-				Stages.DrNGin,
+				Stages.TinyTiger1,
+				Stages.DrNGin1,
 				Stages.DrNeoCortex,
 				Stages.TurtleWoods,
 				Stages.HangEight,
@@ -82,8 +78,16 @@ namespace LiveSplit.Crash.Memory
 				Stages.BearDown,
 				Stages.RockIt,
 				Stages.RoadToRuin,
+
+				Stages.NBrio,
+				Stages.Pinstripe,
+				Stages.TheLab,
+
 				Stages.SnowGo,
 				Stages.BearIt,
+
+				Stages.GeeWiz,
+
 				Stages.UnBearable,
 				Stages.HanginOut,
 				Stages.DigginIt,
@@ -98,82 +102,128 @@ namespace LiveSplit.Crash.Memory
 				Stages.TotallyFly,
 
 				// Crash 3
+				//Stages.TinyTiger2, // Tenative (might use the existing string from Crash 2)
+				Stages.Dingodile,
+				Stages.DrNTropy,
+				//Stages.DrNGin2, // Tentative (might use the existing string from Crash 2)
+				//Stages.UkaUka, // Tentative (might be called something involving Cortex)
+				Stages.ToadVillage,
+				Stages.UnderPressure,
+				Stages.OrientExpress,
+				Stages.BoneYard,
+				Stages.MakinWaves,
+				Stages.HangEmHigh,
+				Stages.HogRide,
+				Stages.TombTime,
+				Stages.MidnightRun,
+				Stages.DinoMight,
+				Stages.DeepTrouble,
+				Stages.HighTime,
+				Stages.RoadCrash,
+				Stages.DoubleHeader,
+				Stages.Sphynxinator,
+				Stages.ByeByeBlimps,
+				Stages.TellNoTales,
+				Stages.FutureFrenzy,
+				Stages.TombWader,
+				Stages.GoneTomorrow,
+				Stages.OrangeAsphalt,
+				Stages.FlamingPassion,
+				Stages.MadBombers,
+				Stages.BugLite,
+				Stages.SkiCrazed,
+				Stages.Area51,
+				Stages.RingsOfPower,
+				Stages.HotCoco,
+				Stages.EggipusRex,
+
+				// DLC
+				Stages.StormyAscent,
+				Stages.FutureTense
 			};
 
-			stageOffsets = new[]
+			// Most (or all) of these strings could almost certainly be shortened and achieve the same results, but I'd rather be safe.
+			// Strings can always be shortened later if needed.
+			stageSignatures = new []
 			{
-				0x0, // Ripper Roo 1
-				0x2850, // Papu Papu
-				0x16fb0, // N. Sanity Beach
-				0x16fd0, // Jungle Rollers
-				0x170f0, // The Great Gate
-				0x17200, // Boulders
-				0x17308, // Upstream
-				0x17418, // Rolling Stones
-				0x17528, // Hog Wild
-				0x17630, // Native Fortress
-				0x17738, // Up the Creek
-				0x17848, // The Lost City
-				0x17958, // Temple Ruins
-				0x17a68, // Road to Nowhere
-				0x17b80, // Boulder Dash
-				0x17c90, // Whole Hog
-				0x17e30, // Sunset Vista
-				0x17e58, // Heavy Machinery
-				0x18000, // Cortex Power
-				0x180c0, // Generator Room
-				0x18178, // Toxic Waste
-				0x18230, // The High Road
-				0x18258, // Slippery Climb
-				0x18400, // Lights Out
-				0x184d0, // Fumbling in the Dark
-				0x18500, // Jaws of Darkness
-				0x186c0, // Castle Machinery
-				0xb43e7, // N. Brio
-				0xb4477, // Pinstripe Potoroo
-				0xf0bf0, // The Lab
+				// Crash 1
+				"52697070657220526f6f", // Ripper Roo
+				"506170752050617075", // Papu Papu
+				"4e2e2053616e697479204265616368", // N. Sanity Beach
+				"4a756e676c6520526f6c6c657273", // Jungle Rollers
+				"5468652047726561742047617465", // The Great Gate
+				"426f756c64657273", // Boulders
+				"557073747265616d", // Upstream
+				"526f6c6c696e672053746f6e6573", // Rolling Stones
+				"486f672057696c64", // Hog Wild
+				"4e617469766520466f727472657373", // Native Fortress
+				"55702074686520437265656b", // Up the Creek
+				"546865204c6f73742043697479", // The Lost City
+				"54656d706c65205275696e73", // Temple Ruins
+				"526f616420746f204e6f7768657265", // Road to Nowhere
+				"426f756c6465722044617368", // Boulder Dash
+				"57686f6c6520486f67", // Whole Hog
+				"53756e736574205669737461", // Sunset Vista
+				"4865617679204d616368696e657279", // Heavy Machinery
+				"436f7274657820506f776572", // Cortex Power
+				"47656e657261746f7220526f6f6d", // Generator Room
+				"546f786963205761737465", // Toxic Waste
+				"546865204869676820526f6164", // The High Road
+				"536c69707065727920436c696d62", // Slippery Climb
+				"4c6967687473204f7574", // Lights Out
+				"46756d626c696e6720696e20746865204461726b", // Fumbling in the Dark
+				"4a617773206f66204461726b6e657373", // Jaws of Darkness
+				"436173746c65204d616368696e657279", // Castle Machinery
 
-				0x18a70, // Ripper Roo 2
-				0x18bb8, // Komodo Brothers
-				0x18c30, // Tiny Tiger
-				0x18e40, // Dr. N. Gin 
-				0x18f48, // Dr. Neo Cortex 
-				0x19270, // Turtle Woods 
-				0x19720, // Hang Eight 
-				0x19850, // The Pits
-				0x19958, // Crash Dash
-				0x19a60, // Snow Biz
-				0x19b58, // Air Crash 
-				0x19d38, // Crash Crush 
-				0x19e48, // The Eel Deal 
-				0x19f58, // Plant Food 
-				0x1a060, // Sewer or Later 
-				0x1a168, // Bear Down 
-				0x1a388, // Rock It 
-				0x1a3a8, // Road to Ruin 
-				0xf0ee0, // Snow Go 
-				0xf11d0, // Bear It 
-				0xf9fb8, // Un-Bearable
-				0xfa090, // Hangin' Out 
-				0xfa190, // Diggin' It
-				0xfa2a0, // Cold Hard Crash 
-				0xfa448, // Ruination 
-				0xfa470, // Bee-Having 
-				0xfa580, // Piston It Away 
-				0xfa710, // Night Fight 
-				0xfa820, // Pack Attack 
-				0xfa9b8, // Spaced Out
-				0xfa9e0, // Totally Bear 
-				0xfabb8, // Totally Fly
-				
-				0xe2790 // Toad Village
+				// Crash 2
+				"52495050455220524f4f", // RIPPER ROO
+				"4b4f4d4f444f2042524f5448455253", // KOMODO BROTHERS
+				"54494e59205449474552", // TINY TIGER
+				"44522e204e2e2047494e", // DR. N. GIN
+				"44522e204e454f20434f52544558", // DR. NEO CORTEX
+				"545552544c4520574f4f4453", // TURTLE WOODS
+				"48414e47204549474854", // HANG EIGHT
+				"5448452050495453", // THE PITS
+				"43524153482044415348", // CRASH DASH
+				"534e4f572042495a", // SNOW BIZ
+				"414952204352415348", // AIR CRASH
+				"4352415348204352555348", // CRASH CRUSH
+				"5448452045454c204445414c", // THE EEL DEAL
+				"504c414e5420464f4f44", // PLANT FOOD
+				"5345574552204f52204c41544552", // SEWER OR LATER
+				"4245415220444f574e", // BEAR DOWN
+				"524f434b204954", // ROCK IT
+				"524f414420544f205255494e", // ROAD TO RUIN
+	
+				"4e2e204272696f", // N. Brio
+				"50696e73747269706520506f746f726f6f", // Pinstripe Potoroo
+				"546865204c6162", // The Lab
+
+				"534e4f5720474f", // SNOW GO
+				"42454152204954", // BEAR IT
+
+				"4765652057697a", // Gee Wiz
+
+				"554e2d4245415241424c45", // UN-BEARABLE
+				"48414e47494e27204f5554", // HANGIN' OUT
+				"44494747494e27204954", // DIGGIN' IT
+				"434f4c442048415244204352415348", // COLD HARD CRASH
+				"5255494e4154494f4e", // RUINATION
+				"4245452d484156494e47", // BEE-HAVING
+				"504953544f4e2049542041574159", // PISTON IT AWAY
+				"4e49474854204649474854", // NIGHT FIGHT
+				"5041434b2041545441434b", // PACK ATTACK
+				"535041434544204f5554", // SPACED OUT
+				"544f54414c4c592042454152", // TOTALLY BEAR
+				"544f54414c4c5920464c59", // TOTALLY FLY
+
+				// Crash 3
+				//"", //
+
+				// DLC
 			};
 
-			return;
-
-			fadePointer = new ProgramPointer("e85d??????7F000001", 0x1C);
-			loadPointer = new ProgramPointer("185c49a2f67f000001", 0x10, 1);
-			collectiblePointer = new ProgramPointer("48989640F77F0000", 0);
+			stageOffsets = new int[stageOrdering.Length];
 		}
 
 		public bool HookProcess()
@@ -196,36 +246,19 @@ namespace LiveSplit.Crash.Memory
 			return true;
 		}
 
-		public int GetCrystals()
+		public bool GetLoadIndicator()
 		{
-			//return process.Read<int>(fadePointer, 0x198);
-			return 0;
-		}
-
-		public int GetGems()
-		{
-			return 0;
-		}
-
-		public int GetLives()
-		{
-			return 0;
-		}
-
-		public int GetBoxes()
-		{
-			return 0;
+			return false;
 		}
 
 		public float GetFade()
 		{
-			return 0;
-			//return fadePointer.Get<float>(process);
+			return fadePointer.Get<float>(process, out bool success);
 		}
 
 		public Stages GetStage()
 		{
-			if (!stageBase.AcquirePointer(process))
+			if (stageBase == IntPtr.Zero && !FindStageOffsets(process))
 			{
 				return Stages.None;
 			}
@@ -234,7 +267,7 @@ namespace LiveSplit.Crash.Memory
 
 			if (success)
 			{
-				int offset = (int)((ulong)address - (ulong)stageBase.Pointer);
+				int offset = (int)((ulong)address - (ulong)stageBase);
 
 				for (int i = 0; i < stageOffsets.Length; i++)
 				{
@@ -246,35 +279,41 @@ namespace LiveSplit.Crash.Memory
 			}
 
 			return Stages.None;
+		}
 
-			/*
-			IntPtr pointer = process.Read<IntPtr>(stagePointer);
-			
-			for (int i = 0; i < StageCount; i++)
+		private bool FindStageOffsets(Process process)
+		{
+			MemorySearcher searcher = new MemorySearcher
 			{
-				if (pointer == stagePointers[i])
-				{
-					return (Crash2Stages)i;
-				}
+				MemoryFilter = info =>
+					(info.State & 0x1000) != 0 &&
+					(info.Protect & 0x04) != 0 &&
+					(info.Protect & 0x100) == 0
+			};
+
+			IntPtr[] pointers = searcher.FindSignatures(process, stageSignatures);
+
+			if (pointers == null)
+			{
+				return false;
 			}
 
-			return Crash2Stages.TheWarpRoom;
-			*/
-		}
+			stageBase = pointers[0];
 
-		public bool GetBoss(int bossIndex)
-		{
-			return false;
-		}
+			ulong converted = (ulong)stageBase;
 
-		public bool GetColoredGem(ColoredGems gem)
-		{
-			return false;
+			for (int i = 1; i < pointers.Length; i++)
+			{
+				stageOffsets[i] = (int)((ulong)pointers[i] - converted);
+			}
+
+			return true;
 		}
 
 		private class ProgramPointer
 		{
 			private DateTime lastTry;
+			private IntPtr pointer;
 
 			private string signature;
 			private int offset;
@@ -287,13 +326,11 @@ namespace LiveSplit.Crash.Memory
 				this.resultIndex = resultIndex;
 			}
 
-			public IntPtr Pointer { get; private set; }
-
 			public T Get<T>(Process process, out bool success) where T : struct
 			{
 				if (process == null)
 				{
-					Pointer = IntPtr.Zero;
+					pointer = IntPtr.Zero;
 					success = false;
 
 					return default(T);
@@ -308,12 +345,12 @@ namespace LiveSplit.Crash.Memory
 
 				success = true;
 
-				return process.Read<T>(Pointer, offset);
+				return process.Read<T>(pointer, offset);
 			}
 
-			public bool AcquirePointer(Process process)
+			private bool AcquirePointer(Process process)
 			{
-				if (Pointer == IntPtr.Zero && DateTime.Now > lastTry.AddSeconds(1))
+				if (pointer == IntPtr.Zero && DateTime.Now > lastTry.AddSeconds(1))
 				{
 					lastTry = DateTime.Now;
 
@@ -325,12 +362,23 @@ namespace LiveSplit.Crash.Memory
 							(info.Protect & 0x100) == 0
 					};
 
-					Pointer = resultIndex == 0
-						? searcher.FindSignature(process, signature)
-						: searcher.FindSignatures(process, signature)[resultIndex];
+					switch (resultIndex)
+					{
+						case -1:
+							pointer = searcher.FindSignatures(process, signature).Last();
+							break;
+
+						case 0:
+							pointer = searcher.FindSignature(process, signature);
+							break;
+
+						default:
+							pointer = searcher.FindSignatures(process, signature)[resultIndex];
+							break;
+					}
 				}
 
-				return Pointer != IntPtr.Zero;
+				return pointer != IntPtr.Zero;
 			}
 		}
 	}

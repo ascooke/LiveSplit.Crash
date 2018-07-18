@@ -24,6 +24,7 @@ namespace LiveSplit.Crash
 		private CrashSettingsControl settings;
 		private RelicDisplay relicDisplay;
 		private BoxDisplay boxDisplay;
+		private StageData[] stageArray;
 
 		private bool processHooked;
 		private bool simpleMode;
@@ -31,6 +32,7 @@ namespace LiveSplit.Crash
 		public CrashComponent()
 		{
 			memory = new CrashMemory();
+			settings = new CrashSettingsControl();
 			events = new CrashEvents(memory);
 			events.LoadStart += OnLoadStart;
 			events.LoadEnd += OnLoadEnd;
@@ -38,7 +40,19 @@ namespace LiveSplit.Crash
 			events.StageLeave += OnStageLeave;
 			events.BoxChange += OnBoxChange;
 
-			settings = new CrashSettingsControl();
+			relicDisplay = new RelicDisplay();
+			boxDisplay = new BoxDisplay();
+
+			//StageData[] crash1Data = LoadStageData("Crash1.xml");
+			StageData[] crash2Data = LoadStageData("Crash2.xml");
+			//StageData[] crash3Data = LoadStageData("Crash3.xml");
+
+			stageArray = new StageData[Enum.GetValues(typeof(Stages)).Length];
+
+			for (int i = 0; i < crash2Data.Length; i++)
+			{
+				stageArray[i + (int)Stages.TurtleWoods] = crash2Data[i];
+			}
 		}
 
 		public string ComponentName => "Crash Bandicoot NST Autosplitter (Memory-Based)";
@@ -72,6 +86,23 @@ namespace LiveSplit.Crash
 		public float PaddingRight => 0;
 
 		public IDictionary<string, Action> ContextMenuControls => null;
+
+		private StageData[] LoadStageData(string filename)
+		{
+			XmlDocument document = new XmlDocument();
+			document.Load("Xml/" + filename);
+
+			var nodes = document.DocumentElement.GetElementsByTagName("Stage");
+
+			StageData[] dataArray = new StageData[nodes.Count];
+
+			for (int i = 0; i < nodes.Count; i++)
+			{
+				dataArray[i] = new StageData(nodes[i]);
+			}
+
+			return dataArray;
+		}
 
 		public void DrawHorizontal(Graphics g, LiveSplitState state, float height, Region clipRegion)
 		{
@@ -117,9 +148,17 @@ namespace LiveSplit.Crash
 			//timer.CurrentState.IsGameTimePaused = false;
 		}
 
-		private void OnStageEnter(StageData data)
+		private void OnStageEnter(Stages stage)
 		{
-			return;
+			StageData data = stageArray[(int)stage];
+
+			if (data == null)
+			{
+				// Clear displays
+				return;
+			}
+
+			Console.WriteLine($"Entering stage {stage} (Sapphire={data.Sapphire}, Gold={data.Gold}, Platinum={data.Platinum}).");
 
 			boxDisplay.BoxTarget = data.Boxes;
 			relicDisplay.Sapphire = data.Sapphire;
@@ -127,7 +166,7 @@ namespace LiveSplit.Crash
 			relicDisplay.Platinum = data.Platinum;
 		}
 
-		private void OnStageLeave()
+		private void OnStageLeave(Stages stage)
 		{
 		}
 
