@@ -433,6 +433,8 @@ namespace LiveSplit.Crash.Memory
 			return pointers;
 		}
 
+		// This function searches for the given array of signatures in order. It's an all or nothing algorithm, so the function will either
+		// find pointers for all signatures or return null if any weren't found in the specific order given.
 		public IntPtr[] FindSignatures(Process process, string[] signatures)
 		{
 			GetMemoryInfo(process.Handle);

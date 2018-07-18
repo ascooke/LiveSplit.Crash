@@ -64,13 +64,14 @@ namespace LiveSplit.Crash
 		FumblingInTheDark,
 		JawsOfDarkness,
 		CastleMachinery,
-		NBrio,
 		TheLab,
 
 		// Bosses
 		PapuPapu,
+		KoalaKong,
 		RipperRoo1,
 		Pinstripe,
+		DrNBrio,
 
 		// DLC
 		StormyAscent,
