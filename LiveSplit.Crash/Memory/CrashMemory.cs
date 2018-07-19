@@ -13,14 +13,16 @@ namespace LiveSplit.Crash.Memory
 		private Process process;
 		private ProgramPointer fadePointer;
 		private ProgramPointer stagePointer;
+		private ProgramPointer pausePointer;
 		private ProgramPointer boxPointer;
 		private Dictionary<string, Stages> stageMap;
 
 		public CrashMemory()
 		{
-			stagePointer = new ProgramPointer("E06000000000100020?D", 0x130);
-			fadePointer = new ProgramPointer("00006F12833A6F12833A", -0x1A, -1);
-			boxPointer = new ProgramPointer("", 0);
+			stagePointer = new ProgramPointer("Stage", "E06000000000100020", 0x130);
+			fadePointer = new ProgramPointer("Fade", "00006F12833A6F12833A", -0x1A, -1);
+			pausePointer = new ProgramPointer("Pause", "0300000000800700003804000038", 0x27);
+			boxPointer = new ProgramPointer("Box", "", 0);
 
 			stageMap = new Dictionary<string, Stages>
 			{
@@ -167,7 +169,13 @@ namespace LiveSplit.Crash.Memory
 
 		public int GetBoxes()
 		{
-			return boxPointer.Get<int>(process, out bool success);
+			return 0;
+			//return boxPointer.Get<int>(process, out bool success);
+		}
+
+		public bool IsPaused()
+		{
+			return pausePointer.Get<short>(process, out bool success) == 1;
 		}
 
 		public Stages GetStage()
@@ -189,12 +197,14 @@ namespace LiveSplit.Crash.Memory
 			private DateTime lastTry;
 			private IntPtr pointer;
 
+			private string name;
 			private string signature;
 			private int offset;
 			private int resultIndex;
 
-			public ProgramPointer(string signature, int offset, int resultIndex = 0)
+			public ProgramPointer(string name, string signature, int offset, int resultIndex = 0)
 			{
+				this.name = name;
 				this.signature = signature;
 				this.offset = offset;
 				this.resultIndex = resultIndex;
@@ -236,6 +246,8 @@ namespace LiveSplit.Crash.Memory
 							(info.Protect & 0x100) == 0
 					};
 
+					IntPtr previousPointer = pointer;
+
 					switch (resultIndex)
 					{
 						case -1:
@@ -249,6 +261,11 @@ namespace LiveSplit.Crash.Memory
 						default:
 							pointer = searcher.FindSignatures(process, signature)[resultIndex];
 							break;
+					}
+
+					if (previousPointer == IntPtr.Zero && pointer != IntPtr.Zero)
+					{
+						Console.WriteLine($"{name} pointer found ({pointer.ToString("X")}).");
 					}
 				}
 

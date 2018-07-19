@@ -14,6 +14,7 @@ namespace LiveSplit.Crash
 
 		private int boxes;
 		private float fade;
+		private bool paused;
 
 		private Stages stage = Stages.None;
 
@@ -31,18 +32,14 @@ namespace LiveSplit.Crash
 		{
 			float oldFade = fade;
 			fade = memory.GetFade();
-
-			// Fade start
+			
 			if (oldFade == 0 && fade > 0)
 			{
 				Console.WriteLine("Fade start.");
-				//LoadStart.Invoke();
 			}
-			// Fade end
 			else if (oldFade > 0 && fade == 0)
 			{
 				Console.WriteLine("Fade end.");
-				//LoadEnd.Invoke();
 			}
 
 			Stages oldStage = stage;
@@ -59,6 +56,14 @@ namespace LiveSplit.Crash
 			if (boxes != oldBoxes)
 			{
 				BoxChange.Invoke(boxes);
+			}
+			
+			bool oldPaused = paused;
+			paused = memory.IsPaused();
+
+			if (paused ^ oldPaused)
+			{
+				Console.WriteLine(paused ? "Paused." : "Unpaused.");
 			}
 		}
 	}

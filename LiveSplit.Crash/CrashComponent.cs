@@ -207,7 +207,7 @@ namespace LiveSplit.Crash
 			Console.WriteLine("Load start.");
 			//timer.CurrentState.IsGameTimePaused = true;
 
-			if (inStage)
+			if (inStage && !memory.IsPaused())
 			{
 				Console.WriteLine("Split.");
 				//timer.Split();
@@ -230,7 +230,8 @@ namespace LiveSplit.Crash
 				boxDisplay.Active = false;
 				relicDisplay.Clear();
 
-				// Clear displays
+				Console.WriteLine($"Entering stage {stage}.");
+
 				return;
 			}
 
