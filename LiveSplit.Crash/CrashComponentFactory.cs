@@ -16,8 +16,8 @@ namespace LiveSplit.Crash
 
 		public Version Version => Version.Parse("1.0.0");
 
-		public string ComponentName => "Crash Bandicoot NST Autosplitter (Memory-Based) v" + Version;
-		public string Description => "Configurable memory-based autosplitter for Crash Bandicoot N. Sane Trilogy. Currently only designed for Crash 2.";
+		public string ComponentName => "Crash NST Autosplitter (Memory-Based) v" + Version;
+		public string Description => "Configurable memory-based autosplitter for Crash Bandicoot N. Sane Trilogy. Works for all three games.";
 
 		public ComponentCategory Category => ComponentCategory.Control;
 

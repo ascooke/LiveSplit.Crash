@@ -11,9 +11,9 @@ using System.Xml;
 
 namespace LiveSplit.Crash.Controls
 {
-	public partial class CrashSettingsControl : UserControl
+	public partial class CrashMasterControl : UserControl
 	{
-		public CrashSettingsControl()
+		public CrashMasterControl()
 		{
 			InitializeComponent();
 		}
@@ -21,19 +21,7 @@ namespace LiveSplit.Crash.Controls
 		public bool DisplayBoxes => displayBoxesCheckbox.Checked;
 		public bool DisplayRelics => displayRelicsCheckbox.Checked;
 		public bool DisplayEnabled => DisplayBoxes || DisplayRelics;
-
-		private void addGameButton_Click(object sender, EventArgs e)
-		{
-			AddGame();
-		}
-
-		private void AddGame()
-		{
-			var control = new CrashControl();
-
-			Controls.Add(control);
-			addGameButton.Location = new Point(addGameButton.Location.X, control.Bounds.Bottom + 4);
-		}
+		public bool SwapOrder => swapCheckbox.Checked;
 
 		public XmlNode SaveSettings(XmlDocument document)
 		{
@@ -46,6 +34,10 @@ namespace LiveSplit.Crash.Controls
 			XmlNode relicNode = document.CreateElement("DisplayRelics");
 			relicNode.InnerText = DisplayRelics.ToString();
 			root.AppendChild(relicNode);
+
+			XmlNode swapNode = document.CreateElement("SwapOrder");
+			swapNode.InnerText = SwapOrder.ToString();
+			root.AppendChild(swapNode);
 
 			return root;
 		}
@@ -65,6 +57,18 @@ namespace LiveSplit.Crash.Controls
 			{
 				displayRelicsCheckbox.Checked = bool.Parse(relicNode.InnerText);
 			}
+
+			XmlNode swapNode = node.SelectSingleNode(".//SwapOrder");
+
+			if (swapNode != null)
+			{
+				swapCheckbox.Checked = bool.Parse(swapNode.InnerText);
+			}
+		}
+
+		private void displayCheckbox_CheckedChanged(object sender, EventArgs e)
+		{
+			swapCheckbox.Enabled = DisplayBoxes && DisplayRelics;
 		}
 	}
 }

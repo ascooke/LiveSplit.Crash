@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,18 +22,17 @@ namespace LiveSplit.Crash
 		private TimerModel timer;
 		private CrashMemory memory;
 		private CrashEvents events;
-		private CrashSettingsControl settings;
+		private CrashMasterControl settings;
 		private RelicDisplay relicDisplay;
 		private BoxDisplay boxDisplay;
 		private StageData[] stageArray;
 
 		private bool processHooked;
-		private bool simpleMode;
 
 		public CrashComponent()
 		{
 			memory = new CrashMemory();
-			settings = new CrashSettingsControl();
+			settings = new CrashMasterControl();
 			events = new CrashEvents(memory);
 			events.LoadStart += OnLoadStart;
 			events.LoadEnd += OnLoadEnd;
@@ -55,7 +55,7 @@ namespace LiveSplit.Crash
 			}
 		}
 
-		public string ComponentName => "Crash Bandicoot NST Autosplitter (Memory-Based)";
+		public string ComponentName => "Crash NST Autosplitter (Memory-Based)";
 
 		public float HorizontalWidth => 0;
 		public float VerticalHeight
@@ -89,8 +89,19 @@ namespace LiveSplit.Crash
 
 		private StageData[] LoadStageData(string filename)
 		{
+			// See https://stackoverflow.com/questions/2820384/reading-embedded-xml-file-c-sharp.
+			string result;
+
+			using (Stream stream = GetType().Assembly.GetManifestResourceStream("LiveSplit.Crash.Xml." + filename))
+			{
+				using (StreamReader reader = new StreamReader(stream))
+				{
+					result = reader.ReadToEnd();
+				}
+			}
+
 			XmlDocument document = new XmlDocument();
-			document.Load("Xml/" + filename);
+			document.LoadXml(result);
 
 			var nodes = document.DocumentElement.GetElementsByTagName("Stage");
 

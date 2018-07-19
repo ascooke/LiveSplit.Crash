@@ -1,6 +1,6 @@
 ﻿namespace LiveSplit.Crash.Controls
 {
-	partial class CrashSettingsControl
+	partial class CrashMasterControl
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -28,37 +28,35 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.addGameButton = new System.Windows.Forms.Button();
 			this.settingsBox = new System.Windows.Forms.GroupBox();
+			this.swapCheckbox = new System.Windows.Forms.CheckBox();
 			this.displayRelicsCheckbox = new System.Windows.Forms.CheckBox();
 			this.displayBoxesCheckbox = new System.Windows.Forms.CheckBox();
-			this.gamesBox = new System.Windows.Forms.GroupBox();
 			this.settingsBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// addGameButton
-			// 
-			this.addGameButton.Image = global::LiveSplit.Crash.Properties.Resources.Add;
-			this.addGameButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.addGameButton.Location = new System.Drawing.Point(4, 182);
-			this.addGameButton.Name = "addGameButton";
-			this.addGameButton.Size = new System.Drawing.Size(80, 32);
-			this.addGameButton.TabIndex = 0;
-			this.addGameButton.Text = "Add Game";
-			this.addGameButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.addGameButton.UseVisualStyleBackColor = true;
-			this.addGameButton.Click += new System.EventHandler(this.addGameButton_Click);
-			// 
 			// settingsBox
 			// 
+			this.settingsBox.Controls.Add(this.swapCheckbox);
 			this.settingsBox.Controls.Add(this.displayRelicsCheckbox);
 			this.settingsBox.Controls.Add(this.displayBoxesCheckbox);
-			this.settingsBox.Location = new System.Drawing.Point(4, 4);
+			this.settingsBox.Location = new System.Drawing.Point(10, 10);
 			this.settingsBox.Name = "settingsBox";
-			this.settingsBox.Size = new System.Drawing.Size(442, 66);
+			this.settingsBox.Size = new System.Drawing.Size(456, 66);
 			this.settingsBox.TabIndex = 1;
 			this.settingsBox.TabStop = false;
 			this.settingsBox.Text = "Settings";
+			// 
+			// swapCheckbox
+			// 
+			this.swapCheckbox.AutoSize = true;
+			this.swapCheckbox.Enabled = false;
+			this.swapCheckbox.Location = new System.Drawing.Point(160, 20);
+			this.swapCheckbox.Name = "swapCheckbox";
+			this.swapCheckbox.Size = new System.Drawing.Size(80, 17);
+			this.swapCheckbox.TabIndex = 2;
+			this.swapCheckbox.Text = "Swap order";
+			this.swapCheckbox.UseVisualStyleBackColor = true;
 			// 
 			// displayRelicsCheckbox
 			// 
@@ -69,6 +67,7 @@
 			this.displayRelicsCheckbox.TabIndex = 1;
 			this.displayRelicsCheckbox.Text = "Display relic times";
 			this.displayRelicsCheckbox.UseVisualStyleBackColor = true;
+			this.displayRelicsCheckbox.CheckedChanged += new System.EventHandler(this.displayCheckbox_CheckedChanged);
 			// 
 			// displayBoxesCheckbox
 			// 
@@ -79,25 +78,15 @@
 			this.displayBoxesCheckbox.TabIndex = 0;
 			this.displayBoxesCheckbox.Text = "Display boxes";
 			this.displayBoxesCheckbox.UseVisualStyleBackColor = true;
+			this.displayBoxesCheckbox.CheckedChanged += new System.EventHandler(this.displayCheckbox_CheckedChanged);
 			// 
-			// gamesBox
-			// 
-			this.gamesBox.Location = new System.Drawing.Point(4, 76);
-			this.gamesBox.Name = "gamesBox";
-			this.gamesBox.Size = new System.Drawing.Size(442, 100);
-			this.gamesBox.TabIndex = 2;
-			this.gamesBox.TabStop = false;
-			this.gamesBox.Text = "Games";
-			// 
-			// CrashSettingsControl
+			// CrashMasterControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Controls.Add(this.gamesBox);
 			this.Controls.Add(this.settingsBox);
-			this.Controls.Add(this.addGameButton);
-			this.Name = "CrashSettingsControl";
-			this.Size = new System.Drawing.Size(451, 545);
+			this.Name = "CrashMasterControl";
+			this.Size = new System.Drawing.Size(467, 77);
 			this.settingsBox.ResumeLayout(false);
 			this.settingsBox.PerformLayout();
 			this.ResumeLayout(false);
@@ -105,11 +94,9 @@
 		}
 
 		#endregion
-
-		private System.Windows.Forms.Button addGameButton;
 		private System.Windows.Forms.GroupBox settingsBox;
 		private System.Windows.Forms.CheckBox displayRelicsCheckbox;
 		private System.Windows.Forms.CheckBox displayBoxesCheckbox;
-		private System.Windows.Forms.GroupBox gamesBox;
+		private System.Windows.Forms.CheckBox swapCheckbox;
 	}
 }

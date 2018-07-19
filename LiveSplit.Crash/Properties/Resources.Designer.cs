@@ -61,36 +61,6 @@ namespace LiveSplit.Crash.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Add {
-            get {
-                object obj = ResourceManager.GetObject("Add", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap BlueGem {
-            get {
-                object obj = ResourceManager.GetObject("BlueGem", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ClearGem {
-            get {
-                object obj = ResourceManager.GetObject("ClearGem", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] Crash {
@@ -111,12 +81,52 @@ namespace LiveSplit.Crash.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///
+        ///&lt;Stages&gt;
+        ///  &lt;!-- N. Sanity Beach --&gt;
+        ///  &lt;Stage Crystals=&quot;&quot; Gems=&quot;&quot; Boxes=&quot;&quot; Sapphire=&quot;&quot; Gold=&quot;&quot; Platinum=&quot;&quot; /&gt;
+        ///  &lt;!-- Jungle Rollers --&gt;
+        ///  &lt;Stage Crystals=&quot;&quot; Gems=&quot;&quot; Boxes=&quot;&quot; Sapphire=&quot;&quot; Gold=&quot;&quot; Platinum=&quot;&quot; /&gt;
+        ///  &lt;!-- The Great Gate --&gt;
+        ///  &lt;Stage Crystals=&quot;&quot; Gems=&quot;&quot; Boxes=&quot;&quot; Sapphire=&quot;&quot; Gold=&quot;&quot; Platinum=&quot;&quot; /&gt;
+        ///  &lt;!-- Boulders --&gt;
+        ///  &lt;Stage Crystals=&quot;&quot; Gems=&quot;&quot; Boxes=&quot;&quot; Sapphire=&quot;&quot; Gold=&quot;&quot; Platinum=&quot;&quot; /&gt;
+        ///  &lt;!-- Upstream --&gt;
+        ///  &lt;Stage Crystals=&quot;&quot; Gems=&quot;&quot; Boxes=&quot;&quot; S [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Crash11 {
+            get {
+                return ResourceManager.GetString("Crash11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Crash2 {
             get {
                 object obj = ResourceManager.GetObject("Crash2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///
+        ///&lt;Stages&gt;
+        ///  &lt;!-- Turtle Woods --&gt;
+        ///  &lt;Stage Crystals=&quot;1&quot; Gems=&quot;1&quot; ColoredGem=&quot;Blue&quot; Boxes=&quot;62&quot; Sapphire=&quot;1:15.00&quot; Gold=&quot;0:56.87&quot; Platinum=&quot;0:45.47&quot; /&gt;
+        ///  &lt;!-- Snow Go --&gt;
+        ///  &lt;Stage Crystals=&quot;1&quot; Gems=&quot;1&quot; ColoredGem=&quot;Red&quot; Boxes=&quot;74&quot; Sapphire=&quot;1:10.00&quot; Gold=&quot;0:49.64&quot; Platinum=&quot;0:42.88&quot; /&gt;
+        ///  &lt;!-- Hang Eight --&gt;
+        ///  &lt;Stage Crystals=&quot;1&quot; Gems=&quot;2&quot; Boxes=&quot;74&quot; Sapphire=&quot;1:20.00&quot; Gold=&quot;1:02.93&quot; Platinum=&quot;0:56.24&quot; /&gt;
+        ///  &lt;!-- The Pits --&gt;
+        ///  &lt;Stage Crystals=&quot;1&quot; Gems=&quot;1&quot; Boxes=&quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Crash21 {
+            get {
+                return ResourceManager.GetString("Crash21", resourceCulture);
             }
         }
         
@@ -131,102 +141,21 @@ namespace LiveSplit.Crash.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///
+        ///&lt;Stages&gt;
+        ///  &lt;!-- Toad Village --&gt;
+        ///  &lt;Stage Crystals=&quot;&quot; Gems=&quot;&quot; Boxes=&quot;&quot; Sapphire=&quot;1:03.00&quot; Gold=&quot;0:57.50&quot; Platinum=&quot;0:44.03&quot; /&gt;
+        ///  &lt;!-- Under Pressure --&gt;
+        ///  &lt;Stage Crystals=&quot;&quot; Gems=&quot;&quot; Boxes=&quot;&quot; Sapphire=&quot;1:39.00&quot; Gold=&quot;1:10.90&quot; Platinum=&quot;1:03.50&quot; /&gt;
+        ///  &lt;!-- Orient Express --&gt;
+        ///  &lt;Stage Crystals=&quot;&quot; Gems=&quot;&quot; Boxes=&quot;&quot; Sapphire=&quot;0:41.00&quot; Gold=&quot;0:27.80&quot; Platinum=&quot;0:18.10&quot; /&gt;
+        ///  &lt;!-- Bone Yard --&gt;
+        ///  &lt;Stage Crystals=&quot;&quot; Gems=&quot;&quot; Boxes=&quot;&quot; Sapphire=&quot;1:45.00&quot; Gold=&quot;1:40.20&quot; P [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static System.Drawing.Bitmap Crystal {
+        internal static string Crash31 {
             get {
-                object obj = ResourceManager.GetObject("Crystal", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Delete {
-            get {
-                object obj = ResourceManager.GetObject("Delete", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Down {
-            get {
-                object obj = ResourceManager.GetObject("Down", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap GreenGem {
-            get {
-                object obj = ResourceManager.GetObject("GreenGem", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PurpleGem {
-            get {
-                object obj = ResourceManager.GetObject("PurpleGem", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Question {
-            get {
-                object obj = ResourceManager.GetObject("Question", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap RedGem {
-            get {
-                object obj = ResourceManager.GetObject("RedGem", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Relic {
-            get {
-                object obj = ResourceManager.GetObject("Relic", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Up {
-            get {
-                object obj = ResourceManager.GetObject("Up", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap YellowGem {
-            get {
-                object obj = ResourceManager.GetObject("YellowGem", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("Crash31", resourceCulture);
             }
         }
     }

@@ -6,18 +6,6 @@ using System.Threading.Tasks;
 
 namespace LiveSplit.Crash
 {
-	public enum ItemTypes
-	{
-		Crystal,
-		ClearGem,
-		RedGem,
-		BlueGem,
-		GreenGem,
-		YellowGem,
-		PurpleGem,
-		Relic
-	}
-
 	public enum ColoredGems
 	{
 		Red,
