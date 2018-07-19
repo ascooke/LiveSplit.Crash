@@ -66,12 +66,12 @@ namespace LiveSplit.Crash
 
 				if (settings.DisplayBoxes)
 				{
-					height += 30;
+					height += 31;
 				}
 
 				if (settings.DisplayRelics)
 				{
-					height += 30;
+					height += 31;
 				}
 
 				return height;
@@ -79,11 +79,30 @@ namespace LiveSplit.Crash
 		}
 
 		public float MinimumWidth => 0;
-		public float MinimumHeight => 0;
+		public float MinimumHeight
+		{
+			get
+			{
+				int minimumHeight = 0;
+
+				if (settings.DisplayBoxes)
+				{
+					minimumHeight += 25;
+				}
+
+				if (settings.DisplayRelics)
+				{
+					minimumHeight += 25;
+				}
+
+				return minimumHeight;
+			}
+		}
+
 		public float PaddingTop => 0;
 		public float PaddingBottom => 0;
-		public float PaddingLeft => 0;
-		public float PaddingRight => 0;
+		public float PaddingLeft => 7;
+		public float PaddingRight => 7;
 
 		public IDictionary<string, Action> ContextMenuControls => null;
 
@@ -121,14 +140,39 @@ namespace LiveSplit.Crash
 
 		public void DrawVertical(Graphics g, LiveSplitState state, float width, Region clipRegion)
 		{
+			bool boxes = settings.DisplayBoxes;
+			bool relics = settings.DisplayRelics;
+
+			if (!boxes && !relics)
+			{
+				return;
+			}
+
+			boxDisplay.VerticalOffset = 0;
+			relicDisplay.VerticalOffset = 0;
+
+			float height = VerticalHeight;
+
+			if (boxes && relics)
+			{
+				if (settings.SwapOrder)
+				{
+					boxDisplay.VerticalOffset = height / 2;
+				}
+				else
+				{
+					relicDisplay.VerticalOffset = height / 2;
+				}
+			}
+
 			if (settings.DisplayBoxes)
 			{
-				boxDisplay.Draw(g, state, width, VerticalHeight);
+				boxDisplay.Draw(g, state, width, height);
 			}
 
 			if (settings.DisplayRelics)
 			{
-				relicDisplay.Draw(g, state, width, VerticalHeight);
+				relicDisplay.Draw(g, state, width, height);
 			}
 		}
 

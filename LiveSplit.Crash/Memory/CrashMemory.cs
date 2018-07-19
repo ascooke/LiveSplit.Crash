@@ -129,6 +129,7 @@ namespace LiveSplit.Crash.Memory
 				{ "Future Tense", Stages.FutureTense },
 
 				// Hubs
+				{ "THE WUMPA ISLANDS", Stages.TheWumpaIslands },
 				{ "THE WARP ROOM", Stages.TheWarpRoom },
 				{ "THE TIME TWISTER", Stages.TheTimeTwister }
 			};

@@ -11,13 +11,15 @@ namespace LiveSplit.Crash.Display
 {
 	public class BoxDisplay : AbstractDisplay
 	{
-		private SimpleLabel label;
+		private SimpleLabel value;
 
-		public BoxDisplay()
+		public BoxDisplay() : base("Boxes")
 		{
-			label = new SimpleLabel
+			value = new SimpleLabel
 			{
-				IsMonospaced = true
+				IsMonospaced = true,
+				HorizontalAlignment = StringAlignment.Far,
+				VerticalAlignment = StringAlignment.Center
 			};
 		}
 
@@ -26,15 +28,20 @@ namespace LiveSplit.Crash.Display
 
 		public override void Draw(Graphics g, LiveSplitState state, float width, float height)
 		{
-			FillBackground(g, state, width, height);
+			base.Draw(g, state, width, height);
 
 			var settings = state.LayoutSettings;
 
-			label.Font = settings.TextFont;
-			label.ShadowColor = settings.ShadowsColor;
-			label.OutlineColor = settings.TextOutlineColor;
-			label.Text = BoxCount + "/" + BoxTarget;
-			label.Draw(g);
+			value.Font = settings.TextFont;
+			value.ForeColor = settings.TextColor;
+			value.ShadowColor = settings.ShadowsColor;
+			value.OutlineColor = settings.TextOutlineColor;
+			value.Text = BoxCount + "/" + BoxTarget;
+			value.X = 5;
+			value.Y = VerticalOffset;
+			value.Width = width - 12;
+			value.Height = 31;
+			value.Draw(g);
 		}
 	}
 }

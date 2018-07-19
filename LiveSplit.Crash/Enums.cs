@@ -176,6 +176,7 @@ namespace LiveSplit.Crash
 		// Hubs //
 		//------//
 
+		TheWumpaIslands,
 		TheWarpRoom,
 		TheTimeTwister,
 

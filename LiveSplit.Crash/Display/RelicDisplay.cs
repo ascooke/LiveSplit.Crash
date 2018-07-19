@@ -15,24 +15,30 @@ namespace LiveSplit.Crash.Display
 		private SimpleLabel goldLabel;
 		private SimpleLabel platinumLabel;
 
-		public RelicDisplay()
+		public RelicDisplay() : base("Relics")
 		{
 			sapphireLabel = new SimpleLabel
 			{
 				ForeColor = Color.DodgerBlue,
-				IsMonospaced = true
+				IsMonospaced = true,
+				HorizontalAlignment = StringAlignment.Far,
+				VerticalAlignment = StringAlignment.Center
 			};
 
 			goldLabel = new SimpleLabel
 			{
 				ForeColor = Color.Goldenrod,
-				IsMonospaced = true
+				IsMonospaced = true,
+				HorizontalAlignment = StringAlignment.Far,
+				VerticalAlignment = StringAlignment.Center
 			};
 
 			platinumLabel = new SimpleLabel
 			{
 				ForeColor = Color.Silver,
-				IsMonospaced = true
+				IsMonospaced = true,
+				HorizontalAlignment = StringAlignment.Far,
+				VerticalAlignment = StringAlignment.Center
 			};
 		}
 
@@ -42,34 +48,34 @@ namespace LiveSplit.Crash.Display
 
 		public override void Draw(Graphics g, LiveSplitState state, float width, float height)
 		{
-			sapphireLabel.Text = "03:03.33";
-			sapphireLabel.X = 0;
-			goldLabel.Text = "02:02.22";
-			goldLabel.X = 100;
-			platinumLabel.Text = "01:01.11";
-			platinumLabel.X = 200;
+			base.Draw(g, state, width, height);
 
-			UpdateLabel(g, sapphireLabel, state);
-			UpdateLabel(g, goldLabel, state);
-			UpdateLabel(g, platinumLabel, state);
+			sapphireLabel.Text = "3:03.33";
+			goldLabel.Text = "2:02.22";
+			platinumLabel.Text = "1:01.11";
 
-			FillBackground(g, state, width, height);
+			float spacing = 50;
+
+			UpdateLabel(sapphireLabel, state, width, height, spacing * 2);
+			UpdateLabel(goldLabel, state, width, height, spacing);
+			UpdateLabel(platinumLabel, state, width, height, 0);
 
 			sapphireLabel.Draw(g);
 			goldLabel.Draw(g);
 			platinumLabel.Draw(g);
 		}
 
-		private void UpdateLabel(Graphics g, SimpleLabel label, LiveSplitState state)
+		private void UpdateLabel(SimpleLabel label, LiveSplitState state, float width, float height, float spacing)
 		{
 			var settings = state.LayoutSettings;
 
 			label.Font = settings.TextFont;
 			label.ShadowColor = settings.ShadowsColor;
 			label.OutlineColor = settings.TextOutlineColor;
-			label.Width = 100;
-			label.Height = 20;
-			//label.SetActualWidth(g);
+			label.X = 5;
+			label.Y = VerticalOffset;
+			label.Width = width - 12 - spacing;
+			label.Height = 31;
 		}
 	}
 }
