@@ -26,6 +26,8 @@ namespace LiveSplit.Crash.Display
 		public int BoxCount { get; set; }
 		public int BoxTarget { get; set; }
 
+		public bool Active { get; set; }
+
 		public override void Draw(Graphics g, LiveSplitState state, float width, float height)
 		{
 			base.Draw(g, state, width, height);
@@ -36,7 +38,7 @@ namespace LiveSplit.Crash.Display
 			value.ForeColor = settings.TextColor;
 			value.ShadowColor = settings.ShadowsColor;
 			value.OutlineColor = settings.TextOutlineColor;
-			value.Text = BoxCount + "/" + BoxTarget;
+			value.Text = Active ? BoxCount + "/" + BoxTarget : "";
 			value.X = 5;
 			value.Y = VerticalOffset;
 			value.Width = width - 12;

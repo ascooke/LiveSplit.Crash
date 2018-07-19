@@ -46,13 +46,16 @@ namespace LiveSplit.Crash.Display
 		public string Gold { set => goldLabel.Text = value; }
 		public string Platinum { set => platinumLabel.Text = value; }
 
+		public void Clear()
+		{
+			sapphireLabel.Text = "";
+			goldLabel.Text = "";
+			platinumLabel.Text = "";
+		}
+
 		public override void Draw(Graphics g, LiveSplitState state, float width, float height)
 		{
 			base.Draw(g, state, width, height);
-
-			sapphireLabel.Text = "3:03.33";
-			goldLabel.Text = "2:02.22";
-			platinumLabel.Text = "1:01.11";
 
 			float spacing = 50;
 

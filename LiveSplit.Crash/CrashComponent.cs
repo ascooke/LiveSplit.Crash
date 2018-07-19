@@ -227,6 +227,8 @@ namespace LiveSplit.Crash
 			if (data == null)
 			{
 				inStage = false;
+				boxDisplay.Active = false;
+				relicDisplay.Clear();
 
 				// Clear displays
 				return;
@@ -235,6 +237,7 @@ namespace LiveSplit.Crash
 			Console.WriteLine($"Entering stage {stage} (Boxes={data.Boxes}, Sapphire={data.Sapphire}, Gold={data.Gold}, Platinum={data.Platinum}).");
 
 			inStage = true;
+			boxDisplay.Active = true;
 			boxDisplay.BoxTarget = data.Boxes;
 			relicDisplay.Sapphire = data.Sapphire;
 			relicDisplay.Gold = data.Gold;
