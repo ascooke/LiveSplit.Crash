@@ -11,6 +11,7 @@ namespace LiveSplit.Crash
 		Red,
 		Blue,
 		Green,
+		Orange,
 		Yellow,
 		Purple,
 		None
@@ -56,10 +57,14 @@ namespace LiveSplit.Crash
 
 		// Bosses
 		PapuPapu,
-		KoalaKong,
 		RipperRoo1,
-		Pinstripe,
-		DrNBrio,
+		KoalaKong,
+		PinstripePotoroo,
+		DrNitrusBrio,
+		DrNeoCortex1,
+
+		// Other
+		TheGreatHall,
 
 		// DLC
 		StormyAscent,
@@ -112,7 +117,7 @@ namespace LiveSplit.Crash
 		KomodoBrothers,
 		TinyTiger1,
 		DrNGin1,
-		DrNeoCortex,
+		DrNeoCortex2,
 
 		//---------//
 		// Crash 3 //
@@ -176,7 +181,9 @@ namespace LiveSplit.Crash
 		// Hubs //
 		//------//
 
-		TheWumpaIslands,
+		NSanityIsland,
+		WumpaIslands,
+		CortexIsland,
 		TheWarpRoom,
 		TheTimeTwister,
 

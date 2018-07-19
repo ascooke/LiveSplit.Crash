@@ -24,8 +24,7 @@ namespace LiveSplit.Crash
 
 		public event Action LoadStart;
 		public event Action LoadEnd;
-		public event Action<Stages> StageEnter;
-		public event Action<Stages> StageLeave;
+		public event Action<Stages> StageChange;
 		public event Action<int> BoxChange;
 
 		public void Refresh()
@@ -49,18 +48,17 @@ namespace LiveSplit.Crash
 			Stages oldStage = stage;
 			stage = memory.GetStage();
 
-			if (stage != oldStage)
+			if (stage != oldStage && stage != Stages.None)
 			{
-				if (stage != Stages.None)
-				{
-					StageEnter.Invoke(stage);
-				}
-				else
-				{
-					//Console.WriteLine($"Leaving stage {oldStage}.");
+				StageChange.Invoke(stage);
+			}
 
-					//StageLeave.Invoke();
-				}
+			int oldBoxes = boxes;
+			boxes = memory.GetBoxes();
+
+			if (boxes != oldBoxes)
+			{
+				BoxChange.Invoke(boxes);
 			}
 		}
 	}

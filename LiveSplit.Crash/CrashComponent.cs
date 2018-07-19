@@ -27,6 +27,8 @@ namespace LiveSplit.Crash
 		private BoxDisplay boxDisplay;
 		private StageData[] stageArray;
 
+		private bool onTitle;
+		private bool inStage;
 		private bool processHooked;
 
 		public CrashComponent()
@@ -36,22 +38,31 @@ namespace LiveSplit.Crash
 			events = new CrashEvents(memory);
 			events.LoadStart += OnLoadStart;
 			events.LoadEnd += OnLoadEnd;
-			events.StageEnter += OnStageEnter;
-			events.StageLeave += OnStageLeave;
+			events.StageChange += OnStageChange;
 			events.BoxChange += OnBoxChange;
 
 			relicDisplay = new RelicDisplay();
 			boxDisplay = new BoxDisplay();
 
-			//StageData[] crash1Data = LoadStageData("Crash1.xml");
+			StageData[] crash1Data = LoadStageData("Crash1.xml");
 			StageData[] crash2Data = LoadStageData("Crash2.xml");
-			//StageData[] crash3Data = LoadStageData("Crash3.xml");
+			StageData[] crash3Data = LoadStageData("Crash3.xml");
 
 			stageArray = new StageData[Enum.GetValues(typeof(Stages)).Length];
+
+			for (int i = 0; i < crash1Data.Length; i++)
+			{
+				stageArray[i + (int)Stages.NSanityBeach] = crash1Data[i];
+			}
 
 			for (int i = 0; i < crash2Data.Length; i++)
 			{
 				stageArray[i + (int)Stages.TurtleWoods] = crash2Data[i];
+			}
+
+			for (int i = 0; i < crash3Data.Length; i++)
+			{
+				stageArray[i + (int)Stages.ToadVillage] = crash3Data[i];
 			}
 		}
 
@@ -195,6 +206,12 @@ namespace LiveSplit.Crash
 		{
 			Console.WriteLine("Load start.");
 			//timer.CurrentState.IsGameTimePaused = true;
+
+			if (inStage)
+			{
+				Console.WriteLine("Split.");
+				//timer.Split();
+			}
 		}
 
 		private void OnLoadEnd()
@@ -203,30 +220,31 @@ namespace LiveSplit.Crash
 			//timer.CurrentState.IsGameTimePaused = false;
 		}
 
-		private void OnStageEnter(Stages stage)
+		private void OnStageChange(Stages stage)
 		{
 			StageData data = stageArray[(int)stage];
 
 			if (data == null)
 			{
+				inStage = false;
+
 				// Clear displays
 				return;
 			}
 
-			Console.WriteLine($"Entering stage {stage} (Sapphire={data.Sapphire}, Gold={data.Gold}, Platinum={data.Platinum}).");
+			Console.WriteLine($"Entering stage {stage} (Boxes={data.Boxes}, Sapphire={data.Sapphire}, Gold={data.Gold}, Platinum={data.Platinum}).");
 
+			inStage = true;
 			boxDisplay.BoxTarget = data.Boxes;
 			relicDisplay.Sapphire = data.Sapphire;
 			relicDisplay.Gold = data.Gold;
 			relicDisplay.Platinum = data.Platinum;
 		}
 
-		private void OnStageLeave(Stages stage)
-		{
-		}
-
 		private void OnBoxChange(int boxes)
 		{
+			Console.WriteLine($"Box change ({boxes}).");
+
 			boxDisplay.BoxCount = boxes;
 		}
 
@@ -237,6 +255,8 @@ namespace LiveSplit.Crash
 
 		private void OnReset(object sender, TimerPhase phase)
 		{
+			onTitle = true;
+			inStage = false;
 		}
 
 		public void Update(IInvalidator invalidator, LiveSplitState state, float width, float height, LayoutMode mode)

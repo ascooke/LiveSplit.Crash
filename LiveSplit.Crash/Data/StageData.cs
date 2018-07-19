@@ -11,12 +11,18 @@ namespace LiveSplit.Crash.Data
 	{
 		public StageData(XmlNode node)
 		{
+			var keys = node.Attributes["Keys"];
 			var crystals = node.Attributes["Crystals"];
 			var coloredGem = node.Attributes["ColoredGem"];
 
+			if (keys != null)
+			{
+				Keys = 1;
+			}
+
 			if (crystals != null)
 			{
-				Crystals = int.Parse(crystals.Value);
+				Crystals = 1;
 			}
 
 			Gems = int.Parse(node.Attributes["Gems"].Value);
@@ -30,6 +36,7 @@ namespace LiveSplit.Crash.Data
 		public int Crystals { get; }
 		public int Gems { get; }
 		public int Boxes { get; }
+		public int Keys { get; }
 
 		public ColoredGems ColoredGem { get; }
 

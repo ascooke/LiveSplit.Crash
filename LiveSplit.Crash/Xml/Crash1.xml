@@ -2,57 +2,57 @@
 
 <Stages>
   <!-- N. Sanity Beach -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="49" Sapphire="0:34.00" Gold="0:28.26" Platinum="0:25.76" />
   <!-- Jungle Rollers -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="43" Sapphire="1:03.00" Gold="0:48.12" Platinum="0:46.89" />
   <!-- The Great Gate -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="38" Sapphire="1:05.00" Gold="0:53.29" Platinum="0:48.07" />
   <!-- Boulders -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="16" Sapphire="1:04.00" Gold="0:49.44" Platinum="0:47.48" />
   <!-- Upstream -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="36" Sapphire="1:03.00" Gold="0:49.95" Platinum="0:46.51" />
   <!-- Rolling Stones -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="87" Sapphire="1:04.00" Gold="0:50.35" Platinum="0:46.49" />
   <!-- Hog Wild -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="24" Sapphire="0:55.00" Gold="0:47.53" Platinum="0:43.42" />
   <!-- Native Fortress -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="48" Sapphire="2:55.00" Gold="2:25.87" Platinum="2:05.80" />
   <!-- Up the Creek -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="48" Sapphire="1:42.00" Gold="1:20.25" Platinum="1:16.31" />
   <!-- The Lost City -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" ColoredGem="Green" Boxes="82" Sapphire="2:35.00" Gold="1:56.12" Platinum="1:40.52" />
   <!-- Temple Ruins -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="67" Sapphire="2:11.00" Gold="1:32.61" Platinum="1:25.34" />
   <!-- Road to Nowhere -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="42" Sapphire="1:24.00" Gold="1:03.26" Platinum="0:57.85" />
   <!-- Boulder Dash -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="35" Sapphire="1:45.00" Gold="1:24.61" Platinum="1:18.08" />
   <!-- Whole Hog -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="24" Sapphire="0:48.00" Gold="0:30.44" Platinum="0:26.87" />
   <!-- Sunset Vista -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Keys="1" Boxes="90" Sapphire="5:30.00" Gold="4:10.04" Platinum="3:41.85" />
   <!-- Heavy Machinery -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage  Gems="1" Boxes="86" Sapphire="2:20.00" Gold="1:57.82" Platinum="1:36.29" />
   <!-- Cortex Power -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="42" Sapphire="1:05.00" Gold="0:43.98" Platinum="0:39.70" />
   <!-- Generator Room -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" ColoredGem="Orange" Boxes="52" Sapphire="1:22.00" Gold="1:08.37" Platinum="0:59.72" />
   <!-- Toxic Waste -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" ColoredGem="Blue" Boxes="39" Sapphire="1:16.00" Gold="1:03.47" Platinum="0:55.75" />
   <!-- The High Road -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="45" Sapphire="1:28.00" Gold="1:13.29" Platinum="1:04.61" />
   <!-- Slippery Climb -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage  Gems="1" ColoredGem="Red" Boxes="51" Sapphire="3:30.00" Gold="3:00.47" Platinum="2:26.08" />
   <!-- Lights Out -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" ColoredGem="Purple" Boxes="15" Sapphire="1:31.00" Gold="1:20.67" Platinum="1:06.87" />
   <!-- Fumbling in the Dark -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="18" Sapphire="2:28.00" Gold="1:57.68" Platinum="1:41.59" />
   <!-- Jaws of Darkness -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Keys="1" Boxes="112" Sapphire="2:21.00" Gold="1:59.21" Platinum="1:36.26" />
   <!-- Castle Machinery -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="27" Sapphire="3:15.00" Gold="2:37.61" Platinum="2:09.89" />
   <!-- The Lab -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" ColoredGem="Yellow" Boxes="36" Sapphire="1:20.00" Gold="0:56.22" Platinum="0:44.92" />
   <!-- Stormy Ascent -->
-  <Stage Crystals="" Gems="" Boxes="" Sapphire="" Gold="" Platinum="" />
+  <Stage Gems="1" Boxes="56" Sapphire="7:00.00" Gold="4:30.00" Platinum="3:10.00" />
 </Stages>

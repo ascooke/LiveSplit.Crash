@@ -13,12 +13,14 @@ namespace LiveSplit.Crash.Memory
 		private Process process;
 		private ProgramPointer fadePointer;
 		private ProgramPointer stagePointer;
+		private ProgramPointer boxPointer;
 		private Dictionary<string, Stages> stageMap;
 
 		public CrashMemory()
 		{
 			stagePointer = new ProgramPointer("E06000000000100020?D", 0x130);
 			fadePointer = new ProgramPointer("00006F12833A6F12833A", -0x1A, -1);
+			boxPointer = new ProgramPointer("", 0);
 
 			stageMap = new Dictionary<string, Stages>
 			{
@@ -49,12 +51,13 @@ namespace LiveSplit.Crash.Memory
 				{ "Jaws of Darkness", Stages.JawsOfDarkness },
 				{ "Castle Machinery", Stages.CastleMachinery },
 				{ "The Lab", Stages.TheLab },
+				{ "The Great Hall", Stages.TheGreatHall },
 				{ "Papu Papu", Stages.PapuPapu },
 				{ "Koala Kong", Stages.KoalaKong },
 				{ "Ripper Roo", Stages.RipperRoo1 },
-				{ "Pinstripe Potoroo", Stages.Pinstripe },
-				{ "Dr. N. Brio", Stages.DrNBrio },
-				//{ "", Stages. },
+				{ "Pinstripe Potoroo", Stages.PinstripePotoroo },
+				{ "Dr. Nitrus Brio", Stages.DrNitrusBrio },
+				{ "Dr. Neo Cortex", Stages.DrNeoCortex1 },
 
 				// Crash 2
 				{ "TURTLE WOODS", Stages.TurtleWoods },
@@ -88,7 +91,7 @@ namespace LiveSplit.Crash.Memory
 				{ "KOMODO BROTHERS", Stages.KomodoBrothers },
 				{ "TINY TIGER", Stages.TinyTiger1 },
 				{ "DR. N. GIN", Stages.DrNGin1 },
-				{ "DR. NEO CORTEX", Stages.DrNeoCortex },
+				{ "DR. NEO CORTEX", Stages.DrNeoCortex2 },
 
 				// Crash 3
 				{ "Toad Village", Stages.ToadVillage },
@@ -129,7 +132,9 @@ namespace LiveSplit.Crash.Memory
 				{ "Future Tense", Stages.FutureTense },
 
 				// Hubs
-				{ "THE WUMPA ISLANDS", Stages.TheWumpaIslands },
+				{ "N. SANITY ISLANDS", Stages.NSanityIsland },
+				{ "THE WUMPA ISLANDS", Stages.WumpaIslands },
+				{ "CORTEX ISLANDS", Stages.CortexIsland },
 				{ "THE WARP ROOM", Stages.TheWarpRoom },
 				{ "THE TIME TWISTER", Stages.TheTimeTwister }
 			};
@@ -155,14 +160,14 @@ namespace LiveSplit.Crash.Memory
 			return true;
 		}
 
-		public bool GetLoadIndicator()
-		{
-			return false;
-		}
-
 		public float GetFade()
 		{
 			return fadePointer.Get<float>(process, out bool success);
+		}
+
+		public int GetBoxes()
+		{
+			return boxPointer.Get<int>(process, out bool success);
 		}
 
 		public Stages GetStage()
