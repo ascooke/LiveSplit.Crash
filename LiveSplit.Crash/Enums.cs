@@ -176,18 +176,20 @@ namespace LiveSplit.Crash
 
 		// DLC
 		FutureTense,
-		
+
 		//------//
 		// Hubs //
 		//------//
 
+		TheWumpaIslands,
 		NSanityIsland,
-		WumpaIslands,
 		CortexIsland,
 		TheWarpRoom,
 		TheTimeTwister,
 
 		// Other
-		None
+		None,
+		Title,
+		Invalid
 	}
 }

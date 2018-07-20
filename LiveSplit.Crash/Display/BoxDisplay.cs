@@ -42,7 +42,7 @@ namespace LiveSplit.Crash.Display
 			value.X = 5;
 			value.Y = VerticalOffset;
 			value.Width = width - 12;
-			value.Height = 31;
+			value.Height = 25;
 			value.Draw(g);
 		}
 	}

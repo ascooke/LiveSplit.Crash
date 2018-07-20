@@ -26,16 +26,23 @@ namespace LiveSplit.Crash
 		private RelicDisplay relicDisplay;
 		private BoxDisplay boxDisplay;
 		private StageData[] stageArray;
+		private DateTime startTime;
 
-		private bool onTitle;
+		private bool onTitle = true;
+		private bool inHub;
 		private bool inStage;
 		private bool processHooked;
 
+		private bool allPointersFound;
+
 		public CrashComponent()
 		{
+			startTime = DateTime.Now;
 			memory = new CrashMemory();
 			settings = new CrashMasterControl();
-			events = new CrashEvents(memory);
+			events = new CrashEvents(memory, settings);
+			events.FadeStart += OnFadeStart;
+			events.FadeEnd += OnFadeEnd;
 			events.LoadStart += OnLoadStart;
 			events.LoadEnd += OnLoadEnd;
 			events.StageChange += OnStageChange;
@@ -77,12 +84,12 @@ namespace LiveSplit.Crash
 
 				if (settings.DisplayBoxes)
 				{
-					height += 31;
+					height += 25;
 				}
 
 				if (settings.DisplayRelics)
 				{
-					height += 31;
+					height += 25;
 				}
 
 				return height;
@@ -162,19 +169,21 @@ namespace LiveSplit.Crash
 			boxDisplay.VerticalOffset = 0;
 			relicDisplay.VerticalOffset = 0;
 
-			float height = VerticalHeight;
+			float height = 25;
 
 			if (boxes && relics)
 			{
 				if (settings.SwapOrder)
 				{
-					boxDisplay.VerticalOffset = height / 2;
+					boxDisplay.VerticalOffset = height;
 				}
 				else
 				{
-					relicDisplay.VerticalOffset = height / 2;
+					relicDisplay.VerticalOffset = height;
 				}
 			}
+
+			FillBackground(g, state, width, VerticalHeight);
 
 			if (settings.DisplayBoxes)
 			{
@@ -184,6 +193,16 @@ namespace LiveSplit.Crash
 			if (settings.DisplayRelics)
 			{
 				relicDisplay.Draw(g, state, width, height);
+			}
+		}
+
+		private void FillBackground(Graphics g, LiveSplitState state, float width, float height)
+		{
+			Color backgroundColor = state.LayoutSettings.BackgroundColor;
+
+			if (backgroundColor.ToArgb() != Color.Transparent.ToArgb())
+			{
+				g.FillRectangle(new SolidBrush(backgroundColor), 0, 0, width, height);
 			}
 		}
 
@@ -200,6 +219,24 @@ namespace LiveSplit.Crash
 		public void SetSettings(XmlNode settings)
 		{
 			this.settings.LoadSettings(settings);
+		}
+
+		private void OnFadeStart()
+		{
+			Console.WriteLine("Fade start.");
+
+			return;
+
+			if (onTitle && timer.CurrentState.CurrentPhase == TimerPhase.NotRunning)
+			{
+				timer.Start();
+				timer.CurrentState.IsGameTimePaused = true;
+			}
+		}
+
+		private void OnFadeEnd()
+		{
+			Console.WriteLine("Fade end.");
 		}
 
 		private void OnLoadStart()
@@ -222,15 +259,33 @@ namespace LiveSplit.Crash
 
 		private void OnStageChange(Stages stage)
 		{
+			if (stage == Stages.Title)
+			{
+				onTitle = true;
+				inHub = false;
+
+				Console.WriteLine("Exiting to title.");
+
+				return;
+			}
+
+			if (stage == Stages.None)
+			{
+				return;
+			}
+
+			onTitle = false;
+
 			StageData data = stageArray[(int)stage];
 
 			if (data == null)
 			{
 				inStage = false;
+				inHub = true;
 				boxDisplay.Active = false;
 				relicDisplay.Clear();
 
-				Console.WriteLine($"Entering stage {stage}.");
+				Console.WriteLine($"Entering hub {stage}.");
 
 				return;
 			}
@@ -238,6 +293,7 @@ namespace LiveSplit.Crash
 			Console.WriteLine($"Entering stage {stage} (Boxes={data.Boxes}, Sapphire={data.Sapphire}, Gold={data.Gold}, Platinum={data.Platinum}).");
 
 			inStage = true;
+			inHub = false;
 			boxDisplay.Active = true;
 			boxDisplay.BoxTarget = data.Boxes;
 			relicDisplay.Sapphire = data.Sapphire;
@@ -260,6 +316,7 @@ namespace LiveSplit.Crash
 		private void OnReset(object sender, TimerPhase phase)
 		{
 			onTitle = true;
+			inHub = false;
 			inStage = false;
 		}
 
@@ -297,13 +354,31 @@ namespace LiveSplit.Crash
 			
 			processHooked = memory.HookProcess();
 
-			if (!processHooked && processPreviouslyHooked)
+			if (processHooked ^ processPreviouslyHooked)
 			{
-				return;
+				Console.WriteLine(processHooked ? "Process hooked." : "Process unhooked.");
+
+				if (!processHooked)
+				{
+					boxDisplay.Active = false;
+					relicDisplay.Clear();
+
+					return;
+				}
 			}
 
 			events.Refresh();
 			//timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime);
+
+			bool found = memory.AllPointersFound;
+
+			if (found && !allPointersFound)
+			{
+				Console.WriteLine($"Time taken: {(DateTime.Now - startTime).ToString()}");
+			}
+
+			allPointersFound = found;
+
 		}
 
 		public void Dispose()

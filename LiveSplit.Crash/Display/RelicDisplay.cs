@@ -59,16 +59,16 @@ namespace LiveSplit.Crash.Display
 
 			float spacing = 50;
 
-			UpdateLabel(sapphireLabel, state, width, height, spacing * 2);
-			UpdateLabel(goldLabel, state, width, height, spacing);
-			UpdateLabel(platinumLabel, state, width, height, 0);
+			UpdateLabel(sapphireLabel, state, width, spacing * 2);
+			UpdateLabel(goldLabel, state, width, spacing);
+			UpdateLabel(platinumLabel, state, width, 0);
 
 			sapphireLabel.Draw(g);
 			goldLabel.Draw(g);
 			platinumLabel.Draw(g);
 		}
 
-		private void UpdateLabel(SimpleLabel label, LiveSplitState state, float width, float height, float spacing)
+		private void UpdateLabel(SimpleLabel label, LiveSplitState state, float width, float spacing)
 		{
 			var settings = state.LayoutSettings;
 
@@ -78,7 +78,7 @@ namespace LiveSplit.Crash.Display
 			label.X = 5;
 			label.Y = VerticalOffset;
 			label.Width = width - 12 - spacing;
-			label.Height = 31;
+			label.Height = 25;
 		}
 	}
 }

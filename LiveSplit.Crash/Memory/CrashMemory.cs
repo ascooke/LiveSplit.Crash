@@ -22,44 +22,44 @@ namespace LiveSplit.Crash.Memory
 			stagePointer = new ProgramPointer("Stage", "E06000000000100020", 0x130);
 			fadePointer = new ProgramPointer("Fade", "00006F12833A6F12833A", -0x1A, -1);
 			pausePointer = new ProgramPointer("Pause", "0300000000800700003804000038", 0x27);
-			boxPointer = new ProgramPointer("Box", "", 0);
+			boxPointer = new ProgramPointer("Box", "FF4992244992240800", 0x1BED47);
 
 			stageMap = new Dictionary<string, Stages>
 			{
 				// Crash 1
-				{ "N. Sanity Beach", Stages.NSanityBeach },
-				{ "Jungle Rollers", Stages.JungleRollers },
-				{ "The Great Gate", Stages.TheGreatGate },
-				{ "Boulders", Stages.Boulders },
-				{ "Upstream", Stages.Upstream },
-				{ "Rolling Stones", Stages.RollingStones },
-				{ "Hog Wild", Stages.HogWild },
-				{ "Native Fortress", Stages.NativeFortress },
-				{ "Up the Creek", Stages.UpTheCreek },
-				{ "The Lost City", Stages.TheLostCity },
-				{ "Temple Ruins", Stages.TempleRuins },
-				{ "Road to Nowhere", Stages.RoadToNowhere },
-				{ "Boulder Dash", Stages.BoulderDash },
-				{ "Whole Hog", Stages.WholeHog },
-				{ "Sunset Vista", Stages.SunsetVista },
-				{ "Heavy Machinery", Stages.HeavyMachinery },
-				{ "Cortex Power", Stages.CortexPower },
-				{ "Generator Room", Stages.GeneratorRoom },
-				{ "Toxic Waste", Stages.ToxicWaste },
-				{ "The High Road", Stages.TheHighRoad },
-				{ "Slippery Climb", Stages.SlipperyClimb },
-				{ "Lights Out", Stages.LightsOut },
-				{ "Fumbling in the Dark", Stages.FumblingInTheDark },
-				{ "Jaws of Darkness", Stages.JawsOfDarkness },
-				{ "Castle Machinery", Stages.CastleMachinery },
-				{ "The Lab", Stages.TheLab },
-				{ "The Great Hall", Stages.TheGreatHall },
-				{ "Papu Papu", Stages.PapuPapu },
-				{ "Koala Kong", Stages.KoalaKong },
-				{ "Ripper Roo", Stages.RipperRoo1 },
-				{ "Pinstripe Potoroo", Stages.PinstripePotoroo },
-				{ "Dr. Nitrus Brio", Stages.DrNitrusBrio },
-				{ "Dr. Neo Cortex", Stages.DrNeoCortex1 },
+				{ "N. SANITY BEACH", Stages.NSanityBeach },
+				{ "JUNGLE ROLLERS", Stages.JungleRollers },
+				{ "THE GREAT GATE", Stages.TheGreatGate },
+				{ "BOULDERS", Stages.Boulders },
+				{ "UPSTREAM", Stages.Upstream },
+				{ "ROLLING STONES", Stages.RollingStones },
+				{ "HOG WILD", Stages.HogWild },
+				{ "NATIVE FORTRESS", Stages.NativeFortress },
+				{ "UP THE CREEK", Stages.UpTheCreek },
+				{ "THE LOST CITY", Stages.TheLostCity },
+				{ "TEMPLE RUINS", Stages.TempleRuins },
+				{ "ROAD TO NOWHERE", Stages.RoadToNowhere },
+				{ "BOULDER DASH", Stages.BoulderDash },
+				{ "WHOLE HOG", Stages.WholeHog },
+				{ "SUNSET VISTA", Stages.SunsetVista },
+				{ "HEAVY MACHINERY", Stages.HeavyMachinery },
+				{ "CORTEX POWER", Stages.CortexPower },
+				{ "GENERATOR ROOM", Stages.GeneratorRoom },
+				{ "TOXIC WASTE", Stages.ToxicWaste },
+				{ "THE HIGH ROAD", Stages.TheHighRoad },
+				{ "SLIPPERY CLIMB", Stages.SlipperyClimb },
+				{ "LIGHTS OUT", Stages.LightsOut },
+				{ "FUMBLING IN THE DARK", Stages.FumblingInTheDark },
+				{ "JAWS OF DARKNESS", Stages.JawsOfDarkness },
+				{ "CASTLE MACHINERY", Stages.CastleMachinery },
+				{ "THE LAB", Stages.TheLab },
+				{ "THE GREAT HALL", Stages.TheGreatHall },
+				{ "PAPU PAPU", Stages.PapuPapu },
+				{ "KOALA KONG", Stages.KoalaKong },
+				//{ "RIPPER ROO", Stages.RipperRoo1 },
+				{ "PINSTRIPE POTOROO", Stages.PinstripePotoroo },
+				{ "DR. NITRUS BRIO", Stages.DrNitrusBrio },
+				//{ "DR. NEO CORTEX", Stages.DrNeoCortex1 },
 
 				// Crash 2
 				{ "TURTLE WOODS", Stages.TurtleWoods },
@@ -96,50 +96,66 @@ namespace LiveSplit.Crash.Memory
 				{ "DR. NEO CORTEX", Stages.DrNeoCortex2 },
 
 				// Crash 3
-				{ "Toad Village", Stages.ToadVillage },
-				{ "Under Pressure", Stages.UnderPressure },
-				{ "Orient Express", Stages.OrientExpress },
-				{ "Bone Yard", Stages.BoneYard },
-				{ "Makin' Waves", Stages.MakinWaves },
-				{ "Gee Wiz", Stages.GeeWiz },
-				{ "Hang'em High", Stages.HangEmHigh },
-				{ "Hog Ride", Stages. HogRide},
-				{ "Tomb Time", Stages.TombTime },
-				{ "Midnight Run", Stages.MidnightRun },
-				{ "Dino Might!", Stages.DinoMight },
-				{ "Deep Trouble", Stages.DeepTrouble },
-				{ "High Time", Stages.HighTime },
-				{ "Road Crash", Stages.RoadCrash },
-				{ "Double Header", Stages.DoubleHeader },
-				{ "Sphynxinator", Stages.Sphynxinator },
-				{ "Bye Bye Blimps", Stages.ByeByeBlimps },
-				{ "Tell No Tales", Stages.TellNoTales },
-				{ "Future Frenzy", Stages.FutureFrenzy },
-				{ "Tomb Wader", Stages.TombWader },
-				{ "Gone Tomorrow", Stages.GoneTomorrow },
-				{ "Orange Asphalt", Stages.OrangeAsphalt },
-				{ "Flaming Passion", Stages.FlamingPassion },
-				{ "Mad Bombers", Stages.MadBombers },
-				{ "Bug Lite", Stages.BugLite },
-				{ "Ski Crazed", Stages.SkiCrazed },
-				{ "Area 51?", Stages.Area51 },
-				{ "Rings of Power", Stages.RingsOfPower },
-				{ "Hot Coco", Stages.HotCoco },
-				{ "Eggipus Rex", Stages.EggipusRex },
-				{ "Tiny Tiger", Stages.TinyTiger2 },
-				{ "Dingodile", Stages.Dingodile },
-				{ "Dr. N. Tropy", Stages.DrNTropy },
-				{ "Dr. N. Gin", Stages.DrNGin2 },
-				{ "Uka Uka", Stages.UkaUka },
-				{ "Future Tense", Stages.FutureTense },
+				{ "TOAD VILLAGE", Stages.ToadVillage },
+				{ "UNDER PRESSURE", Stages.UnderPressure },
+				{ "ORIENT EXPRESS", Stages.OrientExpress },
+				{ "BONE YARD", Stages.BoneYard },
+				{ "MAKIN' WAVES", Stages.MakinWaves },
+				{ "GEE WIZ", Stages.GeeWiz },
+				{ "HANG'EM HIGH", Stages.HangEmHigh },
+				{ "HOG RIDE", Stages. HogRide},
+				{ "TOMB TIME", Stages.TombTime },
+				{ "MIDNIGHT RUN", Stages.MidnightRun },
+				{ "DINO MIGHT!", Stages.DinoMight },
+				{ "DEEP TROUBLE", Stages.DeepTrouble },
+				{ "HIGH TIME", Stages.HighTime },
+				{ "ROAD CRASH", Stages.RoadCrash },
+				{ "DOUBLE HEADER", Stages.DoubleHeader },
+				{ "SPHYNXINATOR", Stages.Sphynxinator },
+				{ "BYE BYE BLIMPS", Stages.ByeByeBlimps },
+				{ "TELL NO TALES", Stages.TellNoTales },
+				{ "FUTURE FRENZY", Stages.FutureFrenzy },
+				{ "TOMB WADER", Stages.TombWader },
+				{ "GONE TOMORROW", Stages.GoneTomorrow },
+				{ "ORANGE ASPHALT", Stages.OrangeAsphalt },
+				{ "FLAMING PASSION", Stages.FlamingPassion },
+				{ "MAD BOMBERS", Stages.MadBombers },
+				{ "BUG LITE", Stages.BugLite },
+				{ "SKI CRAZED", Stages.SkiCrazed },
+				{ "AREA 51?", Stages.Area51 },
+				{ "RINGS OF POWER", Stages.RingsOfPower },
+				{ "HOT COCO", Stages.HotCoco },
+				{ "EGGIPUS REX", Stages.EggipusRex },
+				//{ "TINY TIGER", Stages.TinyTiger2 },
+				{ "DINGODILE", Stages.Dingodile },
+				{ "DR. N. TROPY", Stages.DrNTropy },
+				//{ "DR. N. GIN", Stages.DrNGin2 },
+				{ "UKA UKA", Stages.UkaUka },
+				{ "FUTURE TENSE", Stages.FutureTense },
 
 				// Hubs
 				{ "N. SANITY ISLANDS", Stages.NSanityIsland },
-				{ "THE WUMPA ISLANDS", Stages.WumpaIslands },
+				{ "THE WUMPA ISLANDS", Stages.TheWumpaIslands },
 				{ "CORTEX ISLANDS", Stages.CortexIsland },
 				{ "THE WARP ROOM", Stages.TheWarpRoom },
 				{ "THE TIME TWISTER", Stages.TheTimeTwister }
 			};
+		}
+
+		public bool AllPointersFound
+		{
+			get
+			{
+				ProgramPointer[] pointers =
+				{
+					fadePointer,
+					stagePointer,
+					pausePointer,
+					boxPointer
+				};
+
+				return pointers.All(p => p.Pointer != IntPtr.Zero);
+			}
 		}
 
 		public bool HookProcess()
@@ -169,8 +185,7 @@ namespace LiveSplit.Crash.Memory
 
 		public int GetBoxes()
 		{
-			return 0;
-			//return boxPointer.Get<int>(process, out bool success);
+			return boxPointer.Get<int>(process, out bool success);
 		}
 
 		public bool IsPaused()
@@ -184,10 +199,15 @@ namespace LiveSplit.Crash.Memory
 
 			if (!success)
 			{
-				return Stages.None;
+				return Stages.Invalid;
 			}
 
 			string key = process.ReadAscii(pointer);
+			
+			if (key.Length == 0)
+			{
+				return Stages.Title;
+			}
 
 			return !stageMap.TryGetValue(key, out Stages stage) ? Stages.None : stage;
 		}
@@ -195,7 +215,6 @@ namespace LiveSplit.Crash.Memory
 		private class ProgramPointer
 		{
 			private DateTime lastTry;
-			private IntPtr pointer;
 
 			private string name;
 			private string signature;
@@ -210,11 +229,13 @@ namespace LiveSplit.Crash.Memory
 				this.resultIndex = resultIndex;
 			}
 
+			public IntPtr Pointer { get; private set; }
+
 			public T Get<T>(Process process, out bool success) where T : struct
 			{
 				if (process == null)
 				{
-					pointer = IntPtr.Zero;
+					Pointer = IntPtr.Zero;
 					success = false;
 
 					return default(T);
@@ -229,12 +250,12 @@ namespace LiveSplit.Crash.Memory
 
 				success = true;
 
-				return process.Read<T>(pointer, offset);
+				return process.Read<T>(Pointer, offset);
 			}
 
 			private bool AcquirePointer(Process process)
 			{
-				if (pointer == IntPtr.Zero && DateTime.Now > lastTry.AddSeconds(1))
+				if (Pointer == IntPtr.Zero && DateTime.Now > lastTry.AddSeconds(1))
 				{
 					lastTry = DateTime.Now;
 
@@ -246,30 +267,30 @@ namespace LiveSplit.Crash.Memory
 							(info.Protect & 0x100) == 0
 					};
 
-					IntPtr previousPointer = pointer;
+					IntPtr previousPointer = Pointer;
 
 					switch (resultIndex)
 					{
 						case -1:
-							pointer = searcher.FindSignatures(process, signature).Last();
+							Pointer = searcher.FindSignatures(process, signature).Last();
 							break;
 
 						case 0:
-							pointer = searcher.FindSignature(process, signature);
+							Pointer = searcher.FindSignature(process, signature);
 							break;
 
 						default:
-							pointer = searcher.FindSignatures(process, signature)[resultIndex];
+							Pointer = searcher.FindSignatures(process, signature)[resultIndex];
 							break;
 					}
 
-					if (previousPointer == IntPtr.Zero && pointer != IntPtr.Zero)
+					if (previousPointer == IntPtr.Zero && Pointer != IntPtr.Zero)
 					{
-						Console.WriteLine($"{name} pointer found ({pointer.ToString("X")}).");
+						Console.WriteLine($"{name} pointer found ({Pointer.ToString("X")}).");
 					}
 				}
 
-				return pointer != IntPtr.Zero;
+				return Pointer != IntPtr.Zero;
 			}
 		}
 	}

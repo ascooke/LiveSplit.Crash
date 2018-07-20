@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LiveSplit.Crash.Controls;
 using LiveSplit.Crash.Data;
 using LiveSplit.Crash.Memory;
 
@@ -11,18 +12,21 @@ namespace LiveSplit.Crash
 	public class CrashEvents
 	{
 		private CrashMemory memory;
+		private CrashMasterControl settings;
 
 		private int boxes;
 		private float fade;
-		private bool paused;
 
-		private Stages stage = Stages.None;
+		private Stages stage = Stages.Invalid;
 
-		public CrashEvents(CrashMemory memory)
+		public CrashEvents(CrashMemory memory, CrashMasterControl settings)
 		{
 			this.memory = memory;
+			this.settings = settings;
 		}
 
+		public event Action FadeStart;
+		public event Action FadeEnd;
 		public event Action LoadStart;
 		public event Action LoadEnd;
 		public event Action<Stages> StageChange;
@@ -35,36 +39,34 @@ namespace LiveSplit.Crash
 			
 			if (oldFade == 0 && fade > 0)
 			{
-				Console.WriteLine("Fade start.");
+				FadeStart.Invoke();
 			}
 			else if (oldFade > 0 && fade == 0)
 			{
-				Console.WriteLine("Fade end.");
+				FadeEnd.Invoke();
 			}
 
 			Stages oldStage = stage;
 			stage = memory.GetStage();
 
-			if (stage != oldStage && stage != Stages.None)
+			if (stage != oldStage && stage != Stages.Invalid)
 			{
 				StageChange.Invoke(stage);
 			}
 
-			int oldBoxes = boxes;
-			boxes = memory.GetBoxes();
-
-			if (boxes != oldBoxes)
+			if (settings.DisplayBoxes)
 			{
-				BoxChange.Invoke(boxes);
-			}
-			
-			bool oldPaused = paused;
-			paused = memory.IsPaused();
+				int oldBoxes = boxes;
+				boxes = memory.GetBoxes();
 
-			if (paused ^ oldPaused)
-			{
-				Console.WriteLine(paused ? "Paused." : "Unpaused.");
+				if (boxes != oldBoxes)
+				{
+					BoxChange.Invoke(boxes);
+				}
 			}
+
+			// This is called to initialize the pause pointer.
+			memory.IsPaused();
 		}
 	}
 }

@@ -25,20 +25,8 @@ namespace LiveSplit.Crash.Display
 
 		public float VerticalOffset { get; set; }
 
-		protected void FillBackground(Graphics g, LiveSplitState state, float width, float height)
-		{
-			Color backgroundColor = state.LayoutSettings.BackgroundColor;
-
-			if (backgroundColor.ToArgb() != Color.Transparent.ToArgb())
-			{
-				g.FillRectangle(new SolidBrush(backgroundColor), 0, 0, width, height);
-			}
-		}
-
 		public virtual void Draw(Graphics g, LiveSplitState state, float width, float height)
 		{
-			FillBackground(g, state, width, height);
-
 			var settings = state.LayoutSettings;
 
 			label.Font = settings.TextFont;
@@ -48,7 +36,7 @@ namespace LiveSplit.Crash.Display
 			label.X = 5;
 			label.Y = VerticalOffset;
 			label.Width = width - 10;
-			label.Height = 31;
+			label.Height = height;
 			label.Draw(g);
 		}
 	}
