@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using LiveSplit.Crash.Controls;
 
 namespace LiveSplit.Crash.Memory
 {
@@ -19,10 +20,10 @@ namespace LiveSplit.Crash.Memory
 
 		public CrashMemory()
 		{
-			stagePointer = new ProgramPointer("Stage", "E06000000000100020", 0x130);
-			fadePointer = new ProgramPointer("Fade", "00006F12833A6F12833A", -0x1A, -1);
-			pausePointer = new ProgramPointer("Pause", "0300000000800700003804000038", 0x27);
-			boxPointer = new ProgramPointer("Box", "FF4992244992240800", 0x1BED47);
+			stagePointer = new ProgramPointer("E06000000000100020", 0x130);
+			fadePointer = new ProgramPointer("00006F12833A6F12833A", -0x1A, -1);
+			pausePointer = new ProgramPointer("0300000000800700003804000038", 0x27);
+			boxPointer = new ProgramPointer("FF4992244992240800", 0x1BED47);
 
 			stageMap = new Dictionary<string, Stages>
 			{
@@ -142,21 +143,7 @@ namespace LiveSplit.Crash.Memory
 			};
 		}
 
-		public bool AllPointersFound
-		{
-			get
-			{
-				ProgramPointer[] pointers =
-				{
-					fadePointer,
-					stagePointer,
-					pausePointer,
-					boxPointer
-				};
-
-				return pointers.All(p => p.Pointer != IntPtr.Zero);
-			}
-		}
+		public bool PointersAcquired { get; private set; }
 
 		public bool HookProcess()
 		{
@@ -178,31 +165,69 @@ namespace LiveSplit.Crash.Memory
 			return true;
 		}
 
+		public bool AcquirePointers()
+		{
+			Console.Write("Acquiring pointers... ");
+
+			ProgramPointer[] pointers =
+			{
+				fadePointer,
+				stagePointer,
+				pausePointer,
+				boxPointer
+			};
+
+			DateTime start = DateTime.Now;
+
+			foreach (ProgramPointer p in pointers)
+			{
+				p.AcquirePointer(process);
+			}
+
+			TimeSpan elapsed = DateTime.Now - start;
+
+			if (pointers.Any(p => p.Pointer == IntPtr.Zero))
+			{
+				Console.WriteLine($"failed ({elapsed}).");
+
+				return PointersAcquired = false;
+			}
+
+			Console.WriteLine($"done ({elapsed}).");
+
+			return PointersAcquired = true;
+		}
+
+		public void ClearPointers()
+		{
+			fadePointer.Pointer = IntPtr.Zero;
+			stagePointer.Pointer = IntPtr.Zero;
+			pausePointer.Pointer = IntPtr.Zero;
+			boxPointer.Pointer = IntPtr.Zero;
+
+			PointersAcquired = false;
+
+			Console.WriteLine("Pointers cleared.");
+		}
+
 		public float GetFade()
 		{
-			return fadePointer.Get<float>(process, out bool success);
+			return fadePointer.Get<float>(process);
 		}
 
 		public int GetBoxes()
 		{
-			return boxPointer.Get<int>(process, out bool success);
+			return boxPointer.Get<int>(process);
 		}
 
 		public bool IsPaused()
 		{
-			return pausePointer.Get<short>(process, out bool success) == 1;
+			return pausePointer.Get<short>(process) == 1;
 		}
 
 		public Stages GetStage()
 		{
-			IntPtr pointer = stagePointer.Get<IntPtr>(process, out bool success);
-
-			if (!success)
-			{
-				return Stages.Invalid;
-			}
-
-			string key = process.ReadAscii(pointer);
+			string key = process.ReadAscii(stagePointer.Get<IntPtr>(process));
 			
 			if (key.Length == 0)
 			{
@@ -214,83 +239,70 @@ namespace LiveSplit.Crash.Memory
 		
 		private class ProgramPointer
 		{
-			private DateTime lastTry;
-
-			private string name;
 			private string signature;
 			private int offset;
 			private int resultIndex;
 
-			public ProgramPointer(string name, string signature, int offset, int resultIndex = 0)
+			public ProgramPointer(string signature, int offset, int resultIndex = 0)
 			{
-				this.name = name;
 				this.signature = signature;
 				this.offset = offset;
 				this.resultIndex = resultIndex;
 			}
 
-			public IntPtr Pointer { get; private set; }
+			public IntPtr Pointer { get; set; }
 
-			public T Get<T>(Process process, out bool success) where T : struct
+			public T Get<T>(Process process) where T : struct
 			{
-				if (process == null)
-				{
-					Pointer = IntPtr.Zero;
-					success = false;
-
-					return default(T);
-				}
-
-				if (!AcquirePointer(process))
-				{
-					success = false;
-
-					return default(T);
-				}
-
-				success = true;
-
+				// Both the process and pointer are assumed valid when calling this function.
 				return process.Read<T>(Pointer, offset);
 			}
 
-			private bool AcquirePointer(Process process)
+			public void AcquirePointer(Process process)
 			{
-				if (Pointer == IntPtr.Zero && DateTime.Now > lastTry.AddSeconds(1))
+				if (Pointer != IntPtr.Zero)
 				{
-					lastTry = DateTime.Now;
-
-					MemorySearcher searcher = new MemorySearcher
-					{
-						MemoryFilter = info =>
-							(info.State & 0x1000) != 0 &&
-							(info.Protect & 0x04) != 0 &&
-							(info.Protect & 0x100) == 0
-					};
-
-					IntPtr previousPointer = Pointer;
-
-					switch (resultIndex)
-					{
-						case -1:
-							Pointer = searcher.FindSignatures(process, signature).Last();
-							break;
-
-						case 0:
-							Pointer = searcher.FindSignature(process, signature);
-							break;
-
-						default:
-							Pointer = searcher.FindSignatures(process, signature)[resultIndex];
-							break;
-					}
-
-					if (previousPointer == IntPtr.Zero && Pointer != IntPtr.Zero)
-					{
-						Console.WriteLine($"{name} pointer found ({Pointer.ToString("X")}).");
-					}
+					return;
 				}
 
-				return Pointer != IntPtr.Zero;
+				MemorySearcher searcher = new MemorySearcher
+				{
+					MemoryFilter = info =>
+						(info.State & 0x1000) != 0 &&
+						(info.Protect & 0x04) != 0 &&
+						(info.Protect & 0x100) == 0
+				};
+				
+				switch (resultIndex)
+				{
+					case -1:
+						List<IntPtr> list1 = searcher.FindSignatures(process, signature);
+
+						if (list1.Count == 0)
+						{
+							return;
+						}
+
+						Pointer = list1.Last();
+
+						break;
+
+					case 0:
+						Pointer = searcher.FindSignature(process, signature);
+						break;
+
+					default:
+						List<IntPtr> list2 = searcher.FindSignatures(process, signature);
+
+						if (list2.Count == 0)
+						{
+							return;
+						}
+
+						Pointer = list2[resultIndex];
+
+						break;
+				}
 			}
 		}
 	}

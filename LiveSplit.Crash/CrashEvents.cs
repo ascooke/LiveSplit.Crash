@@ -12,14 +12,15 @@ namespace LiveSplit.Crash
 	public class CrashEvents
 	{
 		private CrashMemory memory;
-		private CrashMasterControl settings;
+		private CrashControl settings;
 
 		private int boxes;
 		private float fade;
+		private bool paused;
 
 		private Stages stage = Stages.Invalid;
 
-		public CrashEvents(CrashMemory memory, CrashMasterControl settings)
+		public CrashEvents(CrashMemory memory, CrashControl settings)
 		{
 			this.memory = memory;
 			this.settings = settings;
@@ -54,7 +55,7 @@ namespace LiveSplit.Crash
 				StageChange.Invoke(stage);
 			}
 
-			if (settings.DisplayBoxes)
+			//if (settings.DisplayBoxes)
 			{
 				int oldBoxes = boxes;
 				boxes = memory.GetBoxes();
@@ -65,8 +66,13 @@ namespace LiveSplit.Crash
 				}
 			}
 
-			// This is called to initialize the pause pointer.
-			memory.IsPaused();
+			bool oldPaused = paused;
+			paused = memory.IsPaused();
+
+			if (paused ^ oldPaused)
+			{
+				Console.WriteLine(paused ? "Paused." : "Unpaused.");
+			}
 		}
 	}
 }

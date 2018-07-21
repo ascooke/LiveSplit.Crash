@@ -1,6 +1,6 @@
 ﻿namespace LiveSplit.Crash.Controls
 {
-	partial class CrashMasterControl
+	partial class CrashControl
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -30,16 +30,16 @@
 		{
 			this.settingsBox = new System.Windows.Forms.GroupBox();
 			this.swapCheckbox = new System.Windows.Forms.CheckBox();
-			this.displayRelicsCheckbox = new System.Windows.Forms.CheckBox();
-			this.displayBoxesCheckbox = new System.Windows.Forms.CheckBox();
+			this.relicCheckbox = new System.Windows.Forms.CheckBox();
+			this.boxCheckbox = new System.Windows.Forms.CheckBox();
 			this.settingsBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// settingsBox
 			// 
 			this.settingsBox.Controls.Add(this.swapCheckbox);
-			this.settingsBox.Controls.Add(this.displayRelicsCheckbox);
-			this.settingsBox.Controls.Add(this.displayBoxesCheckbox);
+			this.settingsBox.Controls.Add(this.relicCheckbox);
+			this.settingsBox.Controls.Add(this.boxCheckbox);
 			this.settingsBox.Location = new System.Drawing.Point(10, 10);
 			this.settingsBox.Name = "settingsBox";
 			this.settingsBox.Size = new System.Drawing.Size(456, 66);
@@ -58,34 +58,36 @@
 			this.swapCheckbox.Text = "Swap order";
 			this.swapCheckbox.UseVisualStyleBackColor = true;
 			// 
-			// displayRelicsCheckbox
+			// relicCheckbox
 			// 
-			this.displayRelicsCheckbox.AutoSize = true;
-			this.displayRelicsCheckbox.Location = new System.Drawing.Point(7, 43);
-			this.displayRelicsCheckbox.Name = "displayRelicsCheckbox";
-			this.displayRelicsCheckbox.Size = new System.Drawing.Size(109, 17);
-			this.displayRelicsCheckbox.TabIndex = 1;
-			this.displayRelicsCheckbox.Text = "Display relic times";
-			this.displayRelicsCheckbox.UseVisualStyleBackColor = true;
-			this.displayRelicsCheckbox.CheckedChanged += new System.EventHandler(this.displayCheckbox_CheckedChanged);
+			this.relicCheckbox.AutoSize = true;
+			this.relicCheckbox.Enabled = false;
+			this.relicCheckbox.Location = new System.Drawing.Point(7, 43);
+			this.relicCheckbox.Name = "relicCheckbox";
+			this.relicCheckbox.Size = new System.Drawing.Size(109, 17);
+			this.relicCheckbox.TabIndex = 1;
+			this.relicCheckbox.Text = "Display relic times";
+			this.relicCheckbox.UseVisualStyleBackColor = true;
+			this.relicCheckbox.CheckedChanged += new System.EventHandler(this.displayCheckbox_CheckedChanged);
 			// 
-			// displayBoxesCheckbox
+			// boxCheckbox
 			// 
-			this.displayBoxesCheckbox.AutoSize = true;
-			this.displayBoxesCheckbox.Location = new System.Drawing.Point(7, 20);
-			this.displayBoxesCheckbox.Name = "displayBoxesCheckbox";
-			this.displayBoxesCheckbox.Size = new System.Drawing.Size(91, 17);
-			this.displayBoxesCheckbox.TabIndex = 0;
-			this.displayBoxesCheckbox.Text = "Display boxes";
-			this.displayBoxesCheckbox.UseVisualStyleBackColor = true;
-			this.displayBoxesCheckbox.CheckedChanged += new System.EventHandler(this.displayCheckbox_CheckedChanged);
+			this.boxCheckbox.AutoSize = true;
+			this.boxCheckbox.Enabled = false;
+			this.boxCheckbox.Location = new System.Drawing.Point(7, 20);
+			this.boxCheckbox.Name = "boxCheckbox";
+			this.boxCheckbox.Size = new System.Drawing.Size(91, 17);
+			this.boxCheckbox.TabIndex = 0;
+			this.boxCheckbox.Text = "Display boxes";
+			this.boxCheckbox.UseVisualStyleBackColor = true;
+			this.boxCheckbox.CheckedChanged += new System.EventHandler(this.displayCheckbox_CheckedChanged);
 			// 
-			// CrashMasterControl
+			// CrashControl
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.settingsBox);
-			this.Name = "CrashMasterControl";
+			this.Name = "CrashControl";
 			this.Size = new System.Drawing.Size(467, 77);
 			this.settingsBox.ResumeLayout(false);
 			this.settingsBox.PerformLayout();
@@ -95,8 +97,8 @@
 
 		#endregion
 		private System.Windows.Forms.GroupBox settingsBox;
-		private System.Windows.Forms.CheckBox displayRelicsCheckbox;
-		private System.Windows.Forms.CheckBox displayBoxesCheckbox;
+		private System.Windows.Forms.CheckBox relicCheckbox;
+		private System.Windows.Forms.CheckBox boxCheckbox;
 		private System.Windows.Forms.CheckBox swapCheckbox;
 	}
 }

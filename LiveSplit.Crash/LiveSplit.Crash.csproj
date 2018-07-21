@@ -50,11 +50,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\CrashMasterControl.cs">
+    <Compile Include="Controls\CrashControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\CrashMasterControl.Designer.cs">
-      <DependentUpon>CrashMasterControl.cs</DependentUpon>
+    <Compile Include="Controls\CrashControl.Designer.cs">
+      <DependentUpon>CrashControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\CrashTestingForm.cs">
       <SubType>Form</SubType>
@@ -81,8 +81,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\CrashMasterControl.resx">
-      <DependentUpon>CrashMasterControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\CrashControl.resx">
+      <DependentUpon>CrashControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CrashTestingForm.resx">
       <DependentUpon>CrashTestingForm.cs</DependentUpon>

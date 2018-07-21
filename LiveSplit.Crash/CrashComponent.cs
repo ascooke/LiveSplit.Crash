@@ -19,27 +19,27 @@ namespace LiveSplit.Crash
 {
 	public class CrashComponent : IComponent
 	{
+		private const int RetrySeconds = 5;
+
 		private TimerModel timer;
 		private CrashMemory memory;
 		private CrashEvents events;
-		private CrashMasterControl settings;
+		private CrashControl settings;
 		private RelicDisplay relicDisplay;
 		private BoxDisplay boxDisplay;
 		private StageData[] stageArray;
-		private DateTime startTime;
+		private DateTime lastTry;
 
-		private bool onTitle = true;
+		private bool onTitle;
 		private bool inHub;
 		private bool inStage;
+		private bool firstAttempt = true;
 		private bool processHooked;
-
-		private bool allPointersFound;
 
 		public CrashComponent()
 		{
-			startTime = DateTime.Now;
+			settings = new CrashControl();
 			memory = new CrashMemory();
-			settings = new CrashMasterControl();
 			events = new CrashEvents(memory, settings);
 			events.FadeStart += OnFadeStart;
 			events.FadeEnd += OnFadeEnd;
@@ -47,9 +47,6 @@ namespace LiveSplit.Crash
 			events.LoadEnd += OnLoadEnd;
 			events.StageChange += OnStageChange;
 			events.BoxChange += OnBoxChange;
-
-			relicDisplay = new RelicDisplay();
-			boxDisplay = new BoxDisplay();
 
 			StageData[] crash1Data = LoadStageData("Crash1.xml");
 			StageData[] crash2Data = LoadStageData("Crash2.xml");
@@ -71,6 +68,8 @@ namespace LiveSplit.Crash
 			{
 				stageArray[i + (int)Stages.ToadVillage] = crash3Data[i];
 			}
+
+			Console.WriteLine("Component created.");
 		}
 
 		public string ComponentName => "Crash NST Autosplitter (Memory-Based)";
@@ -282,30 +281,46 @@ namespace LiveSplit.Crash
 			{
 				inStage = false;
 				inHub = true;
-				boxDisplay.Active = false;
-				relicDisplay.Clear();
+
+				if (boxDisplay != null)
+				{
+					boxDisplay.Active = false;
+				}
+
+				relicDisplay?.Clear();
 
 				Console.WriteLine($"Entering hub {stage}.");
 
 				return;
 			}
 
-			Console.WriteLine($"Entering stage {stage} (Boxes={data.Boxes}, Sapphire={data.Sapphire}, Gold={data.Gold}, Platinum={data.Platinum}).");
+			Console.WriteLine($"Entering stage {stage} ({data})");
 
 			inStage = true;
 			inHub = false;
-			boxDisplay.Active = true;
-			boxDisplay.BoxTarget = data.Boxes;
-			relicDisplay.Sapphire = data.Sapphire;
-			relicDisplay.Gold = data.Gold;
-			relicDisplay.Platinum = data.Platinum;
+
+			if (boxDisplay != null)
+			{
+				boxDisplay.Active = true;
+				boxDisplay.BoxTarget = data.Boxes;
+			}
+
+			if (relicDisplay != null)
+			{
+				relicDisplay.Sapphire = data.Sapphire;
+				relicDisplay.Gold = data.Gold;
+				relicDisplay.Platinum = data.Platinum;
+			}
 		}
 
 		private void OnBoxChange(int boxes)
 		{
 			Console.WriteLine($"Box change ({boxes}).");
 
-			boxDisplay.BoxCount = boxes;
+			if (boxDisplay != null)
+			{
+				boxDisplay.BoxCount = boxes;
+			}
 		}
 
 		private void OnStart(object sender, EventArgs e)
@@ -337,9 +352,14 @@ namespace LiveSplit.Crash
 
 			if (settings.DisplayEnabled)
 			{
-				if (relicDisplay == null)
+				// Displays are created here so that if display is disabled, the memory isn't wasted.
+				if (boxDisplay == null)
 				{
 					boxDisplay = new BoxDisplay();
+				}
+
+				if (relicDisplay == null)
+				{
 					relicDisplay = new RelicDisplay();
 				}
 
@@ -360,25 +380,45 @@ namespace LiveSplit.Crash
 
 				if (!processHooked)
 				{
-					boxDisplay.Active = false;
-					relicDisplay.Clear();
+					memory.ClearPointers();
+
+					if (boxDisplay != null)
+					{
+						boxDisplay.Active = false;
+					}
+
+					relicDisplay?.Clear();
 
 					return;
 				}
 			}
 
-			events.Refresh();
-			//timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime);
-
-			bool found = memory.AllPointersFound;
-
-			if (found && !allPointersFound)
+			if (!processHooked)
 			{
-				Console.WriteLine($"Time taken: {(DateTime.Now - startTime).ToString()}");
+				return;
 			}
 
-			allPointersFound = found;
+			if (!memory.PointersAcquired && (firstAttempt || lastTry.AddSeconds(RetrySeconds) <= DateTime.Now))
+			{
+				firstAttempt = false;
 
+				if (!memory.AcquirePointers())
+				{
+					lastTry = DateTime.Now;
+
+					Console.WriteLine($"Retrying in {RetrySeconds} seconds.");
+
+					return;
+				}
+			}
+
+			if (!memory.PointersAcquired)
+			{
+				return;
+			}
+
+			events.Refresh();
+			//timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime);
 		}
 
 		public void Dispose()

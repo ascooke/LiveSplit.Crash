@@ -43,5 +43,11 @@ namespace LiveSplit.Crash.Data
 		public string Sapphire { get; }
 		public string Gold { get; }
 		public string Platinum { get; }
+
+		public override string ToString()
+		{
+			return $"Crystals={Crystals}, Gems={Gems}, ColoredGem={ColoredGem}, Keys={Keys}, Boxes={Boxes}, " +
+			       $"Sapphire={Sapphire}, Gold={Gold}, Platinum={Platinum}";
+		}
 	}
 }

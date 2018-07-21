@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.crashMasterControl1 = new LiveSplit.Crash.Controls.CrashMasterControl();
+			this.crashMasterControl1 = new LiveSplit.Crash.Controls.CrashControl();
 			this.SuspendLayout();
 			// 
 			// crashMasterControl1
@@ -52,6 +52,6 @@
 
 		#endregion
 
-		private CrashMasterControl crashMasterControl1;
+		private CrashControl crashMasterControl1;
 	}
 }

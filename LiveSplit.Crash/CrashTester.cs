@@ -14,6 +14,8 @@ namespace LiveSplit.Crash
 
 		public static void Main(string[] args)
 		{
+			Console.WriteLine("Hi Hobz o/");
+
 			bool formTesting = false;
 
 			if (formTesting)
@@ -24,8 +26,6 @@ namespace LiveSplit.Crash
 			else
 			{
 				CrashComponent component = new CrashComponent();
-
-				Console.WriteLine("Component created.");
 
 				while (true)
 				{
