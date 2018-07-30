@@ -64,14 +64,16 @@
     </Compile>
     <Compile Include="CrashComponent.cs" />
     <Compile Include="CrashComponentFactory.cs" />
-    <Compile Include="CrashEvents.cs" />
     <Compile Include="CrashTester.cs" />
     <Compile Include="Data\StageData.cs" />
     <Compile Include="Display\AbstractDisplay.cs" />
     <Compile Include="Display\BoxDisplay.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Memory\CrashMemory.cs" />
+    <Compile Include="Memory\GameMemory.cs" />
+    <Compile Include="Memory\GamePointer.cs" />
     <Compile Include="Memory\MemoryReader.cs" />
+    <Compile Include="Memory\StringPointer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Display\RelicDisplay.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

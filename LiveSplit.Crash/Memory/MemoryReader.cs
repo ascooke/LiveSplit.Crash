@@ -129,9 +129,11 @@ namespace LiveSplit.Crash.Memory
 			if (length < 0 || length > 2048) { return string.Empty; }
 			return Encoding.Unicode.GetString(Read(targetProcess, address + last + 0x8, 2 * length));
 		}
-		public static string ReadAscii(this Process targetProcess, IntPtr address)
+		public static string ReadAscii(this Process targetProcess, IntPtr address, params int[] offsets)
 		{
 			if (targetProcess == null || address == IntPtr.Zero) { return string.Empty; }
+
+			int last = OffsetAddress(targetProcess, ref address, offsets);
 
 			StringBuilder sb = new StringBuilder();
 			byte[] data = new byte[128];
@@ -140,7 +142,7 @@ namespace LiveSplit.Crash.Memory
 			bool invalid = false;
 			do
 			{
-				WinAPI.ReadProcessMemory(targetProcess.Handle, address + offset, data, 128, out bytesRead);
+				WinAPI.ReadProcessMemory(targetProcess.Handle, address + last + offset, data, 128, out bytesRead);
 				int i = 0;
 				while (i < bytesRead)
 				{

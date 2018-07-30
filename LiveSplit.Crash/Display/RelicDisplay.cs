@@ -57,7 +57,7 @@ namespace LiveSplit.Crash.Display
 		{
 			base.Draw(g, state, width, height);
 
-			float spacing = 50;
+			float spacing = 60;
 
 			UpdateLabel(sapphireLabel, state, width, spacing * 2);
 			UpdateLabel(goldLabel, state, width, spacing);

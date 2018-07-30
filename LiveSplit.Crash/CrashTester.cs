@@ -5,17 +5,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using LiveSplit.Crash.Controls;
+using LiveSplit.Crash.Memory;
 
 namespace LiveSplit.Crash
 {
 	public class CrashTester
 	{
-		private const int Tick = 100;
+		private const int Framerate = 10;
 
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Hi Hobz o/");
-
 			bool formTesting = false;
 
 			if (formTesting)
@@ -31,7 +30,7 @@ namespace LiveSplit.Crash
 				{
 					component.Autosplit();
 
-					Thread.Sleep((int)(1000f / Tick));
+					Thread.Sleep((int)(1000f / Framerate));
 				}
 			}
 		}

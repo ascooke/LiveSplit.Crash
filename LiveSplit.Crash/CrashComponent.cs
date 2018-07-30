@@ -14,39 +14,34 @@ using LiveSplit.Crash.Memory;
 using LiveSplit.Model;
 using LiveSplit.UI;
 using LiveSplit.UI.Components;
+using Timer = System.Timers.Timer;
 
 namespace LiveSplit.Crash
 {
 	public class CrashComponent : IComponent
 	{
-		private const int RetrySeconds = 5;
-
+		private const int RetryTime = 10;
+		
 		private TimerModel timer;
 		private CrashMemory memory;
-		private CrashEvents events;
 		private CrashControl settings;
 		private RelicDisplay relicDisplay;
 		private BoxDisplay boxDisplay;
 		private StageData[] stageArray;
-		private DateTime lastTry;
+		private Dictionary<string, Stages> stageMap;
 
 		private bool onTitle;
 		private bool inHub;
 		private bool inStage;
-		private bool firstAttempt = true;
-		private bool processHooked;
 
 		public CrashComponent()
 		{
 			settings = new CrashControl();
 			memory = new CrashMemory();
-			events = new CrashEvents(memory, settings);
-			events.FadeStart += OnFadeStart;
-			events.FadeEnd += OnFadeEnd;
-			events.LoadStart += OnLoadStart;
-			events.LoadEnd += OnLoadEnd;
-			events.StageChange += OnStageChange;
-			events.BoxChange += OnBoxChange;
+			memory.Fade.OnValueChange += OnFadeChange;
+			memory.Boxes.OnValueChange += OnBoxChange;
+			memory.Pause.OnValueChange += OnPauseChange;
+			memory.Stage.OnValueChange += OnStageChange;
 
 			StageData[] crash1Data = LoadStageData("Crash1.xml");
 			StageData[] crash2Data = LoadStageData("Crash2.xml");
@@ -69,7 +64,123 @@ namespace LiveSplit.Crash
 				stageArray[i + (int)Stages.ToadVillage] = crash3Data[i];
 			}
 
-			Console.WriteLine("Component created.");
+			stageMap = new Dictionary<string, Stages>
+			{
+				// Crash 1
+				{ "N. SANITY BEACH", Stages.NSanityBeach },
+				{ "JUNGLE ROLLERS", Stages.JungleRollers },
+				{ "THE GREAT GATE", Stages.TheGreatGate },
+				{ "BOULDERS", Stages.Boulders },
+				{ "UPSTREAM", Stages.Upstream },
+				{ "ROLLING STONES", Stages.RollingStones },
+				{ "HOG WILD", Stages.HogWild },
+				{ "NATIVE FORTRESS", Stages.NativeFortress },
+				{ "UP THE CREEK", Stages.UpTheCreek },
+				{ "THE LOST CITY", Stages.TheLostCity },
+				{ "TEMPLE RUINS", Stages.TempleRuins },
+				{ "ROAD TO NOWHERE", Stages.RoadToNowhere },
+				{ "BOULDER DASH", Stages.BoulderDash },
+				{ "WHOLE HOG", Stages.WholeHog },
+				{ "SUNSET VISTA", Stages.SunsetVista },
+				{ "HEAVY MACHINERY", Stages.HeavyMachinery },
+				{ "CORTEX POWER", Stages.CortexPower },
+				{ "GENERATOR ROOM", Stages.GeneratorRoom },
+				{ "TOXIC WASTE", Stages.ToxicWaste },
+				{ "THE HIGH ROAD", Stages.TheHighRoad },
+				{ "SLIPPERY CLIMB", Stages.SlipperyClimb },
+				{ "LIGHTS OUT", Stages.LightsOut },
+				{ "FUMBLING IN THE DARK", Stages.FumblingInTheDark },
+				{ "JAWS OF DARKNESS", Stages.JawsOfDarkness },
+				{ "CASTLE MACHINERY", Stages.CastleMachinery },
+				{ "THE LAB", Stages.TheLab },
+				{ "THE GREAT HALL", Stages.TheGreatHall },
+				{ "STORMY ASCENT", Stages.StormyAscent },
+				{ "PAPU PAPU", Stages.PapuPapu },
+				{ "KOALA KONG", Stages.KoalaKong },
+				//{ "RIPPER ROO", Stages.RipperRoo1 },
+				{ "PINSTRIPE POTOROO", Stages.PinstripePotoroo },
+				{ "DR. NITRUS BRIO", Stages.DrNitrusBrio },
+				//{ "DR. NEO CORTEX", Stages.DrNeoCortex1 },
+
+				// Crash 2
+				{ "TURTLE WOODS", Stages.TurtleWoods },
+				{ "SNOW GO", Stages.SnowGo },
+				{ "HANG EIGHT", Stages.HangEight },
+				{ "THE PITS", Stages.ThePits },
+				{ "CRASH DASH", Stages.CrashDash },
+				{ "AIR CRASH", Stages.AirCrash },
+				{ "SNOW BIZ", Stages.SnowBiz },
+				{ "BEAR IT", Stages.BearIt },
+				{ "CRASH CRUSH", Stages.CrashCrush },
+				{ "THE EEL DEAL", Stages.TheEelDeal },
+				{ "PLANT FOOD", Stages.PlantFood },
+				{ "SEWER OR LATER", Stages.SewerOrLater },
+				{ "BEAR DOWN", Stages.BearDown },
+				{ "ROAD TO RUIN", Stages.RoadToRuin },
+				{ "UN-BEARABLE", Stages.UnBearable },
+				{ "HANGIN' OUT", Stages.HanginOut },
+				{ "DIGGIN' IT", Stages.DigginIt },
+				{ "COLD HARD CRASH", Stages.ColdHardCrash },
+				{ "RUINATION", Stages.Ruination },
+				{ "BEE-HAVING", Stages.BeeHaving },
+				{ "PISTON IT AWAY", Stages.PistonItAway },
+				{ "ROCK IT", Stages.RockIt },
+				{ "NIGHT FIGHT", Stages.NightFight },
+				{ "PACK ATTACK", Stages.PackAttack },
+				{ "SPACED OUT", Stages.SpacedOut },
+				{ "TOTALLY BEAR", Stages.TotallyBear },
+				{ "TOTALLY FLY", Stages.TotallyFly },
+				{ "RIPPER ROO", Stages.RipperRoo1 },
+				{ "KOMODO BROTHERS", Stages.KomodoBrothers },
+				{ "TINY TIGER", Stages.TinyTiger1 },
+				{ "DR. N. GIN", Stages.DrNGin1 },
+				{ "DR. NEO CORTEX", Stages.DrNeoCortex2 },
+
+				// Crash 3
+				{ "TOAD VILLAGE", Stages.ToadVillage },
+				{ "UNDER PRESSURE", Stages.UnderPressure },
+				{ "ORIENT EXPRESS", Stages.OrientExpress },
+				{ "BONE YARD", Stages.BoneYard },
+				{ "MAKIN' WAVES", Stages.MakinWaves },
+				{ "GEE WIZ", Stages.GeeWiz },
+				{ "HANG'EM HIGH", Stages.HangEmHigh },
+				{ "HOG RIDE", Stages. HogRide},
+				{ "TOMB TIME", Stages.TombTime },
+				{ "MIDNIGHT RUN", Stages.MidnightRun },
+				{ "DINO MIGHT!", Stages.DinoMight },
+				{ "DEEP TROUBLE", Stages.DeepTrouble },
+				{ "HIGH TIME", Stages.HighTime },
+				{ "ROAD CRASH", Stages.RoadCrash },
+				{ "DOUBLE HEADER", Stages.DoubleHeader },
+				{ "SPHYNXINATOR", Stages.Sphynxinator },
+				{ "BYE BYE BLIMPS", Stages.ByeByeBlimps },
+				{ "TELL NO TALES", Stages.TellNoTales },
+				{ "FUTURE FRENZY", Stages.FutureFrenzy },
+				{ "TOMB WADER", Stages.TombWader },
+				{ "GONE TOMORROW", Stages.GoneTomorrow },
+				{ "ORANGE ASPHALT", Stages.OrangeAsphalt },
+				{ "FLAMING PASSION", Stages.FlamingPassion },
+				{ "MAD BOMBERS", Stages.MadBombers },
+				{ "BUG LITE", Stages.BugLite },
+				{ "SKI CRAZED", Stages.SkiCrazed },
+				{ "AREA 51?", Stages.Area51 },
+				{ "RINGS OF POWER", Stages.RingsOfPower },
+				{ "HOT COCO", Stages.HotCoco },
+				{ "EGGIPUS REX", Stages.EggipusRex },
+				//{ "TINY TIGER", Stages.TinyTiger2 },
+				{ "DINGODILE", Stages.Dingodile },
+				{ "DR. N. TROPY", Stages.DrNTropy },
+				//{ "DR. N. GIN", Stages.DrNGin2 },
+				{ "UKA UKA", Stages.UkaUka },
+				{ "FUTURE TENSE", Stages.FutureTense },
+
+				// Hubs
+				{ "N. SANITY ISLANDS", Stages.NSanityIsland },
+				{ "THE WUMPA ISLANDS", Stages.TheWumpaIslands },
+				{ "CORTEX ISLANDS", Stages.CortexIsland },
+				{ "THE WARP ROOM", Stages.TheWarpRoom },
+				{ "THE TIME TWISTER", Stages.TheTimeTwister }
+			};
 		}
 
 		public string ComponentName => "Crash NST Autosplitter (Memory-Based)";
@@ -220,9 +331,16 @@ namespace LiveSplit.Crash
 			this.settings.LoadSettings(settings);
 		}
 
-		private void OnFadeStart()
+		private void OnFadeChange(float oldFade, float newFade)
 		{
-			Console.WriteLine("Fade start.");
+			if (oldFade == 0 && newFade > 0)
+			{
+				Console.WriteLine("Fade start.");
+			}
+			else if (oldFade > 0 && newFade == 0)
+			{
+				Console.WriteLine("Fade end.");
+			}
 
 			return;
 
@@ -233,31 +351,25 @@ namespace LiveSplit.Crash
 			}
 		}
 
-		private void OnFadeEnd()
+		private void OnBoxChange(int oldBoxes, int newBoxes)
 		{
-			Console.WriteLine("Fade end.");
-		}
+			Console.WriteLine($"Box change ({newBoxes}).");
 
-		private void OnLoadStart()
-		{
-			Console.WriteLine("Load start.");
-			//timer.CurrentState.IsGameTimePaused = true;
-
-			if (inStage && !memory.IsPaused())
+			if (boxDisplay != null)
 			{
-				Console.WriteLine("Split.");
-				//timer.Split();
+				boxDisplay.BoxCount = newBoxes;
 			}
 		}
 
-		private void OnLoadEnd()
+		private void OnPauseChange(bool oldPause, bool newPause)
 		{
-			Console.WriteLine("Load end.");
-			//timer.CurrentState.IsGameTimePaused = false;
+			Console.WriteLine(newPause ? "Paused." : "Unpaused");
 		}
 
-		private void OnStageChange(Stages stage)
+		private void OnStageChange(string oldStage, string newStage)
 		{
+			Stages stage = stageMap[newStage];
+
 			if (stage == Stages.Title)
 			{
 				onTitle = true;
@@ -313,16 +425,6 @@ namespace LiveSplit.Crash
 			}
 		}
 
-		private void OnBoxChange(int boxes)
-		{
-			Console.WriteLine($"Box change ({boxes}).");
-
-			if (boxDisplay != null)
-			{
-				boxDisplay.BoxCount = boxes;
-			}
-		}
-
 		private void OnStart(object sender, EventArgs e)
 		{
 			timer.InitializeGameTime();
@@ -350,7 +452,7 @@ namespace LiveSplit.Crash
 			
 			Autosplit();
 
-			if (settings.DisplayEnabled)
+			if (memory.ProcessHooked && settings.DisplayEnabled)
 			{
 				// Displays are created here so that if display is disabled, the memory isn't wasted.
 				if (boxDisplay == null)
@@ -370,54 +472,25 @@ namespace LiveSplit.Crash
 		// This function is public for use in the tester class.
 		public void Autosplit()
 		{
-			bool processPreviouslyHooked = processHooked;
-			
-			processHooked = memory.HookProcess();
+			bool processPreviouslyHooked = memory.ProcessHooked;
+			bool processHooked = memory.HookProcess();
 
-			if (processHooked ^ processPreviouslyHooked)
+			if (!processHooked)
 			{
-				Console.WriteLine(processHooked ? "Process hooked." : "Process unhooked.");
-
-				if (!processHooked)
+				if (processPreviouslyHooked)
 				{
-					memory.ClearPointers();
-
 					if (boxDisplay != null)
 					{
 						boxDisplay.Active = false;
 					}
 
 					relicDisplay?.Clear();
-
-					return;
 				}
-			}
 
-			if (!processHooked)
-			{
 				return;
 			}
 
-			if (!memory.PointersAcquired && (firstAttempt || lastTry.AddSeconds(RetrySeconds) <= DateTime.Now))
-			{
-				firstAttempt = false;
-
-				if (!memory.AcquirePointers())
-				{
-					lastTry = DateTime.Now;
-
-					Console.WriteLine($"Retrying in {RetrySeconds} seconds.");
-
-					return;
-				}
-			}
-
-			if (!memory.PointersAcquired)
-			{
-				return;
-			}
-
-			events.Refresh();
+			memory.Refresh();
 			//timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime);
 		}
 
