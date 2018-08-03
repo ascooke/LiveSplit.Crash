@@ -13,22 +13,19 @@ namespace LiveSplit.Crash.Memory
 	{
 		public CrashMemory() : base("CrashBandicootNSaneTrilogy")
 		{
-			Fade = new GamePointer<float>();
-			Boxes = new GamePointer<int>();
-			Pause = new GamePointer<bool>();
-			Stage = new StringPointer();
+			Fade = new GamePointer<float>(0x1A69598, 0xA0, 0x40, 0xF8, 0x10, 0x3AC);
+			Boxes = new GamePointer<int>(0x1A69A98, 0x70, 0x20, 0x198, 0x70, 0x7F8);
+			Stage = new GamePointer<ulong>(0x1A21808, 0x78, 0x90, 0xC0, 0xA0, 0x460);
 		}
-
+		
 		public GamePointer<float> Fade { get; }
 		public GamePointer<int> Boxes { get; }
-		public GamePointer<bool> Pause { get; }
-		public StringPointer Stage { get; }
+		public GamePointer<ulong> Stage { get; }
 
 		protected override void OnHook(Process process)
 		{
 			Fade.Process = process;
 			Boxes.Process = process;
-			Pause.Process = process;
 			Stage.Process = process;
 		}
 
@@ -36,7 +33,6 @@ namespace LiveSplit.Crash.Memory
 		{
 			Fade.Process = null;
 			Boxes.Process = null;
-			Pause.Process = null;
 			Stage.Process = null;
 		}
 
@@ -44,7 +40,6 @@ namespace LiveSplit.Crash.Memory
 		{
 			Fade.Refresh();
 			Boxes.Refresh();
-			Pause.Refresh();
 			Stage.Refresh();
 		}
 	}

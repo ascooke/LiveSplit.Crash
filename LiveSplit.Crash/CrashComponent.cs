@@ -14,7 +14,6 @@ using LiveSplit.Crash.Memory;
 using LiveSplit.Model;
 using LiveSplit.UI;
 using LiveSplit.UI.Components;
-using Timer = System.Timers.Timer;
 
 namespace LiveSplit.Crash
 {
@@ -25,8 +24,8 @@ namespace LiveSplit.Crash
 		private TimerModel timer;
 		private CrashMemory memory;
 		private CrashControl settings;
-		private RelicDisplay relicDisplay;
 		private BoxDisplay boxDisplay;
+		private RelicDisplay relicDisplay;
 		private StageData[] stageArray;
 		private Dictionary<string, Stages> stageMap;
 
@@ -40,7 +39,6 @@ namespace LiveSplit.Crash
 			memory = new CrashMemory();
 			memory.Fade.OnValueChange += OnFadeChange;
 			memory.Boxes.OnValueChange += OnBoxChange;
-			memory.Pause.OnValueChange += OnPauseChange;
 			memory.Stage.OnValueChange += OnStageChange;
 
 			StageData[] crash1Data = LoadStageData("Crash1.xml");
@@ -361,14 +359,14 @@ namespace LiveSplit.Crash
 			}
 		}
 
-		private void OnPauseChange(bool oldPause, bool newPause)
+		private void OnStageChange(ulong oldAddress, ulong newAddress)
 		{
-			Console.WriteLine(newPause ? "Paused." : "Unpaused");
-		}
+			string value = memory.Process.ReadAscii((IntPtr)newAddress);
 
-		private void OnStageChange(string oldStage, string newStage)
-		{
-			Stages stage = stageMap[newStage];
+			if (!stageMap.TryGetValue(value, out Stages stage))
+			{
+				return;
+			}
 
 			if (stage == Stages.Title)
 			{
@@ -394,7 +392,7 @@ namespace LiveSplit.Crash
 				inStage = false;
 				inHub = true;
 
-				if (boxDisplay != null)
+				if (settings.DisplayBoxes)
 				{
 					boxDisplay.Active = false;
 				}
@@ -411,13 +409,13 @@ namespace LiveSplit.Crash
 			inStage = true;
 			inHub = false;
 
-			if (boxDisplay != null)
+			if (settings.DisplayBoxes)
 			{
 				boxDisplay.Active = true;
 				boxDisplay.BoxTarget = data.Boxes;
 			}
 
-			if (relicDisplay != null)
+			if (settings.DisplayRelics)
 			{
 				relicDisplay.Sapphire = data.Sapphire;
 				relicDisplay.Gold = data.Gold;
@@ -454,17 +452,6 @@ namespace LiveSplit.Crash
 
 			if (memory.ProcessHooked && settings.DisplayEnabled)
 			{
-				// Displays are created here so that if display is disabled, the memory isn't wasted.
-				if (boxDisplay == null)
-				{
-					boxDisplay = new BoxDisplay();
-				}
-
-				if (relicDisplay == null)
-				{
-					relicDisplay = new RelicDisplay();
-				}
-
 				invalidator?.Invalidate(0, 0, width, height);
 			}
 		}
@@ -479,7 +466,7 @@ namespace LiveSplit.Crash
 			{
 				if (processPreviouslyHooked)
 				{
-					if (boxDisplay != null)
+					if (settings.DisplayBoxes)
 					{
 						boxDisplay.Active = false;
 					}

@@ -9,8 +9,6 @@ namespace LiveSplit.Crash.Memory
 {
 	public abstract class GameMemory
 	{
-		private Process process;
-
 		private string processName;
 
 		protected GameMemory(string processName)
@@ -21,33 +19,35 @@ namespace LiveSplit.Crash.Memory
 		protected abstract void OnHook(Process process);
 		protected abstract void OnUnhook();
 
-		public bool ProcessHooked => process != null && !process.HasExited;
+		public bool ProcessHooked => Process != null && !Process.HasExited;
+
+		public Process Process { get; private set; }
 
 		public bool HookProcess()
 		{
-			if (process == null)
+			if (Process == null)
 			{
 				Process[] processes = Process.GetProcessesByName(processName);
-				process = processes.Length == 0 ? null : processes[0];
+				Process = processes.Length == 0 ? null : processes[0];
 
-				if (process == null || process.HasExited)
+				if (Process == null || Process.HasExited)
 				{
 					return false;
 				}
 
-				MemoryReader.Update64Bit(process);
+				MemoryReader.Update64Bit(Process);
 
-				OnHook(process);
+				OnHook(Process);
 			}
-			else if (process.HasExited)
+			else if (Process.HasExited)
 			{
-				process = null;
+				Process = null;
 				OnUnhook();
 
 				return false;
 			}
 
-			return process != null;
+			return Process != null;
 		}
 	}
 }

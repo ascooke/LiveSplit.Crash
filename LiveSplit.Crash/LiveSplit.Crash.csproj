@@ -73,7 +73,6 @@
     <Compile Include="Memory\GameMemory.cs" />
     <Compile Include="Memory\GamePointer.cs" />
     <Compile Include="Memory\MemoryReader.cs" />
-    <Compile Include="Memory\StringPointer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Display\RelicDisplay.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

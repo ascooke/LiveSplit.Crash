@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LiveSplit.Crash.Memory
 {
-	public class GamePointer<T> where T : struct
+	public class GamePointer<T> where T : struct, IEquatable<T>
 	{
 		private int[] offsets;
 		private T currentValue;
@@ -32,8 +32,8 @@ namespace LiveSplit.Crash.Memory
 
 			if (!newValue.Equals(currentValue))
 			{
-				currentValue = newValue;
 				OnValueChange?.Invoke(currentValue, newValue);
+				currentValue = newValue;
 			}
 		}
 	}
