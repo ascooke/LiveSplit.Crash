@@ -48,6 +48,11 @@ namespace LiveSplit.Crash
 				Console.WriteLine($"Lives change ({newLives})");
 			};
 
+			memory.Paused.OnValueChange += (oldPaused, newPaused) =>
+			{
+				Console.WriteLine(newPaused ? "Paused" : "Unpaused");
+			};
+
 			StageData[] crash1Data = LoadStageData("Crash1.xml");
 			StageData[] crash2Data = LoadStageData("Crash2.xml");
 			StageData[] crash3Data = LoadStageData("Crash3.xml");
@@ -364,6 +369,13 @@ namespace LiveSplit.Crash
 		private void OnFadeStart()
 		{
 			Console.WriteLine("Fade start");
+
+			if (memory.Paused.Read())
+			{
+				Console.WriteLine("IGT paused (quitting from the pause screen)");
+
+				//timer.CurrentState.IsGameTimePaused = true;
+			}
 
 			/*
 			if (timer.CurrentState.IsGameTimePaused)
