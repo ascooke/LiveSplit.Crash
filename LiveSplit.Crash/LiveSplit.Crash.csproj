@@ -72,6 +72,7 @@
     <Compile Include="Memory\CrashMemory.cs" />
     <Compile Include="Memory\GameMemory.cs" />
     <Compile Include="Memory\GamePointer.cs" />
+    <Compile Include="Memory\IGamePointer.cs" />
     <Compile Include="Memory\MemoryReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Display\RelicDisplay.cs" />

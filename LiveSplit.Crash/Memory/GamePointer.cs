@@ -7,18 +7,21 @@ using System.Threading.Tasks;
 
 namespace LiveSplit.Crash.Memory
 {
-	public class GamePointer<T> where T : struct, IEquatable<T>
+	public class GamePointer<T> : IGamePointer where T : struct, IEquatable<T>
 	{
 		private int[] offsets;
 		private T currentValue;
 
-		public GamePointer(params int[] offsets)
+		public GamePointer(bool refreshEnabled, params int[] offsets)
 		{
 			this.offsets = offsets;
+
+			RefreshEnabled = refreshEnabled;
 		}
 
 		// Setting the process publicly is easier than passing it into functions repeatedly.
 		public Process Process { get; set; }
+		public bool RefreshEnabled { get; set; }
 		public event Action<T, T> OnValueChange;
 
 		public T Read()

@@ -28,8 +28,10 @@ namespace LiveSplit.Crash
 		private RelicDisplay relicDisplay;
 		private StageData[] stageArray;
 		private Dictionary<string, Stages> stageMap;
-
+		
 		private bool onTitle;
+		private bool enteringGameOver;
+		private bool onGameOver;
 		private bool inHub;
 		private bool inStage;
 
@@ -40,6 +42,11 @@ namespace LiveSplit.Crash
 			memory.Fade.OnValueChange += OnFadeChange;
 			memory.Boxes.OnValueChange += OnBoxChange;
 			memory.Stage.OnValueChange += OnStageChange;
+			memory.Alive.OnValueChange += OnAliveChange;
+			memory.Lives.OnValueChange += (oldLives, newLives) =>
+			{
+				Console.WriteLine($"Lives change ({newLives})");
+			};
 
 			StageData[] crash1Data = LoadStageData("Crash1.xml");
 			StageData[] crash2Data = LoadStageData("Crash2.xml");
@@ -331,13 +338,18 @@ namespace LiveSplit.Crash
 
 		private void OnFadeChange(float oldFade, float newFade)
 		{
+			// Fade start.
 			if (oldFade == 0 && newFade > 0)
 			{
-				Console.WriteLine("Fade start.");
+				OnFadeStart();
+
+				return;
 			}
-			else if (oldFade > 0 && newFade == 0)
+
+			// Fade end.
+			if (newFade == 1 && oldFade < 1)
 			{
-				Console.WriteLine("Fade end.");
+				OnFadeEnd();
 			}
 
 			return;
@@ -349,9 +361,46 @@ namespace LiveSplit.Crash
 			}
 		}
 
+		private void OnFadeStart()
+		{
+			Console.WriteLine("Fade start");
+
+			/*
+			if (timer.CurrentState.IsGameTimePaused)
+			{
+				timer.CurrentState.IsGameTimePaused = false;
+
+				Console.WriteLine("IGT restarted");
+			}
+			*/
+		}
+
+		private void OnFadeEnd()
+		{
+			Console.WriteLine("Fade end");
+
+			if (enteringGameOver)
+			{
+				enteringGameOver = false;
+				onGameOver = true;
+
+				Console.WriteLine("On game over screen");
+
+				return;
+			}
+
+			if (onGameOver)
+			{
+				onGameOver = false;
+				//timer.CurrentState.IsGameTimePaused = true;
+
+				Console.WriteLine("IGT paused (leaving game over screen)");
+			}
+		}
+
 		private void OnBoxChange(int oldBoxes, int newBoxes)
 		{
-			Console.WriteLine($"Box change ({newBoxes}).");
+			Console.WriteLine($"Box change ({newBoxes})");
 
 			if (boxDisplay != null)
 			{
@@ -373,7 +422,7 @@ namespace LiveSplit.Crash
 				onTitle = true;
 				inHub = false;
 
-				Console.WriteLine("Exiting to title.");
+				Console.WriteLine("Exiting to title");
 
 				return;
 			}
@@ -399,12 +448,12 @@ namespace LiveSplit.Crash
 
 				relicDisplay?.Clear();
 
-				Console.WriteLine($"Entering hub {stage}.");
+				Console.WriteLine($"Entering hub {stage}");
 
 				return;
 			}
 
-			Console.WriteLine($"Entering stage {stage} ({data})");
+			Console.WriteLine($"Entering stage {stage}");
 
 			inStage = true;
 			inHub = false;
@@ -420,6 +469,18 @@ namespace LiveSplit.Crash
 				relicDisplay.Sapphire = data.Sapphire;
 				relicDisplay.Gold = data.Gold;
 				relicDisplay.Platinum = data.Platinum;
+			}
+		}
+
+		private void OnAliveChange(bool oldAlive, bool newAlive)
+		{
+			Console.WriteLine(newAlive ? "Alive" : "Dead");
+
+			if (!newAlive && memory.Lives.Read() == 0)
+			{
+				onGameOver = true;
+
+				Console.WriteLine("Entering game over screen");
 			}
 		}
 
