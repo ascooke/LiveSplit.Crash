@@ -185,11 +185,6 @@ namespace LiveSplit.Crash
 		NSanityIsland,
 		CortexIsland,
 		TheWarpRoom,
-		TheTimeTwister,
-
-		// Other
-		None,
-		Title,
-		Invalid
+		TheTimeTwister
 	}
 }

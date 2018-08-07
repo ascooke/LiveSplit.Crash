@@ -28,10 +28,10 @@ namespace LiveSplit.Crash
 		private RelicDisplay relicDisplay;
 		private StageData[] stageArray;
 		private Dictionary<string, Stages> stageMap;
+		private DateTime transitionTime;
 		
-		private bool onTitle;
-		private bool enteringGameOver;
-		private bool onGameOver;
+		private bool firstLoad;
+		private bool loading;
 		private bool inHub;
 		private bool inStage;
 
@@ -40,17 +40,13 @@ namespace LiveSplit.Crash
 			settings = new CrashControl();
 			memory = new CrashMemory();
 			memory.Fade.OnValueChange += OnFadeChange;
-			memory.Boxes.OnValueChange += OnBoxChange;
 			memory.Stage.OnValueChange += OnStageChange;
-			memory.Alive.OnValueChange += OnAliveChange;
-			memory.Lives.OnValueChange += (oldLives, newLives) =>
+			memory.Boxes.OnValueChange += (oldBoxes, newBoxes) =>
 			{
-				Console.WriteLine($"Lives change ({newLives})");
-			};
-
-			memory.Paused.OnValueChange += (oldPaused, newPaused) =>
-			{
-				Console.WriteLine(newPaused ? "Paused" : "Unpaused");
+				if (settings.DisplayBoxes)
+				{
+					boxDisplay.BoxCount = newBoxes;
+				}
 			};
 
 			StageData[] crash1Data = LoadStageData("Crash1.xml");
@@ -343,113 +339,67 @@ namespace LiveSplit.Crash
 
 		private void OnFadeChange(float oldFade, float newFade)
 		{
-			// Fade start.
+			// Fade start
 			if (oldFade == 0 && newFade > 0)
 			{
-				OnFadeStart();
-
-				return;
+				if (firstLoad)
+				{
+					firstLoad = false;
+					timer.CurrentState.IsGameTimePaused = false;
+				}
+				else if (timer.CurrentState.CurrentPhase == TimerPhase.NotRunning && memory.Title.Read() == 2 &&
+					!memory.Credits.Read() && newFade < 0.2f)
+				{
+					firstLoad = true;
+					
+					timer.Start();
+					timer.InitializeGameTime();
+				}
 			}
-
-			// Fade end.
-			if (newFade == 1 && oldFade < 1)
+			// Fade end
+			else if (newFade == 1 && oldFade < 1)
 			{
-				OnFadeEnd();
-			}
+				transitionTime = DateTime.Now;
 
-			return;
-
-			if (onTitle && timer.CurrentState.CurrentPhase == TimerPhase.NotRunning)
-			{
-				timer.Start();
-				timer.CurrentState.IsGameTimePaused = true;
+				if (firstLoad)
+				{
+					timer.CurrentState.IsGameTimePaused = true;
+				}
 			}
 		}
-
-		private void OnFadeStart()
-		{
-			Console.WriteLine("Fade start");
-
-			if (memory.Paused.Read())
-			{
-				Console.WriteLine("IGT paused (quitting from the pause screen)");
-
-				//timer.CurrentState.IsGameTimePaused = true;
-			}
-
-			/*
-			if (timer.CurrentState.IsGameTimePaused)
-			{
-				timer.CurrentState.IsGameTimePaused = false;
-
-				Console.WriteLine("IGT restarted");
-			}
-			*/
-		}
-
-		private void OnFadeEnd()
-		{
-			Console.WriteLine("Fade end");
-
-			if (enteringGameOver)
-			{
-				enteringGameOver = false;
-				onGameOver = true;
-
-				Console.WriteLine("On game over screen");
-
-				return;
-			}
-
-			if (onGameOver)
-			{
-				onGameOver = false;
-				//timer.CurrentState.IsGameTimePaused = true;
-
-				Console.WriteLine("IGT paused (leaving game over screen)");
-			}
-		}
-
-		private void OnBoxChange(int oldBoxes, int newBoxes)
-		{
-			Console.WriteLine($"Box change ({newBoxes})");
-
-			if (boxDisplay != null)
-			{
-				boxDisplay.BoxCount = newBoxes;
-			}
-		}
-
+		
 		private void OnStageChange(ulong oldAddress, ulong newAddress)
 		{
 			string value = memory.Process.ReadAscii((IntPtr)newAddress);
 
 			if (!stageMap.TryGetValue(value, out Stages stage))
 			{
-				return;
-			}
-
-			if (stage == Stages.Title)
-			{
-				onTitle = true;
-				inHub = false;
-
-				Console.WriteLine("Exiting to title");
+				if (loading)
+				{
+					loading = false;
+					timer.CurrentState.IsGameTimePaused = false;
+				}
 
 				return;
 			}
 
-			if (stage == Stages.None)
-			{
-				return;
-			}
+			loading = true;
 
-			onTitle = false;
+			timer.CurrentState.IsGameTimePaused = true;
+			timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime - (DateTime.Now - transitionTime));
 
 			StageData data = stageArray[(int)stage];
-
+			
+			// Data being null means you're entering a hub.
 			if (data == null)
 			{
+				// After the opening cutscene (following starting a new game), the player enters a hub without first being in a stage.
+				// The timer should not split in these cases.
+				if (inStage)
+				{
+					timer.Split();
+				}
+
 				inStage = false;
 				inHub = true;
 
@@ -460,12 +410,8 @@ namespace LiveSplit.Crash
 
 				relicDisplay?.Clear();
 
-				Console.WriteLine($"Entering hub {stage}");
-
 				return;
 			}
-
-			Console.WriteLine($"Entering stage {stage}");
 
 			inStage = true;
 			inHub = false;
@@ -484,30 +430,6 @@ namespace LiveSplit.Crash
 			}
 		}
 
-		private void OnAliveChange(bool oldAlive, bool newAlive)
-		{
-			Console.WriteLine(newAlive ? "Alive" : "Dead");
-
-			if (!newAlive && memory.Lives.Read() == 0)
-			{
-				onGameOver = true;
-
-				Console.WriteLine("Entering game over screen");
-			}
-		}
-
-		private void OnStart(object sender, EventArgs e)
-		{
-			timer.InitializeGameTime();
-		}
-
-		private void OnReset(object sender, TimerPhase phase)
-		{
-			onTitle = true;
-			inHub = false;
-			inStage = false;
-		}
-
 		public void Update(IInvalidator invalidator, LiveSplitState state, float width, float height, LayoutMode mode)
 		{
 			if (timer == null)
@@ -516,9 +438,11 @@ namespace LiveSplit.Crash
 				{
 					CurrentState = state
 				};
-
-				timer.CurrentState.OnStart += OnStart;
-				timer.CurrentState.OnReset += OnReset;
+				
+				timer.CurrentState.OnReset += (sender, value) =>
+				{
+					firstLoad = false;
+				};
 			}
 			
 			Autosplit();
