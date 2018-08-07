@@ -16,6 +16,19 @@ namespace LiveSplit.Crash
 		Purple,
 		None
 	}
+
+	public enum Categories
+	{
+		AnyPercent,
+		AllGems,
+		OneHundredPercent,
+		OneOhTwoPercent,
+		OneOhFivePercent,
+		OneOhEightPercent,
+		TrilogyAnyPercent,
+		TrilogyThreeFifteenPercent,
+		Unknown
+	}
 	
 	public enum Stages
 	{
