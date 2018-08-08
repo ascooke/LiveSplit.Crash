@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,11 +30,13 @@ namespace LiveSplit.Crash
 		private RelicDisplay relicDisplay;
 		private StageData[] stageArray;
 		private Dictionary<string, Stages> stageMap;
+		private HashSet<Stages> hubSet;
 		private DateTime transitionTime;
 		
 		private bool firstLoad;
 		private bool loading;
 		private bool inHub;
+		private bool inBoss;
 		private bool inStage;
 
 		public CrashComponent()
@@ -47,6 +51,15 @@ namespace LiveSplit.Crash
 				{
 					boxDisplay.BoxCount = newBoxes;
 				}
+			};
+
+			hubSet = new HashSet<Stages>
+			{
+				Stages.TheWumpaIslands,
+				Stages.NSanityIsland,
+				Stages.CortexIsland,
+				Stages.TheWarpRoom,
+				Stages.TheTimeTwister
 			};
 
 			StageData[] crash1Data = LoadStageData("Crash1.xml");
@@ -342,18 +355,19 @@ namespace LiveSplit.Crash
 			// Fade start
 			if (oldFade == 0 && newFade > 0)
 			{
+				if (timer.CurrentState.CurrentPhase != TimerPhase.NotRunning)
+				{
+					return;
+				}
+
 				if (firstLoad)
 				{
 					firstLoad = false;
 					timer.CurrentState.IsGameTimePaused = false;
 				}
-				else if (timer.CurrentState.CurrentPhase == TimerPhase.NotRunning && memory.Title.Read() == 2 &&
-					!memory.Credits.Read() && newFade < 0.2f)
+				else if (memory.Title.Read() == 2 && !memory.Credits.Read() && newFade < 0.2f)
 				{
-					firstLoad = true;
-					
 					timer.Start();
-					timer.InitializeGameTime();
 				}
 			}
 			// Fade end
@@ -390,18 +404,20 @@ namespace LiveSplit.Crash
 
 			StageData data = stageArray[(int)stage];
 			
-			// Data being null means you're entering a hub.
+			// Data being null means you're entering either a hub or a boss.
 			if (data == null)
 			{
-				// After the opening cutscene (following starting a new game), the player enters a hub without first being in a stage.
-				// The timer should not split in these cases.
-				if (inStage)
+				inHub = hubSet.Contains(stage);
+
+				// In Crash 2, after the opening cutscene (following starting a new game), the player enters a hub without first being
+				// in a regular stage. The timer should not split in this case.
+				if (inHub && (inStage || inBoss))
 				{
 					timer.Split();
 				}
 
+				inBoss = !inHub;
 				inStage = false;
-				inHub = true;
 
 				if (settings.DisplayBoxes)
 				{
@@ -414,6 +430,7 @@ namespace LiveSplit.Crash
 			}
 
 			inStage = true;
+			inBoss = false;
 			inHub = false;
 
 			if (settings.DisplayBoxes)
@@ -438,7 +455,13 @@ namespace LiveSplit.Crash
 				{
 					CurrentState = state
 				};
-				
+
+				timer.CurrentState.OnStart += (sender, e) =>
+				{
+					firstLoad = true;
+					timer.InitializeGameTime();
+				};
+
 				timer.CurrentState.OnReset += (sender, value) =>
 				{
 					firstLoad = false;
@@ -475,7 +498,6 @@ namespace LiveSplit.Crash
 			}
 
 			memory.Refresh();
-			//timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime);
 		}
 
 		public void Dispose()
