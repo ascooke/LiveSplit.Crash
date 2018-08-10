@@ -11,8 +11,8 @@ namespace LiveSplit.Crash
 {
 	public class CrashComponentFactory : IComponentFactory
 	{
-		public string UpdateName => ComponentName + Version;
-		public string XMLURL => UpdateURL + "LiveSplit.Crash.Updates.xml";
+		public string UpdateName => ComponentName;
+		public string XMLURL => UpdateURL + "LiveSplit.Crash/LiveSplit.Crash.Updates.xml";
 		public string UpdateURL => "https://raw.githubusercontent.com/Grimelios/LiveSplit.Crash/master/";
 
 		public Version Version
