@@ -98,6 +98,7 @@
     <None Include="Resources\Crash.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="LiveSplit.Crash.Updates.xml" />
     <Content Include="Resources\Crash1.png" />
     <Content Include="Resources\Crash2.png" />
     <Content Include="Resources\Crash3.png" />

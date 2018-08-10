@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using LiveSplit.Model;
@@ -14,7 +15,15 @@ namespace LiveSplit.Crash
 		public string XMLURL => "LiveSplit.Crash.Updates.xml";
 		public string UpdateURL => "https://raw.githubusercontent.com/Grimelios/LiveSplit.Crash/master/";
 
-		public Version Version => Version.Parse("1.0.0");
+		public Version Version
+		{
+			get
+			{
+				Version version = Assembly.GetExecutingAssembly().GetName().Version;
+
+				return Version.Parse($"{version.Major}.{version.Minor}.{version.Build}");
+			}
+		}
 
 		public string ComponentName => "Crash NST Autosplitter (Memory-Based) v" + Version;
 		public string Description => "Configurable memory-based autosplitter for Crash Bandicoot N. Sane Trilogy. Works for all three games.";
