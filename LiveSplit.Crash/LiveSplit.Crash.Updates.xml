@@ -3,7 +3,7 @@
 <updates>
 	<update version="0.9.4">
 		<files>
-			<file path="LiveSplit.Crash/LiveSplit.Crash.dll" status="changed"/>
+			<file path="Components/LiveSplit.Crash.dll" status="changed"/>
 		</files>
 		<changelog>
 			<change>Testing auto-updates through LiveSplit.</change>
