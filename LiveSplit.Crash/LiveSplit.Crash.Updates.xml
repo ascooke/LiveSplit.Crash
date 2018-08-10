@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <updates>
-	<update version="0.9.2">
+	<update version="0.9.3">
 		<files>
 			<file path="LiveSplit.Crash/LiveSplit.Crash.dll" status="changed"/>
 		</files>
