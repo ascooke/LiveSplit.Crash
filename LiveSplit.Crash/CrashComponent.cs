@@ -369,7 +369,10 @@ namespace LiveSplit.Crash
 		{
 			// There are only two instances where fading in is valuable to the autosplitter. The first is starting a new game (at
 			// which point the fade begins immediately) and the second is a quick fade following the opening cutscene for each game.
-			if (timer.CurrentState.CurrentPhase == TimerPhase.NotRunning && memory.EnteringGame.Read())
+			bool onTitle = memory.Title.Read() == 2;
+			bool timerRunning = timer.CurrentState.CurrentPhase != TimerPhase.NotRunning;
+
+			if (onTitle && !timerRunning && memory.EnteringGame.Read())
 			{
 				timer.Start();
 
