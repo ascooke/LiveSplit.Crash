@@ -34,6 +34,7 @@ namespace LiveSplit.Crash
 		private DateTime transitionTime;
 		
 		private bool firstLoad;
+		private bool startedFromTitle;
 		private bool loading;
 		private bool inHub;
 		private bool inBoss;
@@ -355,33 +356,49 @@ namespace LiveSplit.Crash
 			// Fade start
 			if (oldFade == 0 && newFade > 0)
 			{
-				if (timer.CurrentState.CurrentPhase != TimerPhase.NotRunning)
-				{
-					return;
-				}
-
-				if (firstLoad)
-				{
-					firstLoad = false;
-					timer.CurrentState.IsGameTimePaused = false;
-				}
-				else if (memory.Title.Read() == 2 && !memory.Credits.Read() && newFade < 0.2f)
-				{
-					timer.Start();
-				}
+				OnFadeStart();
 			}
-			// Fade end
+			// Fade end (note that this only registers the end of fades TO black, not fades FROM black).
 			else if (newFade == 1 && oldFade < 1)
 			{
-				transitionTime = DateTime.Now;
+				OnFadeEnd();
+			}
+		}
 
-				if (firstLoad)
+		private void OnFadeStart()
+		{
+			// There are only two instances where fading in is valuable to the autosplitter. The first is starting a new game (at
+			// which point the fade begins immediately) and the second is a quick fade following the opening cutscene for each game.
+			if (timer.CurrentState.CurrentPhase == TimerPhase.NotRunning && memory.EnteringGame.Read())
+			{
+				timer.Start();
+
+				return;
+			}
+
+			// This all accounts for restarting IGT following the opening cutscene. It's a special case because there's no fade from
+			// the load screen into each opening cutscene.
+			if (firstLoad)
+			{
+				firstLoad = false;
+
+				if (startedFromTitle)
 				{
-					timer.CurrentState.IsGameTimePaused = true;
+					timer.CurrentState.IsGameTimePaused = false;
 				}
 			}
 		}
-		
+
+		private void OnFadeEnd()
+		{
+			transitionTime = DateTime.Now;
+
+			if (firstLoad && startedFromTitle)
+			{
+				timer.CurrentState.IsGameTimePaused = true;
+			}
+		}
+
 		private void OnStageChange(ulong oldAddress, ulong newAddress)
 		{
 			string value = memory.Process.ReadAscii((IntPtr)newAddress);
@@ -459,12 +476,19 @@ namespace LiveSplit.Crash
 				timer.CurrentState.OnStart += (sender, e) =>
 				{
 					firstLoad = true;
+
+					if (!startedFromTitle)
+					{
+						startedFromTitle = memory.EnteringGame.Read();
+					}
+
 					timer.InitializeGameTime();
 				};
 
 				timer.CurrentState.OnReset += (sender, value) =>
 				{
 					firstLoad = false;
+					startedFromTitle = false;
 				};
 			}
 			
