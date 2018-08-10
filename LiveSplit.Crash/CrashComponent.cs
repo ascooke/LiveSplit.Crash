@@ -35,6 +35,7 @@ namespace LiveSplit.Crash
 		
 		private bool firstLoad;
 		private bool startedFromTitle;
+		private bool quit;
 		private bool loading;
 		private bool inHub;
 		private bool inBoss;
@@ -389,7 +390,11 @@ namespace LiveSplit.Crash
 				{
 					timer.CurrentState.IsGameTimePaused = false;
 				}
+
+				return;
 			}
+
+			quit = memory.Paused.Read();
 		}
 
 		private void OnFadeEnd()
@@ -419,8 +424,12 @@ namespace LiveSplit.Crash
 
 			loading = true;
 
-			timer.CurrentState.IsGameTimePaused = true;
-			timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime - (DateTime.Now - transitionTime));
+			// Pausing and quitting should not pause IGT.
+			if (!quit)
+			{
+				timer.CurrentState.IsGameTimePaused = true;
+				timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime - (DateTime.Now - transitionTime));
+			}
 
 			StageData data = stageArray[(int)stage];
 			
