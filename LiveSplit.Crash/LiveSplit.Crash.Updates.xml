@@ -1,4 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <updates>
+	<update version="0.9.1">
+		<files>
+			<file path="Components/LiveSplit.Crash.dll" status="changed" />
+		</files>
+		<changelog>
+			<change>Pausing and quitting no longer triggers a split.</change>
+			<change>Added simple logging.</change>
+		</changelog>
+	</update>
 </updates>

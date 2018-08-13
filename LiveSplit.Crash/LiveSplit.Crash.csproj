@@ -69,6 +69,7 @@
     <Compile Include="Display\AbstractDisplay.cs" />
     <Compile Include="Display\BoxDisplay.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="Logging.cs" />
     <Compile Include="Memory\CrashMemory.cs" />
     <Compile Include="Memory\GameMemory.cs" />
     <Compile Include="Memory\GamePointer.cs" />

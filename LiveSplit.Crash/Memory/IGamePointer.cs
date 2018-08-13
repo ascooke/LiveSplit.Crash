@@ -13,8 +13,12 @@ namespace LiveSplit.Crash.Memory
 	{
 		Process Process { get; set; }
 
-		bool RefreshEnabled { get; set; }
+		bool IsRefreshEnabled { get; set; }
+		bool IsPointerValid { get; }
 
+		string Name { get; }
+
+		void Validate();
 		void Refresh();
 	}
 }

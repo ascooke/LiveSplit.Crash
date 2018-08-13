@@ -12,17 +12,37 @@ namespace LiveSplit.Crash.Memory
 		private int[] offsets;
 		private T currentValue;
 
-		public GamePointer(bool refreshEnabled, params int[] offsets)
+		public GamePointer(string name, bool refreshEnabled, params int[] offsets)
 		{
 			this.offsets = offsets;
 
-			RefreshEnabled = refreshEnabled;
+			Name = name;
+			IsRefreshEnabled = refreshEnabled;
 		}
 
 		// Setting the process publicly is easier than passing it into functions repeatedly.
 		public Process Process { get; set; }
-		public bool RefreshEnabled { get; set; }
+
+		public bool IsRefreshEnabled { get; set; }
+		public bool IsPointerValid { get; private set; }
+
+		public string Name { get; }
+
 		public event Action<T, T> OnValueChange;
+
+		public void Validate()
+		{
+			try
+			{
+				Read();
+			}
+			catch (Exception e)
+			{
+				IsPointerValid = false;
+			}
+
+			IsPointerValid = true;
+		}
 
 		public T Read()
 		{

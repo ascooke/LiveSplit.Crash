@@ -35,6 +35,7 @@ namespace LiveSplit.Crash
 		
 		private bool firstLoad;
 		private bool startedFromTitle;
+		private bool exitingToTitle;
 		private bool quit;
 		private bool loading;
 		private bool inHub;
@@ -202,6 +203,8 @@ namespace LiveSplit.Crash
 				{ "THE WARP ROOM", Stages.TheWarpRoom },
 				{ "THE TIME TWISTER", Stages.TheTimeTwister }
 			};
+
+			Logging.Write("[Component] Component created.");
 		}
 
 		public string ComponentName => "Crash NST Autosplitter (Memory-Based)";
@@ -395,6 +398,11 @@ namespace LiveSplit.Crash
 			}
 
 			quit = memory.Paused.Read();
+
+			if (inHub && quit)
+			{
+				exitingToTitle = true;
+			}
 		}
 
 		private void OnFadeEnd()
@@ -410,9 +418,12 @@ namespace LiveSplit.Crash
 		private void OnStageChange(ulong oldAddress, ulong newAddress)
 		{
 			string value = memory.Process.ReadAscii((IntPtr)newAddress);
-
+			
+			// During normal gameplay (and on the title screen), the stage string regularly cycles between the empty string and a
+			// bunch of lowercase x's.
 			if (!stageMap.TryGetValue(value, out Stages stage))
 			{
+				// This handles a load screen ending.
 				if (loading)
 				{
 					loading = false;
@@ -421,15 +432,8 @@ namespace LiveSplit.Crash
 
 				return;
 			}
-
-			loading = true;
-
-			// Pausing and quitting should not pause IGT.
-			if (!quit)
-			{
-				timer.CurrentState.IsGameTimePaused = true;
-				timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime - (DateTime.Now - transitionTime));
-			}
+			
+			SetLoading();
 
 			StageData data = stageArray[(int)stage];
 			
@@ -440,7 +444,7 @@ namespace LiveSplit.Crash
 
 				// In Crash 2, after the opening cutscene (following starting a new game), the player enters a hub without first being
 				// in a regular stage. The timer should not split in this case.
-				if (inHub && (inStage || inBoss))
+				if (inHub && (inStage || inBoss) && !quit)
 				{
 					timer.Split();
 				}
@@ -476,6 +480,14 @@ namespace LiveSplit.Crash
 			}
 		}
 
+		private void SetLoading()
+		{
+			loading = true;
+			
+			timer.CurrentState.IsGameTimePaused = true;
+			timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime - (DateTime.Now - transitionTime));
+		}
+
 		public void Update(IInvalidator invalidator, LiveSplitState state, float width, float height, LayoutMode mode)
 		{
 			if (timer == null)
@@ -501,6 +513,8 @@ namespace LiveSplit.Crash
 				{
 					firstLoad = false;
 					startedFromTitle = false;
+					exitingToTitle = false;
+					quit = false;
 				};
 			}
 			
@@ -538,6 +552,7 @@ namespace LiveSplit.Crash
 
 		public void Dispose()
 		{
+			Logging.Write("[Component] Component closing.");
 		}
 	}
 }
