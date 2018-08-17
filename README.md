@@ -8,13 +8,13 @@ The Crash NST autosplitter is meant to be a replacement for Thomadin's image-bas
 - The timer starts automatically when you select New Game from the title screen (**see the deficiencies section below**).
 - The timer splits automatically when you finish a stage and return to a hub.
 - The timer ends automatically when you finish your run (**see the deficiencies section below**).
-- Loads are removed by pausing in-game time (IGT) during loading screens. Like the current image-based tool, transition time before the screen is removed (meaning that you'll see your timer jump back a bit the moment the loading screen becomes visible).
-- Box count and relic times can optionally be displayed on LiveSplit (**see the deficiencies section below**).
+- Loads are removed by pausing in-game time (IGT) during loading screens. Like the image-based tool, transition time before the screen is removed (meaning that you'll see your timer jump back a bit the moment the loading screen becomes visible).
+- Box count and relic times can optionally be displayed within LiveSplit (**see the deficiencies section below**).
 
 Additional notes:
 
 - The timer doesn't split when you pause and quit a stage (although IGT is still paused).
-- The timer doesn't split when you game over and reload a stage.
+- The timer doesn't split when you game over and reload a stage (although IGT is still paused).
 - Undoing and skipping splits does not affect autosplitter functionality (so the timer will continue pausing and splitting as appropriate).
 
 Note that since this autosplitter reads game memory during runtime, it unfortuantely can't be used for console runs. If you're running Crash on a console, keep using the image-based version.
@@ -24,6 +24,15 @@ Note that since this autosplitter reads game memory during runtime, it unfortuan
 - Right-click and select Edit Splits
 - Select Crash Bandicoot NST as the game (if it's not already)
 - Click the Activate button underneath the attempt count
+- If desired, click the Settings button to configure the autosplitter
+
+If for some reason LiveSplit doesn't find the autosplitter automatically:
+
+- Download LiveSplit.Crash.dll from the Releases section
+- Move the DLL to your LiveSplit/Components folder (you should see lots of other DLL's in there)
+- Open LiveSplit, then right-click and select Edit Layout
+- Add the autosplitter (under the Control category)
+- If desired, click Layout Settings (or double-click the newly-added component) to configure the autosplitter
 
 ## Known deficiencies
 
