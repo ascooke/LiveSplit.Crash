@@ -1,22 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <updates>
-	<update version="0.9.1">
-		<files>
-			<file path="Components/LiveSplit.Crash.dll" status="changed" />
-		</files>
-		<changelog>
-			<change>Pausing and quitting no longer triggers a split.</change>
-			<change>Added simple logging.</change>
-		</changelog>
-	</update>
-	<update version="0.9.2">
-		<files>
-			<file path="Components/LiveSplit.Crash.dll" status="changed" />
-		</files>
-		<changelog>
-			<change>Consolidating repeated bosses among games such that all stages are properly detected.</change>
-			<change>Temporarily disabling configuration until everything's done.</change>
-		</changelog>
-	</update>
 </updates>
