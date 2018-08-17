@@ -16,6 +16,7 @@
 		</files>
 		<changelog>
 			<change>Consolidating repeated bosses among games such that all stages are properly detected.</change>
+			<change>Temporarily disabling configuration until everything's done.</change>
 		</changelog>
 	</update>
 </updates>
