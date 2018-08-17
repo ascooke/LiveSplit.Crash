@@ -1,6 +1,8 @@
 # LiveSplit.Crash
 Memory-based autosplitter for Crash Bandicoot N. Sane Trilogy on PC.
 
+Link to the image-based load remover: [https://github.com/thomasneff/LiveSplit.CrashNSTLoadRemoval](https://github.com/thomasneff/LiveSplit.CrashNSTLoadRemoval)
+
 ## Features
 
 The Crash NST autosplitter is meant to be a replacement for Thomadin's image-based load remover on PC. The tool is designed to be as easy to use as possible, in most cases requiring zero configuration whatsoever (just activate and go). Here's how it currently functions.
@@ -17,7 +19,7 @@ Additional notes:
 - The timer doesn't split when you game over and reload a stage (although IGT is still paused).
 - Undoing and skipping splits does not affect autosplitter functionality (so the timer will continue pausing and splitting as appropriate).
 
-Note that since this autosplitter reads game memory during runtime, it unfortuantely can't be used for console runs. If you're running Crash on a console, keep using the image-based version.
+Note that since this autosplitter reads game memory during runtime, it unfortuantely can't be used for console runs. If you're running Crash on a console, keep using the [image-based version](https://github.com/thomasneff/LiveSplit.CrashNSTLoadRemoval).
 
 ## Installation instructions for LiveSplit
 - Open LiveSplit
