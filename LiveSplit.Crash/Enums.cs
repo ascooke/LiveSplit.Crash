@@ -70,11 +70,9 @@ namespace LiveSplit.Crash
 
 		// Bosses
 		PapuPapu,
-		RipperRoo1,
 		KoalaKong,
 		PinstripePotoroo,
 		DrNitrusBrio,
-		DrNeoCortex1,
 
 		// Other
 		TheGreatHall,
@@ -126,11 +124,7 @@ namespace LiveSplit.Crash
 		TotallyFly,
 
 		// Bosses
-		RipperRoo2,
 		KomodoBrothers,
-		TinyTiger1,
-		DrNGin1,
-		DrNeoCortex2,
 
 		//---------//
 		// Crash 3 //
@@ -181,14 +175,19 @@ namespace LiveSplit.Crash
 		EggipusRex,
 
 		// Bosses
-		TinyTiger2,
 		Dingodile,
 		DrNTropy,
-		DrNGin2,
-		UkaUka,
 
 		// DLC
 		FutureTense,
+
+		//-----------------//
+		// Repeated bosses //
+		//-----------------//
+		RipperRoo,
+		TinyTiger,
+		DrNGin,
+		DrNeoCortex,
 
 		//------//
 		// Hubs //

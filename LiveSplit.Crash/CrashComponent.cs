@@ -119,10 +119,8 @@ namespace LiveSplit.Crash
 				{ "STORMY ASCENT", Stages.StormyAscent },
 				{ "PAPU PAPU", Stages.PapuPapu },
 				{ "KOALA KONG", Stages.KoalaKong },
-				//{ "RIPPER ROO", Stages.RipperRoo1 },
 				{ "PINSTRIPE POTOROO", Stages.PinstripePotoroo },
 				{ "DR. NITRUS BRIO", Stages.DrNitrusBrio },
-				//{ "DR. NEO CORTEX", Stages.DrNeoCortex1 },
 
 				// Crash 2
 				{ "TURTLE WOODS", Stages.TurtleWoods },
@@ -152,11 +150,7 @@ namespace LiveSplit.Crash
 				{ "SPACED OUT", Stages.SpacedOut },
 				{ "TOTALLY BEAR", Stages.TotallyBear },
 				{ "TOTALLY FLY", Stages.TotallyFly },
-				{ "RIPPER ROO", Stages.RipperRoo1 },
 				{ "KOMODO BROTHERS", Stages.KomodoBrothers },
-				{ "TINY TIGER", Stages.TinyTiger1 },
-				{ "DR. N. GIN", Stages.DrNGin1 },
-				{ "DR. NEO CORTEX", Stages.DrNeoCortex2 },
 
 				// Crash 3
 				{ "TOAD VILLAGE", Stages.ToadVillage },
@@ -189,12 +183,15 @@ namespace LiveSplit.Crash
 				{ "RINGS OF POWER", Stages.RingsOfPower },
 				{ "HOT COCO", Stages.HotCoco },
 				{ "EGGIPUS REX", Stages.EggipusRex },
-				//{ "TINY TIGER", Stages.TinyTiger2 },
 				{ "DINGODILE", Stages.Dingodile },
 				{ "DR. N. TROPY", Stages.DrNTropy },
-				//{ "DR. N. GIN", Stages.DrNGin2 },
-				{ "UKA UKA", Stages.UkaUka },
 				{ "FUTURE TENSE", Stages.FutureTense },
+
+				// Repeated bosses		
+				{ "RIPPER ROO", Stages.RipperRoo },
+				{ "TINY TIGER", Stages.TinyTiger },
+				{ "DR. N. GIN", Stages.DrNGin },
+				{ "DR. NEO CORTEX", Stages.DrNeoCortex },
 
 				// Hubs
 				{ "N. SANITY ISLANDS", Stages.NSanityIsland },
