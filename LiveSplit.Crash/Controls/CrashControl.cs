@@ -26,6 +26,7 @@ namespace LiveSplit.Crash.Controls
 		public bool DisplayEnabled => DisplayBoxes || DisplayRelics;
 		public bool SwapOrder => swapCheckbox.Checked;
 		public bool AutoDetectEnabled => detectCheckbox.Checked;
+		public bool PracticeModeEnabled => practiceModeCheckbox.Checked;
 
 		public int Game => gameComboBox.SelectedIndex + 1;
 
@@ -60,6 +61,7 @@ namespace LiveSplit.Crash.Controls
 			root.AppendChild(CreateNode(document, "DisplayRelics", DisplayRelics));
 			root.AppendChild(CreateNode(document, "SwapOrder", SwapOrder));
 			root.AppendChild(CreateNode(document, "AutoDetect", AutoDetectEnabled));
+			root.AppendChild(CreateNode(document, "PracticeMode", PracticeModeEnabled));
 
 			if (!AutoDetectEnabled)
 			{
@@ -84,6 +86,7 @@ namespace LiveSplit.Crash.Controls
 			ParseNode(node, "DisplayRelics", relicCheckbox);
 			ParseNode(node, "SwapOrder", swapCheckbox);
 			ParseNode(node, "AutoDetect", detectCheckbox);
+			ParseNode(node, "PracticeMode", practiceModeCheckbox);
 
 			if (!AutoDetectEnabled)
 			{

@@ -373,6 +373,9 @@ namespace LiveSplit.Crash
 			bool onTitle = memory.Title.Read() == 2;
 			bool timerRunning = timer.CurrentState.CurrentPhase != TimerPhase.NotRunning;
 
+			// With the addition of practice mode, I considered making the timer intentionally NOT start from the title
+			// screen. I decided to keep things as usual so that players can keep their regular splits open with
+			// practice mode enabled and still start real runs if they'd like.
 			if (onTitle && !timerRunning && memory.EnteringGame.Read())
 			{
 				timer.Start();
@@ -416,8 +419,8 @@ namespace LiveSplit.Crash
 		{
 			string value = memory.Process.ReadAscii((IntPtr)newAddress);
 			
-			// During normal gameplay (and on the title screen), the stage string regularly cycles between the empty string and a
-			// bunch of lowercase x's.
+			// During normal gameplay (and on the title screen), the stage string regularly cycles between the empty
+			// string and a bunch of lowercase x's.
 			if (!stageMap.TryGetValue(value, out Stages stage))
 			{
 				// This handles a load screen ending.
@@ -425,6 +428,14 @@ namespace LiveSplit.Crash
 				{
 					loading = false;
 					timer.CurrentState.IsGameTimePaused = false;
+
+					// Practice mode is designed to time individual stages (as opposed to an entire run). As such, when
+					// practice mode is enabled, the timer starts each time a stage is entered (following the loading
+					// screen).
+					if (settings.PracticeModeEnabled && timer.CurrentState.CurrentPhase == TimerPhase.NotRunning)
+					{
+						timer.Start();
+					}
 				}
 
 				return;
@@ -439,8 +450,8 @@ namespace LiveSplit.Crash
 			{
 				inHub = hubSet.Contains(stage);
 
-				// In Crash 2, after the opening cutscene (following starting a new game), the player enters a hub without first being
-				// in a regular stage. The timer should not split in this case.
+				// In Crash 2, after the opening cutscene (following starting a new game), the player enters a hub
+				// without first being in a regular stage. The timer should not split in this case.
 				if (inHub && (inStage || inBoss) && !quit)
 				{
 					timer.Split();
