@@ -432,7 +432,8 @@ namespace LiveSplit.Crash
 					// Practice mode is designed to time individual stages (as opposed to an entire run). As such, when
 					// practice mode is enabled, the timer starts each time a stage is entered (following the loading
 					// screen).
-					if (settings.PracticeModeEnabled && timer.CurrentState.CurrentPhase == TimerPhase.NotRunning)
+					if (settings.PracticeModeEnabled && !inHub &&
+					    timer.CurrentState.CurrentPhase == TimerPhase.NotRunning)
 					{
 						timer.Start();
 					}

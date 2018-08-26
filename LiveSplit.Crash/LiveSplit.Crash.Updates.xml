@@ -9,4 +9,12 @@
 			<change>Added practice mode.</change>
 		</changelog>
 	</update>
+	<update version="1.1.1">
+		<files>
+			<file path="Components/LiveSplit.Crash.dll" status="changed" />
+		</files>
+		<changelog>
+			<change>In practice mode, the timer no longer starts when entering a hub.</change>
+		</changelog>
+	</update>
 </updates>
