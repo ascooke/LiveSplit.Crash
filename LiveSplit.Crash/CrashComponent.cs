@@ -42,6 +42,10 @@ namespace LiveSplit.Crash
 		private bool inBoss;
 		private bool inStage;
 
+		private TimeSpan NewGameCorrection = new TimeSpan(0, 0, 0, 0, 220);
+		private TimeSpan IntroCutsceneCorrection = new TimeSpan(0, 0, 0, 1);
+		private TimeSpan MaxTransitionThreshold = new TimeSpan(0, 0, 0, 3);
+
 		public CrashComponent()
 		{
 			settings = new CrashControl();
@@ -376,10 +380,13 @@ namespace LiveSplit.Crash
 			// With the addition of practice mode, I considered making the timer intentionally NOT start from the title
 			// screen. I decided to keep things as usual so that players can keep their regular splits open with
 			// practice mode enabled and still start real runs if they'd like.
-			if (onTitle && !timerRunning && memory.EnteringGame.Read())
+			if (onTitle && memory.EnteringGame.Read())
 			{
-				timer.Start();
-
+				if (!timerRunning)
+				{
+					timer.Start();
+                } 
+				
 				return;
 			}
 
@@ -392,7 +399,8 @@ namespace LiveSplit.Crash
 				if (startedFromTitle)
 				{
 					timer.CurrentState.IsGameTimePaused = false;
-				}
+                    timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime - IntroCutsceneCorrection);
+                }
 
 				return;
 			}
@@ -412,7 +420,20 @@ namespace LiveSplit.Crash
 			if (firstLoad && startedFromTitle)
 			{
 				timer.CurrentState.IsGameTimePaused = true;
-			}
+				timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime - NewGameCorrection);
+            }
+
+			if (exitingToTitle)
+			{
+                timer.CurrentState.IsGameTimePaused = true;
+				while (memory.Fade.Read() == 1);
+				while (memory.Fade.Read() < 1) ;
+				while (memory.Fade.Read() == 1) ;
+				timer.CurrentState.IsGameTimePaused = false;
+				exitingToTitle = false;
+				firstLoad = true;
+				startedFromTitle = true;
+            }
 		}
 
 		private void OnStageChange(ulong oldAddress, ulong newAddress)
@@ -426,6 +447,7 @@ namespace LiveSplit.Crash
 				// This handles a load screen ending.
 				if (loading)
 				{
+					while (memory.Fade.Read() == 1) ;
 					loading = false;
 					timer.CurrentState.IsGameTimePaused = false;
 
@@ -494,7 +516,12 @@ namespace LiveSplit.Crash
 			loading = true;
 			
 			timer.CurrentState.IsGameTimePaused = true;
-			timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime - (DateTime.Now - transitionTime));
+			TimeSpan transitionDelta = DateTime.Now - transitionTime;
+
+			if(transitionDelta < MaxTransitionThreshold)
+			{
+                timer.CurrentState.SetGameTime(timer.CurrentState.GameTimePauseTime - transitionDelta);
+            }		
 		}
 
 		public void Update(IInvalidator invalidator, LiveSplitState state, float width, float height, LayoutMode mode)
